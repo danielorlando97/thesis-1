@@ -31,6 +31,9 @@
                 linkcolor=black,anchorcolor=black,citecolor=black,%
                 filecolor=black,menucolor=black,runcolor=black,%
                 urlcolor=black]{hyperref}
+
+
+
                 
 % fancyhdr settings from texlive-doc
 \RequirePackage{fancyhdr}
@@ -126,7 +129,7 @@
    \multicitedelim}
   {\usebibmacro{textcite:postnote}}
 
-% % Backreferences in the bibliography.
+% Backreferences in the bibliography.
 % \backrefspanish
 % \renewcommand{\backref}[1]{}
 % \renewcommand{\backrefalt}[4]{%

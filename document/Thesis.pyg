@@ -1,0 +1,15 @@
+        from autogoal.grammar import ContinuousValue, CategoricalValue, DiscreteValue
+
+        class MySeachSpace:
+            def __init__(
+                self,
+                a: DiscreteValue(10, 20)
+                b: ContinuousValue(0, 1)
+                c: CategoricalValue("SearchSpace", "Domain")
+            )
+                if b in [0.5, 1]:
+                    raise ValueError('Invalid hyperparams')
+                self.a, self.b, self.c = a, b, c
+
+        MySeachSpaceDomain = Domain[MySeachSpace]()
+        my_seach_space_instance, _ = MySeachSpaceDomain.get_sample()

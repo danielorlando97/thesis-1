@@ -1,1 +1,442 @@
-\chapter{Propuesta}\label{chapter:proposal}
+\chapter{Propuesta y Detalles de Implementación}\label{chapter:proposal}
+
+Las limitaciones expresivas no solo se encuentra en los sistemas analizados
+en capítulos anteriores. El desarrollo de soluciones para problemas de búsqueda,
+además de una estrategia de búsqueda y un método de evaluación, usualmente cuenta
+con la implementación de mecanismos imperativos y poco descriptivos para generar
+muestras del espacio de búsqueda. Para hacer frente a estas limitaciones expresivas
+el presente documento plante le uso de un {\bf DSL} implementado para que el análisis de
+los problemas de búsqueda partan de una descripción expresiva y de alto nivel de su
+espacio de búsqueda.
+
+Dicha herramienta fue desarrollada pensando en la comodidad del usuario a la hora de
+describir y construir su espacio de interés. Por dicha razón, el biblioteca plantea
+una filosofía constructiva, {\it “de abajo hacia arriba”} ({ \it “Bottom-Up”}), para la
+construcción de dichas descripciones. La misma define una serie de patrones de diseño
+con los que se puede expresar el espacio de búsqueda relativo una clase de {\bf Python} en
+concreto, partiendo de los tipos básicos del lenguaje ({\it int},{\it float},{\it bool},
+{\it str}).
+
+Con dichos patrones el usuario puede describir la estructura y dimensión del espacio
+relativo a la clase en cuestión, así como las características de cada uno de sus
+componentes internos. Además como el origen de la presente investigación se encuentra
+en la imposibilidad de {\bf AutoGOAL} para describir dependencias contextuales, dichas pautas
+fueron ideadas para que se pudieran expresar también dependencias y relaciones entre los
+componentes internos de la clase en cuestión.
+
+La sintaxis que propone el {\bf DSL} para describir los subdominios internos, en su mayoría,
+son expresiones con estilo funcional y declarativo. La intención del autor era intentar,
+en la medida de lo posible, que las descripciones fueran lo más parecidas a las definiciones
+de dominios matemáticos. En las definiciones matemáticas se suele expresar las características
+de un conjunto a partir de las características singulares de un elemento cualquiera de este.
+Un ejemplo simple del modelo al que se aspiraba es la siguiente definición de un subconjunto de
+los números naturales:
+
+\newcommand\Set[2]{\{\,#1\mid#2\,\}}
+\newcommand\SET[2]{\Set{#1}{\text{#2}}}
+
+\begin{align*}
+    A := \Set{x \in \mathbb{N}}{x \ge 100, x \neq 101} \\
+\end{align*}
+
+Por otra parte, la propuesta de solución planteada, aporta sus propios mecanismos para la
+generación de muestras de cada espacio en particular. Dichos mecanismos tiene como base la
+generación de variables aleatorias y aunque la biblioteca cuenta con la implementación de
+algunas de las distribuciones básicas, el usuario puede definir las suyas propias e incluso
+redefinir las ya existentes. Asumiendo la existencia de dichas implementaciones, el resto del
+procesos generativo se centra en la resolución de cada uno de los dominios concretos para cada
+uno de los subespacios. Dichos dominios se encuentra expresados con la sintaxis del {\bf DSL}
+y puede contener dependencias entre ellos. Entre la listas de restricciones que el usuario puede
+describir es importante resaltar dos de ellas, que supone el mayor reto durante el proceso de
+inferencia de los distintos dominios.
+
+Las dependencias contextuales son un de los logros más importantes del presente trabajo. Para
+su resolución el mecanismo generativo necesita reconocer el orden topológico del grafo de
+restricciones, para generar cada uno de los miembros en orden ascendente según grado de
+dependencia. Como a medida que se definen los distintos dominios dinámicos se van generando
+muestras de los distintos subespacios entonces el mecanismo generador necesita una última fase
+en la que se revise la coherencia entre la muestra y las restricciones descritas.
+
+El {\bf DSL} propuesto plantea también una sintaxis de restricciones definidas por funciones
+externas, las cuales en muchos casos el mecanismo generativo las considera funciones
+de {\it "caja negra”}. En estos casos, al igual que sucede con las dependencias contextuales, es
+necesario un análisis posterior al procesos generativo. Dicho análisis en esta ocasión es
+mucho más propenso a errores, pues el mecanismo generativo no cuenta con información suficiente
+para incluir a estas funciones en el proceso de inferencia y redefinición de cada domino en
+concreto. La filosofía {\it “prueba y error”} a la hora de generar muestras aleatorias es el
+mecanismo más simple posible para crear elementos que cumple con un cantidad finita de condiciones.
+Aunque el autor ideo todos los protocolos que pudo para que la creación de muestras fuera lo más
+lineal posible, para el casos de las funciones de {\it "caja negra”} lo más que se puede hacer es
+optimizar el proceso de {\it “prueba y error”} aprendiendo de dichas equivocaciones.
+
+
+\section{Descripción De La Biblioteca}
+
+La cara visible de la biblioteca propuesta es la clase {\bf Domain} la cual es una factoría de espacios
+aleatorios. Dicha clase, los tipos básicos y las funciones {\it lambdas} de {\bf Python} son todas
+las herramientas necesarias para que los usuarios puedan definir sus clases, decorarlas describiendo
+sus espacios búsqueda y posteriormente generar instancias de las mismas.
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+        from search_space import Domain
+        ADomain = Domain[int]()
+        a, _ = ADomain.get_sample()
+    \end{minted}
+    \caption{Ejemplo básico}
+    \label{lst:example}
+\end{listing}
+
+
+
+
+
+La sintaxis del examplo \ref{lst:example} es la mínima expresión del {\bf DSL} propuesto, donde basta con
+definir el tipo del espacio de búsqueda para generar muestras dentro de la versión más extensa dicho
+espacio. Y aunque la herramienta se desarrollo con la intención de describir espacios más complejos,
+como se puede ver en el ejemplo se puede usar para generar muestra de los tipos básicos. Dicha
+funcionalidad "segundaría" en realidad es la base sobre la que se sustenta el resto de funciones de la
+biblioteca. Y como tal el autor trabajo para que fueran lo suficientemente eficiente, nunca será igual
+de rápido que los métodos nativos del lenguaje pero en futuros capítulos se evidenciará que la diferencia
+no es extrema.
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+        from search_space import Domain
+        ADomain = Domain[int] | (lambda x: (x >= 100, x != 101))
+        a, _ = ADomain.get_sample()
+    \end{minted}
+    \caption{Ejemplo básico}
+    \label{ex:func}
+\end{listing}
+
+
+En el ejemplo \ref{ex:func} se muestra uno de los mecanismos más importantes definido por el
+    {\bf DSL}, la sintaxis para declarar restricciones. Con esta herramienta el usuario puede ser capaz de
+expresar las dimensiones y características de sus espacios de interés. Como en los problemas de búsqueda el
+costo temporal suele ser directamente proporcional a las magnitudes del espacio de búsqueda entonces es de
+vital importancia que al describir el espacio de búsqueda de un problema de búsqueda se puede ser lo más
+concreto posible, de forma tal que en el espacio inicial no se incluyan elementos que no representa soluciones
+factibles. El autor espera que se note las similitudes entre esta sintaxis y las definiciones matemáticas, en
+concreto las de este ejemplo con el subconjunto antes definido.
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+        from search_space import Domain
+
+        class MySeachSpace:
+            def __init__(
+                self, 
+                a: int = Domain[int](min = 10, max = 20)
+                b: float = Domain[float] | (lambdas x: (x != 0.5, x < 1))
+                c: str = Domain[str](options = ["SearchSpace", "Domain"])
+            )
+                self.a, self.b, self.c = a, b, c
+
+        MySeachSpaceDomain = Domain[MySeachSpace]()
+        my_seach_space_instance, _ = MySeachSpaceDomain.get_sample()
+    \end{minted}
+    \caption{Ejemplo básico}
+    \label{ex:class}
+\end{listing}
+
+
+
+
+
+Como se ve en el ejemplo \ref{ex:class} número tres la filosofía de la herramienta es que el usuario puede “decorar” sus
+clases declarando los distintos subespacios que la misma contiene. A partir de dicha implementación, basta
+con replicar la sintaxis del primer o del segundo ejemplo, cambiar el tipo de {\bf Domain}, y las restricciones
+en caso de ser necesario, para generar una instancia aleatoria del nuevo espacio descrito. Que la clase
+    {\bf Domain} no solo soporte los tipos básicos sino que también pueda fabricar espacios de clases definidas por
+los usuarios es la característica que hace que la propuesta de solución sea extremadamente extensible. Las
+descripciones del usuario puede ser tan anidadas como se necesite, mientras que las bases de la jerarquía
+planteada en cada nivel estén definidas y debidamente descritas.
+
+
+
+\begin{listing}[!ht]
+    \begin{minted}[autogobble]{Python}
+        from autogoal.grammar import ContinuousValue, CategoricalValue, DiscreteValue
+
+        class MySeachSpace:
+            def __init__(
+                self, 
+                a: DiscreteValue(10, 20)
+                b: ContinuousValue(0, 1)
+                c: CategoricalValue("SearchSpace", "Domain")
+            )
+                if b in [0.5, 1]:
+                    raise ValueError('Invalid hyperparams')
+                self.a, self.b, self.c = a, b, c
+
+        MySeachSpaceDomain = Domain[MySeachSpace]()
+        my_seach_space_instance, _ = MySeachSpaceDomain.get_sample()
+    \end{minted}
+    \caption{Ejemplo básico}
+    \label{ex:autogoal}
+\end{listing}
+
+
+El diseño final del {\bf DSL} planteado para la decoración de las clases se definió principalmente con la idea de
+que los espacios sencillos se pudieran expresar de forma sencillas, y luego aquellos con estructuras más
+complejas tuviera descripciones expresivas pero no necesariamente sencillas. Haciendo referencia una vez
+más a los origenes de este trabajo, se puede comparar los ejemplos \ref{ex:autogoal} y \ref{ex:class} donde se
+evidencia la diferencia entre una clase decorada con las herramientas de {\bf AutoGOAL} y otra con la propuesta
+presentada. Notes que efectivamente son espacios combinados pero extremadamente simples. En ambos casos las
+modificaciones a lo que seria una clase de {\bf Python} común son mínimas. Nótese además que el {\bf DSL}
+planteado es un tanto más verbosos que la sintaxis de {\bf AutoGOAL}; pero esto se debe a la propuesta de solución
+aboga por una sintaxis coherente y consistente con el {\it “tipado estático”} de {\bf Python}, mientras que
+    {\bf AutoGOAL} se apoya en las bondades del tipado dinámico.
+
+Como se comento anteriormente, dos de los aportes más importante de la propuesta son las dependencias
+contextuales y las descripciones de “caja negra”. Ambas funcionalidades son alteraciones de la sintaxis
+antes expuesta para expresar las restricciones de un domino especifico. En el ejemplo numero 5 se muestra
+uno de los casos más clásicos de dependencias contextuales, el espacio aleatoria de dos números donde el
+primero es mayor que el segundo. En dicho ejemplo se escribe la función de restricciones como una función
+de dos parámetros donde el primero es un elemento cualquiera del espacio en cuestión y el segundo es un
+elemento cualquiera de una definición previa. Dado estos dos elementos cuales quiera, el usuario puede
+describir una relación entre ambos espacios a partir de la relación existente entre dos de sus elementos.
+
+Es probable que el lector, al analizar el caso de estudio seleccionado para mostrar la sintaxis de dependencias
+contextuales, piense en que dicho problema se describe mejor con la definición matemática anterior que con la
+clase del ejemplo 5. Y es que la intención del ejemplo 5 era únicamente introducir la sintaxis para la decoración
+de las clases con espacios sensibles al contexto. El DSL cuenta su propia sintaxis para definir espacios de más
+de una dimensión, como seria el caso del dominio planteado en la definición matemática anterior. Dicha sintaxis
+no solo se limita a dimensiones predefinidas, ni a restricciones de indices fijos como es el caso del ejemplo 6
+que intenta simular la definición teórica del problema planteado como ejemplo. Como se puede ver en el ejemplo 7,
+la sintaxis definida para los espacios multidimensionales es capaz de describir dominios donde el tamaño de las
+dimensiones esta descrito por otro espacio aleatorio y las restricciones se les aplican secuencialmente a cada
+subelemento de cada elemento de dicho dominio.
+
+Nótese que, en estos últimos ejemplo se evidencia la flexibilidad de la sintaxis para definirle restricciones a un
+nuevo domino. El número de variables de entrada del delegado de restricciones puede crecer según las necesidades
+del usuario; siendo siempre mayor que uno, pues la primera variable siempre hace referencia a un elemento cualquier
+del domino en cuestión. Salvo dicho primer elemento, todas las variables de la función de restricciones a las que
+el usuario no le asigne un dominio externo harán referencia a indices dinámicos que apuntan a cada una de las
+dimensiones del espacio en cuestión de forma ascendente. Por ejemplo, en la definición del parámetro fulano las
+variables x, i, j, y k hacen referencia a un elemento cualquiera dominio de fulano, al indice dinámico de la
+dimensión cero de dicho elemento, al indice dinámico de la dimensión uno de dicho elemento y a un elemento
+cualquiera del dominio de mengano.
+
+El caso de las restricciones de “caja negra” se ejemplifica con el ejemplo número 8. Con esta funcionalidad
+la biblioteca le deja la puerta abierta al usuario para que pueda describir su dominio de forma imperativa.
+Como se puede ver en el ejemplo; solo es necesario decorar una función de Python donde se describa un
+procesamiento sobre los parámetros de entrada, para que el usuario pueda incluir la llamada a esta dentro de
+la lista de restricciones. El DSL incluirá las llamadas a dicha función dentro de su mecanismo generativo.
+Luego de que culmine el computo de la misma, dicho mecanismo utilizará sus resultados para realizar el resto
+de operaciones que fueron descrita en la lista de restricciones. Que la ejecución de estas funciones de
+“caja negra” se realicen antes o después del procesos de inferencia y redefinición de los distintos dominios
+dinámicos en cuestión depende únicamente de los parámetros con los que el usuario llame a dicha función dentro
+de la lista de restricciones. El resultado de esta función se tendrá en cuenta para al redefinición del dominio
+en cuestión siempre que sus parámetros no hagan referencia al dueño de dicho dominio, osea una función de
+"caja negra" no puede modificar el domino de una variable aleatoria de la que depende su resultado. En
+cualquier otro caso, las funciones de “caja negra” y todas sus dependencias se resuelven previo a la
+redefinición del domino en cuestión.
+
+Para terminar con la descripción de la sintaxis del DSL propuesto y siendo consecuente con la comparación realizada
+en el estado del arte, luego de haber expuesto tanto su mecanismo para describir dependencias contextuales como su
+habilidad para expresar espacios de dimensiones dinámicas, véase en el ejemplo numero 10 la sintaxis propuestas para
+expresar descripciones de espacios con restricciones condicionales. El DSL no aporta ninguna estructura de control
+de flujo para describir estas restricciones condicionales, este anima al usuario a plantear dichas restricciones
+haciendo uso de operadores lógicos. Dichos operadores presentan una implementación de corte, osea de si suficiente
+con el resultado del operador de la izquierda para determinar el resultado final de la operación entonces el operador
+de la derecha nunca será computado. El autor considera dicha propuesta como la opción más expresiva analizada; aunque
+lo ideal seria poder incluir estructura de control de flujo al estilo de las compresión de listas  (“list comprehension”)
+de Python, pero la flexibilidad de dicho lenguaje no alcanza ese punto.
+
+Como se ha comentado con anterioridad la propuesta de solución debe plantear dos mecanismos, uno para describir espacios
+de búsquedas y otro para generar muestras de lo previamente descrito. Hasta el momento se ha hecho énfasis en el componente
+descriptivo y a lo largo de toda las explicaciones anteriores se ha hecho referencia a distintos procesos del componente generativo.
+
+Dicho componente, desde sus inicios, se desarrollo con la intención de alejarse lo más posible de las filosofías de
+“prueba y error”. Este, partiendo de la base de un espacio de búsqueda descrito con las herramientas anteriormente
+detalladas, modela todas las descripciones como una jerarquía de clases sobre la cual pueda detectar las distintas
+relaciones entre los distintos espacios, reconocer el orden topológico de dichas descripciones y preparar todas las
+herramientas necesarias para construir las muestras del espacio en cuestión. En el momento que una instancia de la
+clase Domain llaman al método get\_sample el mecanismo generativo, apoyado en la jerarquía antes descrita, comienza
+a construir la nueva muestra en orden topológico y con la misma filosofía de las descripciones “de abajo hacia arriba”.
+
+Como se explicó anteriormente todo el procesos generativo esta sustentado por la generación de variables aleatorias básicas
+con una cierta distribución. Por esta razón, los procesos realmente aleatorios dentro de la creación de muestras es la
+selección de opciones, como es el casos de los tipos básicos string y bool, y la generación numérica, para los int y los
+float. El resto del mecanismo consiste en crear las instancias de los tipos adecuados con los parámetros correctos. Para que
+la generación sea un proceso lineal el componente generativo trasmite cada una de las restricciones descritas en los niveles
+superiores hacia los niveles inferiores donde se encuentran los tipos básicos antes mencionados. Con la interpretación de
+estas restricciones la biblioteca le puede asignar a cada uno de los tipos básicos el domino más amplio que cumpla con todas
+las condiciones para que el resultado del procesos aleatorio sea consecuente y efectivo.
+
+La coherencia y consistencia de las muestras con sus respectivas descripciones es uno de los temas más importantes de los que
+se debe encargar el componente generativo, sobre todo con la presencia de dependencias contextuales o restricciones de
+“caja negra”. Con respecto al primer caso, como se a mencionado en diversas ocasiones, la generación de muestras se realiza
+de forma constructiva en orden topológico; por lo que al momento de generar muestras de un subcomponente especifico ya se ha
+generado las muestras de las que depende dichos subcomponentes. Del razonamiento anterior se deriva que al momento de generar
+un valor aleatorio para cualquiera de los tipos básicos dentro del su dominio dinámicamente inferido ya se encuentran resueltas
+las restricciones contextuales.
+
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \KwData{this text}
+    \KwResult{how to write algorithm with \LaTeX2e }
+    initialization\;
+    \While{not at end of this document}{
+        read current\;
+        \eIf{understand}{
+            go to next section\;
+            current section becomes this one\;
+        }{
+            go back to the beginning of current section\;
+        } }
+    \caption{How to write algorithms}
+\end{algorithm}
+
+
+
+% \begin{longtable}{|p{2.8cm}|p{0.6cm}|p{1.6cm}|p{2.2cm}|P{0.8cm}|p{2.6cm}|p{2.5cm}|}
+%     \caption{My data}
+%     \label{tab:table3}                                                                                                           \\
+%     \textbf{Name} & \textbf{Year} & \textbf{ID} & \textbf{Address} & \textbf{Salary} & \textbf{Skills} & \textbf{Qualifications} \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+%     Some text     & some text     & some text   & 5                & some text       & Som text        &                         \\
+%     \hline
+% \end{longtable}
+
+
+% \begin{center}
+% \begin{longtable}{|l|l|l|}
+%     \caption[Feasible triples for a highly variable Grid]{Feasible triples for
+%     highly variable Grid, MLMMH.} \label{grid_mlmmh}                                                                                                    \\
+
+%     \hline \multicolumn{1}{|c|}{\textbf{Time (s)}} & \multicolumn{1}{c|}{\textbf{Triple chosen}} & \multicolumn{1}{c|}{\textbf{Other feasible triples}} \\ \hline
+%     \endfirsthead
+
+%     \multicolumn{3}{c}%
+%     {{\bfseries \tablename\ \thetable{} -- continued from previous page}}                                                                               \\
+%     \hline \multicolumn{1}{|c|}{\textbf{Time (s)}} &
+%     \multicolumn{1}{c|}{\textbf{Triple chosen}}    &
+%     \multicolumn{1}{c|}{\textbf{Other feasible triples}}                                                                                                \\ \hline
+%     \endhead
+
+%     \hline \multicolumn{3}{|r|}{{Continued on next page}}                                                                                               \\ \hline
+%     \endfoot
+
+%     \hline \hline
+%     \endlastfoot
+
+%     0                                              & (1, 11, 13725)                              & (1, 12, 10980), (1, 13, 8235), (2, 2, 0), (3, 1, 0)  \\
+%     2745                                           & (1, 12, 10980)                              & (1, 13, 8235), (2, 2, 0), (2, 3, 0), (3, 1, 0)       \\
+%     5490                                           & (1, 12, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     8235                                           & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     10980                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     13725                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     16470                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     19215                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     21960                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     24705                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     27450                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     30195                                          & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     32940                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     35685                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     38430                                          & (1, 13, 10980)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     41175                                          & (1, 12, 13725)                              & (1, 13, 10980), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     43920                                          & (1, 13, 10980)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     46665                                          & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     49410                                          & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     52155                                          & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     54900                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     57645                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     60390                                          & (1, 12, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     63135                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     65880                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     68625                                          & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     71370                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     74115                                          & (1, 12, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     76860                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     79605                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     82350                                          & (1, 12, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     85095                                          & (1, 12, 13725)                              & (1, 13, 10980), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     87840                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     90585                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     93330                                          & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     96075                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     98820                                          & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     101565                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     104310                                         & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     107055                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     109800                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     112545                                         & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     115290                                         & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     118035                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     120780                                         & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     123525                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     126270                                         & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     129015                                         & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     131760                                         & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     134505                                         & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     137250                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     139995                                         & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     142740                                         & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     145485                                         & (1, 12, 16470)                              & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0)   \\
+%     148230                                         & (2, 2, 2745)                                & (2, 3, 0), (3, 1, 0)                                 \\
+%     150975                                         & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     153720                                         & (1, 12, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     156465                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     159210                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     161955                                         & (1, 13, 16470)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+%     164700                                         & (1, 13, 13725)                              & (2, 2, 2745), (2, 3, 0), (3, 1, 0)                   \\
+% \end{longtable}
+% \end{center
+
+
+
+% \begin{landscape}
+%     \begin{table}[h]
+%         \centering
+%         \begin{tabular}{cccccc}
+%             \toprule
+%             \multicolumn{1}{c}{} & \multicolumn{3}{c}{\textbf{Topic 2}} & \multicolumn{2}{c}{\textbf{Topic 3}}                   \\
+%             \cmidrule(rl){2-4} \cmidrule(rl){5-6}
+%             \textbf{Topic 1}     & {A}                                  & {B}                                  & {C} & {D} & {E} \\
+%             \midrule
+%             \rowcolor{lavender}
+%             row1                 & A.1                                  & B.1                                  & C.1 & D.1 & E.1 \\
+%             row2                 & A.2                                  & B.2                                  & C.2 & D.2 & E.2 \\
+%             \rowcolor{lavender}
+%             row3                 & A.3                                  & B.3                                  & C.3 & D.3 & E.3 \\
+%             row4                 & A.4                                  & B.4                                  & C.4 & D.4 & E.4 \\
+%             \rowcolor{lavender}
+%             row5                 & A.5                                  & B.5                                  & C.5 & D.5 & E.5 \\
+%             \bottomrule
+%         \end{tabular}
+%     \end{table}
+% \end{landscape}
+
+
+% \begin{minted}{python}
+%     \caption{Example of a listing.}
+%     \label{lst:example}
+
+%     def boring(args = None):
+%     pass
+% \end{minted}
+
+

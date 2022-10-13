@@ -11,11 +11,19 @@
 \setlength{\marginparwidth}{2cm}
 \usepackage{todonotes}
 \usepackage{listings}
-\usepackage{xcolor}
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{algorithm2e}
 \usepackage{longtable}
+\usepackage{lscape}
+\usepackage{xcolor,colortbl}
+\usepackage{rotating}
+\usepackage{minted}
+\lstset{language=Python}
+\usepackage{pifont}
+\usepackage{changepage}
+\inputminted{tex}{Proposal.tex} 
+
 \floatstyle{plaintop}
 \restylefloat{table}
 \usepackage{biblatex}
@@ -102,4 +110,6 @@
 \include{BackMatter/Recomendations}
 \include{BackMatter/Bibliography}
 
+\renewcommand\listoflistingscaption{List of source codes}
+\listoflistings
 \end{document}

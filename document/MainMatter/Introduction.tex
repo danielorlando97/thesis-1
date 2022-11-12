@@ -31,12 +31,12 @@ implementaciones propias. Estas características describen y definen a
     {\bf AutoGOAL} se autodefine en su documentación oficial[4] como:
 
 \begin{verbatim}
-    " ...Una biblioteca de Python para encontrar automáticamente la me-
+    `` ...Una biblioteca de Python para encontrar automáticamente la me-
     jor manera de resolver una tarea determinada.... 
     Técnicamente hablando, AutoGOAL es un marco para la síntesis de pro-
     gramas, es decir, encontrar el mejor programa para resolver un pro-
     blema dado, siempre que el usuario pueda describir el espacio de to-
-    dos los programas posibles"
+    dos los programas posibles''
 \end{verbatim}
 
 
@@ -52,36 +52,36 @@ del contexto que describe el lenguaje de todos los potenciales programas validos
 que se pueden construir combinando los algoritmos aportados. Al momento de inferir
 la gramática se analizan los tipos de entrada y salida de todos los algoritmos y se
 excluyen los programas donde se intente secuenciar dos implementaciones tales que
-la salida de una no sea consistente con la entrada de la siguiente. De esta
+la salida de uno no sea consistente con la entrada del siguiente. De esta
 manera se logra descarta una gran cantidad de secuencias invalidas, incluso
 antes de empezar a buscar, pero como se puede ver en los resultados de [1]
 todavía quedan algunas {\it instancias invalidas}.
 
 En muchos casos las {\it instancias invalidas} son consecuencias de los
 parámetros iniciales de la búsqueda, como el tiempo de espera o la capacidad de memoria.
-En estos casos durante la ejecución de la instancia en cuestión se superan los límites
-prefijados y automáticamente es descartada como posible solución. Como para la
+En estos casos, durante la ejecución de la instancia en cuestión se superan los límites
+prefijados y es automaticamente descartada como posible solución. Como para la
 biblioteca un algoritmo es una función de la cual solo conoce sus tipos de entrada y
-salida, prever el fallo de las instancias antes descritas previo a su ejecución,
+tipo de salida, prever el fallo de las instancias antes descritas previo a su ejecución,
 es equivalente al {\it Halting Problem}, problema que {\it Alan Turing} demostró en 1936
 que es indecidible en una máquinas de Turing [3].
 
 Sin embargo existe otro conjunto de {\it instancias invalidas} relacionadas a la validez
 y consistencia de los hiperparámtros iniciales. A lo largo del proceso de búsqueda
-se exploran las "posibles soluciones" a partir de las distintas instancias generadas
+se exploran las ``posibles soluciones'' a partir de las distintas instancias generadas
 por la gramática que se infirió de las definiciones del usuario. Como la misma
 es libre del contexto los valores que se generan para cada símbolo terminal de la misma
 son independientes entre si, pero, existen modelos en los que por definición o por
 experiencia práctica se presenta una cierta dependencia entre los valores de sus
 hiperparámetros.
 
-Para describir dicho modelo en el contexto de {\bf AutoGOAL} se presentan dos opciones;
-se puede definir el modelo tal cual, asignar a cada hiperparámetro la descripción
-más extensa de su dominio y en el interior del algoritmo controlar que los mismos
-cumplan con dichas reglas contextuales y en casos contrario lanzar un excepción en
-tiempo de ejecución. O por el contrario, teniendo en cuanta dichas dependencias,
-que el usuario defina un algoritmo por cada combinación de subdominios compatibles
-de los hiperparámetros.
+Para describir dicho modelo en el contexto de {\bf AutoGOAL} se presentan dos opciones.
+La primera sería definir el modelo de la forma mas simple posible, asignando a cada
+hiperparámetro la descripción más extensa de su dominio y en el interior del algoritmo
+controlar que los mismos cumplan con dichas reglas contextuales y en casos contrario
+lanzar un excepción en tiempo de ejecución. Por otro lado, la segunda opción sería, teniendo
+en cuanta dichas dependencias, que el usuario defina un algoritmo por cada combinación de
+subdominios compatibles de los hiperparámetros.
 
 En la práctica, debido a las limitaciones de la biblioteca para describir dichas
 dependencias contextuales, los desarrolladores prefieren incluir dichas {\it instancias
@@ -100,21 +100,20 @@ específico del procesos generativo en cuestión.
 En respuesta a este nuevo problema el presente documento plantea el desarrollo de una
 nueva biblioteca que cuente con todas las arquitecturas y herramientas necesarias para
 crear un {\bf DSL} capaz de describir los distintos espacios de búsquedas bajo una
-filosofía "{\it de abajo hacia arriba}" ({\it Bottom-Up}), mediante el cual apoyado
-en la definición de algunos tipos básicos el usuario pueda ser capaz de componer la
+filosofía ``{\it de abajo hacia arriba}'' ({\it Bottom-Up}), mediante el cual apoyado
+en la definición de algunos tipos básicos el usuario pueda ser capaz de describir la
 estructura interna de su espacio de interés. Dicha herramienta cuenta además con una
-sintaxis, inspirado en el paradigma funcional, para declararles restricciones y
-relaciones a cada uno de los distintos subespacios, declaraciones que dan lugar a la
+sintaxis, inspirada en el paradigma funcional, para declarar restricciones y
+relaciones en cada uno de los distintos subespacios. Estas declaraciones dan lugar a la
 definición de varios {\bf AST's} ({\it Astract Syntaxis Trees, Árboles de Sintaxis
-        Abstracta}) los cuales son visitados al momento del muestreo, para acotar los distintos
+        Abstracta}) los cuales son visitados al momento del muestreo para acotar los distintos
 subdominos y validar cada uno de las selecciones internas.
 
 Toda esta investigación y desarrollo se realizó con el objetivo de crear una
 herramienta con la que se pueda describir detalladamente, en un lenguaje de alto nivel,
-los distintos espacios de búsqueda. Descripciones que debían ser,
-por las características de la biblioteca, escalables, mantenibles, expresivas,
-independientes de los procesos y algoritmos de generación de muestras, pero a
-su vez capaz de transmitirle a estos los distintos dominios dinámicos para
+los distintos espacios de búsqueda. Descripciones que debían ser escalables, mantenibles,
+expresivas, independientes de los procesos y algoritmos de generación de muestras, pero a
+su vez capaz de transmitirle a dichos algoritmos los distintos dominios dinámicos para
 cada contextos en cuestión.
 
 Luego en un plano más general se esperaba darle respuesta a las limitaciones
@@ -126,6 +125,6 @@ posible.
 
 El documento esta organizado en tres capítulos. Un primer capítulo donde se analiza
 el marco teórico en que se realizaron las implementaciones y los trabajos realizados
-en el sector hasta la fecha. Otro donde se detalla la propuesta de soluciones, sus
-objetivos, alcance e implementación. Y por último un capítulo donde apoyado en ejemplos
-se evidenciara la efectividad y expresividad de la propuesta.
+en el sector hasta la fecha. Un segundo capítulo donde se detalla la propuesta de soluciones, sus
+objetivos, alcance e implementación. Y un último un capítulo donde apoyado en ejemplos
+se mide la efectividad y expresividad de la propuesta.

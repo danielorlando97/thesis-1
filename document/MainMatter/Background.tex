@@ -5,8 +5,8 @@ El espacio de búsqueda es una de las componentes principales de los sistemas
 de {\it AutoML}, independientemente de la naturaleza de los mismo. La gran mayoría
 de las herramientas de sector cuentan con una espacio de búsqueda muy específico,
 normalmente determinado por el tipo de problema al que dan solución o a las
-herramientas de {\it ML} subyacentes. En dichos casos, se llama "{\it descripción
-del espacio de búsqueda}" a la delimitación de los hyperparámetros de los
+herramientas de {\it ML} subyacentes. En dichos casos, se llama ``{\it descripción
+del espacio de búsqueda}'' a la delimitación de los hyperparámetros de los
 distintos modelos que se incluyen en dicha definición previa
 
 Como se muestra en las investigaciones previas realizadas por [5] casi ninguna
@@ -36,7 +36,7 @@ de programación de uso general, sino que las distintas herramientas de optimiza
 {\it ML} o {\it AutoML}, suelen implementar un {\bf DSL's} o {\it frameworks} en los
 que las descripciones se pueda acercar un poco más al lenguaje natural.
 
-\subsection{DSL (Lenguaje de Dominio Específico, Domain Specific Language)}
+\subsection{DSL (Lenguaje de Dominio Específico, Domain\newline Specific Language)}
 
 Según [6] un lenguaje de dominio específico es un lenguaje especializado que sirve
 para elevar el nivel de abstracción del software y facilitar el desarrollo del mismo.
@@ -61,7 +61,7 @@ Debido al hecho de que estas herramientas, como se señaló anteriormente, repre
 pequeño engranaje en sistemas mucho más grandes, entonces generalmente las dos fases
 antes descritas suelen tener lugar en algún momento de la ejecución del sistema como un
 todo. Por tanto depende en gran medida de las características del sistema general, el
-que se pueda pensar en estos '{\it componentes descriptivos}' como una herramienta de dos
+que se pueda pensar en estos ``{\it componentes descriptivos}'' como una herramienta de dos
 fases o en un único componente
 
 Precisamente los sistemas que son objeto de estudio de esta tesis presentan las
@@ -82,23 +82,23 @@ estos {\bf DSLs} como {\it tiempo de compilación del DSL} y
 Definimos el {\it tiempo de compilación de un DSL} como todas las operaciones puntuales que se
 realizan para orquestar la infraestructura que dará soporte a la ejecución del objetivo
 final del mismo. Dicha infraestructura debería permanecer inmutable en su mayoría
-durante todos los procesos posteriores a la "{\it compilación}" del {\bf DSL}.
+durante todos los procesos posteriores a la ``{\it compilación}'' del {\bf DSL}.
 
 \subsection{Tiempo de ejecución del DSL}
 
 
 Definimos el {\it tiempo de ejecución del DSL} como todas las operaciones que realiza
-la herramienta, posteriores a la "compilación" del mismo, para lograr su objetivo básico y
+la herramienta, posteriores a la ``compilación'' del mismo, para lograr su objetivo básico y
 principal.
 
 Véase por ejemplo el proceso de ejecución del módulo {\it Grammar} de {\bf AutoGOAL}, el cual es
 la componente descriptiva del sistema. En un primer momento se analizan todas las descripciones
 aportadas para inferir una gramática libre del contexto que describa el espacio de todos los
-programas factibles, proceso que se pudiera interpretar como la "{\it compilación del sistema}". Y
+programas factibles, proceso que se pudiera interpretar como la ``{\it compilación del sistema}''. Y
 posteriormente, de forma iterativa, se generan nuevas instancias de dicha gramática para ser
 evaluadas y realizar otras operaciones ajenas al componente descriptivo. Si se interpreta que
 el objetivo final del módulo {\it Gramar} es la generación de soluciones factibles, entonces se
-podrían decir que una vez que inicia una ejecución de {\bf AutoGOAL}, luego de la "{\it compilación}"
+podrían decir que una vez que inicia una ejecución de {\bf AutoGOAL}, luego de la ``{\it compilación}''
 de sus descripciones, su {\bf DSL} se ejecuta múltiples veces hasta que el sistema encuentra una
 respuesta al problema planteado.
 
@@ -121,9 +121,9 @@ tipados.
 
 Una de las características que hacen a este lenguaje tan flexible e ideal para la metaprogramción,
 es la filosofía bajo la que describe todos los procesos y transiciones de sus objetos. El
-interprete del lenguaje define una lista de "{\it métodos mágicos}", uno por cada operación básica
+interprete del lenguaje define una lista de ``{\it métodos mágicos}'', uno por cada operación básica
 de software, los cuales cuanta con sus propias implementaciones básicas, pero que pueden ser
-redefinidos en todo momento. Como señala [14], los "{\it métodos mágicos}" son los que comienzan y
+redefinidos en todo momento. Como señala [14], los ``{\it métodos mágicos}'' son los que comienzan y
 terminan con el doble guión bajo, entre los que se pueden citar por ejemplo;
 {\it \_\_and\_\_}, {\it \_\_sub\_\_}, {\it \_\_div\_\_}, {\it \_\_mul\_\_} y otra larga lista de funciones que hacen referencia
 a las operaciones aritméticas y de comparación, {\it\_\_call\_\_} método que describe el comportamiento
@@ -152,15 +152,15 @@ encima de una definición, ya sea de función o de clase, se puede transformar e
 apunta el nombre de la definición que cualquier otra instancia. Esto permite por ejemplo
 simplificar la sintaxis para declarar una jerarquía de clases simple, donde la clase que hereda
 únicamente le interesa sobreescribir un método en particular, pues bastaría con decorar la
-una función "x" para que cuando se le intente ejecutar se cree la instancia clases "y"
-que tiene un método "z" que llama a la función "x"
+una función ``x'' para que cuando se le intente ejecutar se cree la instancia clases ``Y''
+que tiene un método ``z'' que llama a la función ``x''
 
 La más alta expresión de esta filosofía, donde toda definición es la instancia de un objeto,
 son las metaclases. Una metaclase es el clase que describe la naturaleza de las instancias
 resultantes de la declaración de nuevas clases. El lenguaje define la metaclases básica
 {\bf type} y brinda las herramientas necesarias para crear nuevas y personalizar la asignación
 de su respectiva metaclases para cada clase que el usuario define. El procesos de instanciación
-de una nueva clase definida por el usuarios pasa por un pipeline de 3 "{\it métodos mágicos}" que
+de una nueva clase definida por el usuarios pasa por un pipeline de 3 ``{\it métodos mágicos}'' que
 tiene origen en el método \_\_call\_\_ de la instancia de su metaclase. Esto es otra gran
 característica para la flexibilización de la semántica pues por ejemplo, bajo el nombre de una
 misma clase, en el momento de crear una nueva instancia, se podrían crear la instancia adecuada
@@ -236,7 +236,7 @@ describir el estado y las propiedades de los trabajos realizados en el área has
 momento:
 
 \begin{itemize}
-    \item {\bf Estilo de la Sintaxis Concreta}: Esta puede ser imperativa o funcional
+    \item {\bf Estilo de la Sintaxis}: Esta puede ser imperativa o funcional
     \item {\bf Objetivo del Sistema Subyacente}: En el caso particular del campo de interés de esta
           investigación la mayoría de las herramientas se encuentra relacionadas con el {\it ML} o
               {\it AutoML}, pero dentro de ambos campos existen múltiples subdominios y razones por las que
@@ -254,7 +254,7 @@ momento:
           las herramientas que soportan las descripciones de los distintos espacios de búsqueda con
           los mecanismos para generar las muestras de dichas descripciones. Un diseño ideal
           es aquel que permita para una misma definición probar varias formas de generar muestras.
-    \item {\bf Características que Conduce el Diseño}: Detrás de las descripciones de los espacios de
+    \item {\bf Características que Inspira el Diseño}: Detrás de las descripciones de los espacios de
           búsqueda existe mucho carga teórica de diversas esferas no solo la computación y el {\it ML},
           sino que también juegan un papel importante la estadística, las probabilidades y otros muchos
           campos de las matemáticas. Para la definición de los distintos {\bf DSL's} los autores se inspiraron
@@ -279,342 +279,216 @@ momento:
 \newcommand*\OK{\ding{51}}
 
 
-
-\begin{table}[h]
-    \begin{adjustwidth}{-3cm}{-1cm}
-        \centering
-        \begin{tabular}{cccccccccc}
-            \toprule
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                           &
-            \multicolumn{1}{c}{}                                                             \\
-            
-            \textbf{Bibliotéca}                                                            &
-            \textbf{\tabular{@{}l@{}l@{}}Estilo de                                           \\la Sintaxis\\Concreta\endtabular} &
-            % \textbf{\tabular{@{}l@{}}Objetivo del\\ Sistema Subyacente\endtabular} &
-
-            % \rot{\textbf{Activo Objetivo}}                                                            &
-
-            \textbf{\tabular{@{}l@{}l@{}}Integración con                                     \\el Lenguaje\\Subyacente\endtabular} &
-
-            % \begin{turn}{90}
-            %     {\textbf{\tabular{@{}l@{}l@{}}Desacoplamientos \\ Descripción - \\Generación\endtabular}}
-            % \end{turn} &
-
-            \textbf{\tabular{@{}l@{}l@{}}Características                                     \\que Conduce\\el Diseño\endtabular} &
-            \begin{turn}{90}
-                {\textbf{\tabular{@{}l@{}}Dependencias             \\Contextuales\endtabular}}
-            \end{turn} &
-            \begin{turn}{90}
-
-                {\textbf{\tabular{@{}l@{}}Dimensiones              \\Aleatorias\endtabular} }
-            \end{turn}  &
-            \begin{turn}{90}
-
-                {\textbf{\tabular{@{}l@{}}Restricciones            \\Condicionales\endtabular}}
-            \end{turn}   \\
-
-
-            \midrule
-            \rowcolor{lavender}
-            AutoGOAL                                                                       &
-            Funcional                                                                      &
-            \tabular{@{}l@{}l@{}l@{}}
-            Hace uso de descripción                                                          \\
-            de tipos de los paráme-                                                          \\
-            tros y resultados de las                                                         \\
-            funciones de cada clase\endtabular                                             &
-
-            \tabular{@{}l@{}l@{}l@{}l@{}}
-            Orientado por tipos que                                                          \\
-            hacen referencia a la                                                            \\
-            función de la variables                                                          \\
-            dentro del problema del                                                          \\
-            AutoML\endtabular                                                              &
-
-                                                                                           &
-                                                                                           &
-            \\
-
-            HyperOpt                                                                       &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-                                                                                           &
-                                                                                           &
-            \\
-            \rowcolor{lavender}
-            \tabular{@{}l@{}}Ray AI                                                          \\ Runtime (AIR)\endtabular                                                                                  &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                              \\
-
-            Chocolate                                                                      &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                              \\
-
-
-            \rowcolor{lavender}
-            Optuna                                                                         &
-            Imperativo                                                                     &
-            E.1                                                                            &
-            E.1                                                                            &
-            \OK                                                                            &
-            \OK                                                                            &
-            \OK                                                                              \\
-
-            AutoGloun                                                                      &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                              \\
-
-            \rowcolor{lavender}
-
-            AutoSklearn                                                                    &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                              \\
-
-
-            TPOT                                                                           &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                            &
-            E.1                                                                              \\
-            \rowcolor{lavender}
-            \tabular{@{}l@{}}Propuesta                                                       \\ de Solución\endtabular                                    &
-            Funcional                                                                      &
-            E.1                                                                            &
-            E.1                                                                            &
-            \OK                                                                            &
-            \OK                                                                            &
-            \OK                                                                              \\
-
-
-
-
-            % row3                 & A.3                                     & B.3                                      & C.3 & D.3 & E.3 \\
-            % row4                 & A.4                                     & B.4                                      & C.4 & D.4 & E.4 \\
-            % \rowcolor{lavender}
-            % row5                 & A.5                                     & B.5                                      & C.5 & D.5 & E.5 \\
-            \bottomrule
-        \end{tabular}
-    \end{adjustwidth}
-\end{table}
-
-=
-
-
-
-% \begin{table}[h]
-%     \begin{adjustwidth}{-3cm}{-1cm}
-%         \centering
-%         \begin{tabular}{cccccccccc}
-%             \toprule
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                      &
-%             \multicolumn{1}{c}{}                                                                        \\
-
-%             \rot{\textbf{Bibliotéca}}                                                                 &
-
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Estilo de la\\ Sintaxis Concreta\endtabular}}
-%             \end{turn}                   &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Objetivo del\\ Sistema Subyacente\endtabular}}
-%             \end{turn}                  &
-
-%             \rot{\textbf{Activo Objetivo}}                                                            &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Integración con el\\ Lenguaje Subyacente\endtabular}}
-%             \end{turn}           &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}l@{}}Desacoplamientos \\ Descripción - \\Generación\endtabular}}
-%             \end{turn} &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Características que \\ Conduce el Diseño\endtabular}}
-%             \end{turn}           &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Dependencias  \\ Contextuales\endtabular}}
-%             \end{turn}                      &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Dimensiones  \\ Aleatorias\endtabular}}
-%             \end{turn}                         &
-
-%             \begin{turn}{90}
-%                 {\textbf{\tabular{@{}l@{}}Restricciones  \\ Condicionales\endtabular}}
-%             \end{turn}                       \\
-
-
-%             \midrule
-%             \rowcolor{lavender}
-%             AutoGOAL                                                                                  &
-%             Funcional                                                                                 &
-%             AutoML                                                                                    &
-%             C.1                                                                                       &
-%             \tabular{@{}l@{}l@{}l@{}} Hace uso de descripción                                           \\de tipos de los parámetros y \\resultados de las funciones \\de cada clase \endtabular                               &
-
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-%             HyperOpt                                                                                  &
-%             Funcional                                                                                 &
-%             \tabular{@{}l@{}} Optimización                                                              \\Paramétrica\endtabular                               &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-%             \rowcolor{lavender}
-%             \tabular{@{}l@{}}Ray AI                                                                     \\ Runtime (AIR)\endtabular                                                                                  &
-%             Funcional                                                                                 &
-%             \tabular{@{}l@{}} Optimización                                                              \\Paramétrica\endtabular                               &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-%             Chocolate                                                                                 &
-%             Funcional                                                                                 &
-%             \tabular{@{}l@{}} Optimización                                                              \\Paramétrica\endtabular                               &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-
-%             \rowcolor{lavender}
-%             Optuna                                                                                    &
-%             Imperativo                                                                                &
-%             \tabular{@{}l@{}} Optimización                                                              \\Paramétrica\endtabular       &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-%             AutoGloun                                                                                 &
-%             Funcional                                                                                 &
-%             AutoML                                                                                    &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-%             \rowcolor{lavender}
-
-%             AutoSklearn                                                                               &
-%             Funcional                                                                                 &
-%             AutoML                                                                                    &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-
-%             TPOT                                                                                      &
-%             Funcional                                                                                 &
-%             AutoML                                                                                    &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-%             \rowcolor{lavender}
-%             \tabular{@{}l@{}}Propuesta                                                                  \\ de Solución\endtabular                                    &
-%             Funcional                                                                                 &
-%             \tabular{@{}l@{}l@{}l@{}l@{}}Descripción                                                    \\ de Espacios \\ de Búsqueda\\ y Generación \\ de Muestras\endtabular                                                                                   &
-%             C.1                                                                                       &
-%             D.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                       &
-%             E.1                                                                                         \\
-
-
-
-
-%             % row3                 & A.3                                     & B.3                                      & C.3 & D.3 & E.3 \\
-%             % row4                 & A.4                                     & B.4                                      & C.4 & D.4 & E.4 \\
-%             % \rowcolor{lavender}
-%             % row5                 & A.5                                     & B.5                                      & C.5 & D.5 & E.5 \\
-%             \bottomrule
-%         \end{tabular}
-%     \end{adjustwidth}
-% \end{table}
-
-
-
-
-
-
-
-
-
-Analizando el estado del arte mediante la comparación antes expuesta se
-resaltar varias puntos. La mayoría de las herramientas de la actualidad
-no resuelven ninguno de los problemas a los que el presente trabajo intenta
-dar respuesta. Todas las herramientas estudiadas interpretan que el mecanismo
-generativo es un elemento integrado de forma natural en las descripciones de
-los espacios de búsqueda, idea que el autor considera que no es el mejor
+\setlength\LTleft{-3.55cm}
+\setlength\LTright{-5cm}
+\begin{longtable}{  p{2.15cm}  p{2.4cm}  p{4.75cm}  p{4.65cm}  p{5.45cm} }
+    \caption{Comparación De Sintaxis}\label{chap2:tab1}                                                                                                                                                                                                                                                                            \\
+    \endfirsthead
+    \multicolumn{5}{c}{\tablename\ \thetable\ -- \textit{Continued from previous page}}                                                                                                                                                                                                                                            \\
+    \hline
+    \endhead
+    \hline
+    \multicolumn{5}{r}{\tablename\ \thetable\ -- \textit{Continued on next page}}                                                                                                                                                                                                                                                  \\
+    \endfoot
+    \hline
+    \endlastfoot
+
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    \textbf{Bibliografia}                                                                                                                                                                                                                                                                                                        &
+    \textbf{Estilo de la Sintaxis}                                                                                                                                                                                                                                                                                               &
+    \textbf{Integración con el Lenguaje Subyacente}                                                                                                                                                                                                                                                                              &
+    \textbf{Características que Inspira el Diseño}                                                                                                                                                                                                                                                                               &
+    \textbf{Capacidad de Generación y Definición}                                                                                                                                                                                                                                                                                  \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+
+    % --------------------------------------------------------------------------------------------------------------
+    AutoGOAL                                                                                                                                                                                                                                                                                                                     &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de descripción de tipos de los parámetros y resultados de las funciones de cada clase                                                                                                                                                                                                                               &
+    Orientado por tipos que hacen referencia a la función de la variables dentro del problema del AutoML                                                                                                                                                                                                                         &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    HyperOpt                                                                                                                                                                                                                                                                                                                     &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de los diccionarios y funciones del lenguaje                                                                                                                                                                                                                                                                        &
+    Orientado por las distintas distribuciones con las que se generan las muestras de las distintas variables aleatorias                                                                                                                                                                                                         &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+
+    % --------------------------------------------------------------------------------------------------------------
+    RayAI Runtime (AIR)                                                                                                                                                                                                                                                                                                          &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de los diccionarios y funciones del lenguaje                                                                                                                                                                                                                                                                        &
+    Orientado por las distintas distribuciones con las que se generan las muestras de las distintas variables aleatorias                                                                                                                                                                                                         &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    Chocolate                                                                                                                                                                                                                                                                                                                    &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de los diccionarios y funciones del lenguaje                                                                                                                                                                                                                                                                        &
+    Orientado por las distintas distribuciones con las que se generan las muestras de las distintas variables aleatorias                                                                                                                                                                                                         &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    Optuna                                                                                                                                                                                                                                                                                                                       &
+    Imperativo                                                                                                                                                                                                                                                                                                                   &
+    Basado en la inversión de dependencia inyecta el motor de generación a la función objetivo para que imperativamente genera las muestras necesarias                                                                                                                                                                           &
+    Orientado por las distintas distribuciones con las que se generan las muestras de las distintas variables aleatorias                                                                                                                                                                                                         &
+    \OK Dependencias Contextuales \OK Dimensiones Aleatorias \OK Restricciones Condicionales                                                                                                                                                                                                                                       \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    AutoGloun                                                                                                                                                                                                                                                                                                                    &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de los diccionarios del lenguaje, junto a una lista de clases implementadas en el mismo                                                                                                                                                                                                                             &
+    Orientado por tipos que hacen referencia a la función de la variable en cuestión dentro del problema del AutoML                                                                                                                                                                                                              &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    AutoSklearn                                                                                                                                                                                                                                                                                                                  &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de los métodos estáticos del lenguaje, para instanciar cada una de las clases que describirá el espacio de los parámetros iniciales. Para enlazar dichas clases con su posición entre los parámetros del constructor usa los metadatos de la función para realizar la asignación según los nombres de las variables &
+    Orientado por tipos que hacen referencia a la su mecanismo generativo                                                                                                                                                                                                                                                        &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    TPOT                                                                                                                                                                                                                                                                                                                         &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de descripción de la sintaxis de los diccionarios del lenguaje para describir su espacio                                                                                                                                                                                                                            &
+    Orientado por los nombres de los algoritmos que forman parte del procesos de selección de modelos y los tipos de sus hiperparámetro                                                                                                                                                                                          &
+    \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    Propuesta de Solución                                                                                                                                                                                                                                                                                                        &
+    Funcional                                                                                                                                                                                                                                                                                                                    &
+    Hace uso de descripción de tipos de los parámetros, en las que apoyado en una clase principal con la redefinición de alguno de sus operadores permite la descripción de restricciones mediante la sintaxis de funciones lambdas del lenguaje                                                                                 &
+    Orientado por tipos originales de las muestras que se generarán                                                                                                                                                                                                                                                              &
+    \OK Dependencias Contextuales \OK Dimensiones Aleatorias \OK Restricciones Condicionales                                                                                                                                                                                                                                       \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+\end{longtable}
+
+\newpage
+
+\setlength\LTleft{-3.55cm}
+\setlength\LTright{-5cm}
+\begin{longtable}{  p{2.5cm}  p{4cm}  p{6.8cm}  p{6.5cm} }
+    \caption{Comparación Técnica}\label{chap2:tab2}                                                                                                                                                                                                                                                                                                                 \\
+    \endfirsthead
+    \multicolumn{4}{c}{\tablename\ \thetable\ -- \textit{Continued from previous page}}                                                                                                                                                                                                                                                                             \\
+    \hline
+    \endhead
+    \hline
+    \multicolumn{4}{r}{\tablename\ \thetable\ -- \textit{Continued on next page}}                                                                                                                                                                                                                                                                                   \\
+    \endfoot
+    \hline
+    \endlastfoot
+
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    \textbf{Bibliografia}                                                                                                                                                                                                                                                                                                                                         &
+    \textbf{Objetivo del Sistema Subyacente}                                                                                                                                                                                                                                                                                                                      &
+    \textbf{Activo Objetivo}                                                                                                                                                                                                                                                                                                                                      &
+    \textbf{Desacoplamientos Descripción - Generación}                                                                                                                                                                                                                                                                                                              \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+
+    % --------------------------------------------------------------------------------------------------------------
+    AutoGOAL                                                                                                                                                                                                                                                                                                                                                      &
+    AutoML, Selección de Modelos, Optimización paramétrica                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Gramática Libre del Contexto. \newline- En tiempo de ejecución: Instancia de la clase Pipeline                                                                                                                                                                                                                                    &
+    Cada uno de los tipos básicos tiene su propia definición de su mecanismo generativo                                                                                                                                                                                                                                                                             \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    HyperOpt                                                                                                                                                                                                                                                                                                                                                      &
+    Biblioteca de optimización paramétrica                                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Diccionario que iguala el nombre del parámetro en cuestión a su función generadora \newline- En tiempo de ejecución: Copia de dicho diccionario con las muestras generadas                                                                                                                                                        &
+    Asigna explícitamente las funciones generadoras a cada una se las variables                                                                                                                                                                                                                                                                                     \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    RayAI Runtime (AIR)                                                                                                                                                                                                                                                                                                                                           &
+    Marco unificado para escalar aplicaciones de IA y Python                                                                                                                                                                                                                                                                                                      &
+    - En tiempo de compilación: Diccionario que iguala el nombre del parámetro en cuestión a su función generadora \newline- En tiempo de ejecución: Copia de dicho diccionario con las muestras generadas                                                                                                                                                        &
+    Asigna explícitamente las funciones generadoras a cada una se las variables                                                                                                                                                                                                                                                                                     \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    Chocolate                                                                                                                                                                                                                                                                                                                                                     &
+    Biblioteca de optimización paramétrica                                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Diccionario que iguala el nombre del parámetro en cuestión a su función generadora \newline- En tiempo de ejecución: Copia de dicho diccionario con las muestras generadas                                                                                                                                                        &
+    Asigna explícitamente las funciones generadoras a cada una se las variables                                                                                                                                                                                                                                                                                     \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    Optuna                                                                                                                                                                                                                                                                                                                                                        &
+    Biblioteca de optimización paramétrica                                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Orquesta la arquitectura necesaria para la optimización paramétrica. \newline- En tiempo de ejecución: Generación muestras para cada una de las variables definidas en el scope de la función                                                                                                                                     &
+    Las descripciones se implementa de forma imperativa haciendo uso del scope de las funciones, las variables del lenguaje y las funciones implementadas por el generador de muestras                                                                                                                                                                              \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    AutoGloun                                                                                                                                                                                                                                                                                                                                                     &
+    AutoML, Selección de Modelos, Optimización paramétrica                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Diccionario que iguala el nombre del parámetro en cuestión a la instancia de su clase generadora. \newline- En tiempo de ejecución: Copia de dicho diccionario con las muestras generadas                                                                                                                                         &
+    Cada uno de los tipos básicos tiene su propia definición de su mecanismo generativo                                                                                                                                                                                                                                                                             \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    AutoSklearn                                                                                                                                                                                                                                                                                                                                                   &
+    AutoML, Selección de Modelos, Optimización paramétrica                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Mediante la ejecución del método estático {\it get\_hyperparameter\_search\_space} se crea una instancia de la clase  {\it ConfigurationSpace} que contiene cada una de las descripciones. \newline- En tiempo de ejecución: Instancia de clasificador personalizado al que se le inyectan las muestras como parámetros iniciales &
+    Cada uno de los tipos básicos tiene su propia definición de su mecanismo generativo                                                                                                                                                                                                                                                                             \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    % --------------------------------------------------------------------------------------------------------------
+    TPOT                                                                                                                                                                                                                                                                                                                                                          &
+    AutoML, Selección de Modelos, Optimización paramétrica                                                                                                                                                                                                                                                                                                        &
+    - En tiempo de compilación: Diccionario que enumera la lista de modelos seleccionables y describe las dimensiones de sus hiperparámetros. \newline- En tiempo de ejecución: Instancia de las distintas clases que pueden formar parte del pipeline final                                                                                                      &
+    No hace referencia explicita a la distribución de sus hiperparámetros                                                                                                                                                                                                                                                                                           \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+    \rowcolor{lavender}
+    % --------------------------------------------------------------------------------------------------------------
+    Propuesta de Solución                                                                                                                                                                                                                                                                                                                                         &
+    Biblioteca para describir y generar muestras de los distintos espacios de búsqueda                                                                                                                                                                                                                                                                            &
+    - En tiempo de compilación: Instancia los mecanismo generadores y construye los AST's que describen las dependencias y relaciones internas. \newline- En tiempo de ejecución: Muestra del espacio que cumple con todas las restricciones descritas                                                                                                            &
+    Cada una de las instancias de los tipos básicos y personalizados hacen referencio al nombre de su mecanismo generador, que posteriormente puede ser mapeado a cualquier clase generadora personalizada                                                                                                                                                          \\
+    % --------------------------------------------------------------------------------------------------------------
+    \hline
+\end{longtable}
+
+
+
+
+
+Analizando el estado del arte mediante las comparaciones antes expuestas,
+donde se detalla las características semánticas y técnicas de las biblioteca
+seleccionadas, se resaltar varias puntos. La mayoría de las herramientas de la
+actualidad no resuelven ninguno de los problemas a los que el presente trabajo
+intenta dar respuesta. Todas las herramientas estudiadas interpretan que el
+mecanismo generativo es un elemento integrado de forma natural en las descripciones
+de los espacios de búsqueda, idea que el autor considera que no es el mejor
 diseño con respecto a la escalabilidad y modularidad de las implementaciones.
 Una cantidad considerable de los ejemplos de solución se apoyan en los diccionarios
 y la comparación textual entre los nombres de los argumentos con las llaves
@@ -643,5 +517,3 @@ se tornan muy verbosa y relativamente poco legibles. Además esta en esta propue
 resolverían todas las restricciones y dependencias en tiempo de ejecución, mientras
 que una sintaxis funcional da espacio a realizar múltiples optimizaciones para
 minimizar el computo en tiempo de ejecución.
-
-% \nocite{fogel2006evolutionary}

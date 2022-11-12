@@ -1,5 +1,276 @@
 \tableofcontents
 \listoffigures
-% \listoftables
-% \listofalgorithms
+\listoftables
+\listofalgorithms
+
 \lstlistoflistings
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class Line:
+    def __init__(
+        self,
+        m: int = Domain[int](min=50, max=100) | (
+            lambda x: x != 65),
+        n: float = Domain[float]() | (
+            lambda x: x < 50)
+    ) -> None:
+        self.m, self.n = m, n
+    \end{minted}
+    \caption{Espacio de las rectas}
+    \label{lst:rectas}
+\end{listing}
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class CenterPoint:
+    Y_Domain = Domain[int]()
+    
+    def __init__(
+        self,
+        x: float = Domain[float]() | (
+            lambda x, y=Y_Domain: 
+                (x < y - 10) | (x > y + 10)
+        ),
+        y: int = Y_Domain
+    ) -> None:
+        self.x, self.y = x, y
+    \end{minted}
+    \caption{Espacio de los puntos acotados por las rectas y = x - 10 y y = x + 10}
+    \label{lst:points}
+\end{listing}
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class LogisticRegression:
+    Solver_Domain = Domain[str](
+        options=['newton-cg', 'lbfgs', 'liblinear', 'sag', 'saga'])
+
+    def __init__(
+        self,
+        solver: str = Solver_Domain,
+        intercept_scaling: float = Domain[float] | (
+            lambda x, s=Solver_Domain: 
+                (s != 'liblinear') & (x == 1)
+        ),
+        random_state: int = Domain[Optional[int]] | (
+            lambda x, s=Solver_Domain: (s != [
+                'liblinear', 'sag', 'saga']) & (x == None)
+        )
+    ) -> None:
+        self.s, self.i = solver, intercept_scaling
+        self.r = random_state
+    \end{minted}
+    \caption{Sklearn LogisticRegression}
+    \label{lst:sklearn}
+\end{listing}
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+@FunctionalConstraint
+def list_div(x: int):
+    result = [i for i in range(2, x)]
+    for i in range(2, x):
+        if x % i == 0:
+            result = [j for j in result 
+                        if j % i != 0]
+    return result
+class WorkPlanning:
+    Review_Work_Domain = Domain[int](min=2, max=10000)
+    def __init__(self,
+        init_time: int = Domain[int] | (
+            lambda x, y=Review_Work_Domain: (
+                x == DivList(y), x > 0
+            )
+        ),
+        review_time: int = Review_Work_Domain,
+    ) -> None:
+        self.init, self.review = init_time, review_time
+    \end{minted}
+    \caption{Espacio de parejas de enteros primos relativos}
+    \label{lst:primos}
+\end{listing}
+
+\newpage
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class GraphByAdjMatrix:
+NDomain = Domain[int](min=0, max=1000)
+AdjMatrixDomain = Domain[bool][NDomain][NDomain] | (
+    lambda x, i, j: x[i][j] == x[j][i]
+)
+def __init__(self, n: int = NDomain,
+    adj_matrix: List[int] = AdjMatrixDomain
+) -> None:
+    self.n, self.matrix = n, adj_matrix
+    \end{minted}
+    \caption{Espacio de grafos, modelados por matriz de adyacencia}
+    \label{lst:adj}
+\end{listing}
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class Node:
+RightDomain = Domain[Optional[Self]]()
+LeftDomain = Domain[Optional[Self]]() | (
+    lambda x: x.LeftDomain == None
+)
+def __init__(self, right: Self = RightDomain,
+    left: Self = LeftDomain
+) -> None:
+    self.right, self.left = right, left
+    \end{minted}
+    \caption{Espacio de grafos, modelados orientados a objeto}
+    \label{lst:node}
+\end{listing}
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class BagItem:
+WeightDomain = Domain[float]()
+PriceDomain = Domain[float](max=50)
+def __init__(self, w: float = WeightDomain, 
+    p: float = PriceDomain
+) -> None:
+    self.w, self.p = w, p
+
+class BagProblem:
+    WeightDomain = Domain[float](max=100)
+    ItemsLenDomain = Domain[int](min=5, max=20)
+    ItemsDomain = Domain[BagItem][ItemsLenDomain] | (
+        lambda x, i, w=WeightDomain: x[i].WeightDomain < w
+    )
+    def __init__(self, w: float = WeightDomain, 
+        items: List[BagItem] = ItemsDomain
+    ) -> None:
+        self.w, self.items = w, items
+    
+@FunctionalConstraint
+def ComputingCurrentCapacity(w: float, items: List[BagItem], 
+    current_counts: List[float]
+):
+    current_w = sum([count * item.w for count,
+                    item in zip(current_counts, items)])
+    return (w - current_w) / items[len(current_counts)].w
+
+class BagSolution(BagProblem):
+    SolutionDomain = Domain[int][BagProblem.ItemsLenDomain] | (
+        lambda x, i, w=BagProblem.WeightDomain, items=BagProblem.ItemsDomain: (
+            x[i] < ComputingCurrentCapacity(w, items, x[:i - 1])
+        ))
+    def validate_solution(self, solution: List[int] = SolutionDomain):
+        price = sum([item.p * count for item,
+                     count in zip(self.items, solution)])
+        weight = sum([item.w * count for item,
+                     count in zip(self.items, solution)])
+        assert self.w >= weight
+        return price
+
+    \end{minted}
+    \caption{La mochila}
+    \label{lst:bag}
+\end{listing}
+
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+@FunctionalConstraint
+def AdjColors(_map: List[List[bool]], 
+    country_colored: List[int], 
+    color_len
+):
+    index = len(country_colored)
+    result = set()
+    for i, is_adj_country in enumerate(_map[index]):
+        if i < index and is_adj_country:
+            result.add(country_colored[i])
+    if len(result) == color_len:
+        return []
+    return list(result)
+
+class ColorMapProblem:
+    CountryLenDomain = Domain[int](min=5, max=20)
+    ColorLenDomain = Domain[int](min=1) | (
+        lambda x, cl=CountryLenDomain: x < cl)
+
+    MapDomain = Domain[bool][CountryLenDomain][CountryLenDomain] | (
+        lambda x, i, j: x[i][j] == x[j][i]
+    )
+    def __init__(self, color_len: int = ColorLenDomain, 
+        adj_map: List[List[bool]] = MapDomain
+    ) -> None:
+        self.cl, self.map = color_len, adj_map
+
+    SolutionDomain = Domain[int][CountryLenDomain] | (
+        lambda x, i, color_len=ColorLenDomain, _map=MapDomain: (
+            x[i] < color_len,
+            x[i] != AdjColors(_map, x[0:i-1], color_len)
+        )
+    )
+    def validate_solution(self, solution: List[int] = SolutionDomain):
+        assert len(solution) == len(self.map)
+        for color in solution:
+            assert color < self.cl
+
+        for i, row in enumerate(self.map):
+            for j, are_adj in enumerate(row):
+                if are_adj and solution[i] == solution[j]:
+                    return False
+        return True
+    \end{minted}
+    \caption{N Colores}
+    \label{lst:colors}
+\end{listing}
+
+
+\begin{listing}[!ht]
+    \begin{minted}{Python}
+class AbsCluster:
+    NClusterDomain = Domain[int]()
+    def __init__(self, n_clusters: int = NClusterDomain) -> None:
+        self.n = n_clusters
+
+class KMeans(AbsCluster):
+    pass
+
+class AgglomerativeClustering(AbsCluster):
+    def __init__(
+        self,
+        n_clusters: int = AbsCluster.NClusterDomain,
+        affinity: str = Domain[str](
+            options=['euclidean', 'manhattan', "l1", "l2"]
+        )
+    ) -> None:
+        super().__init__(n_clusters)
+        self.affinity = affinity
+
+class AbsClassifier:
+    NCategoryDomain = Domain[int]()
+    def __init__(self, n_categories: int = NCategoryDomain) -> None:
+        self.n = n_categories
+
+class KNN(AbsClassifier):
+    def __init__(self, n_categories: int = AbsClassifier.NCategoryDomain) -> None:
+        super().__init__(n_categories)
+        k = self.n * 2 - 1
+
+class GaussianNB(AbsClassifier):
+    def __init__(self, n_categories: int = AbsClassifier.NCategoryDomain) -> None:
+        super().__init__(n_categories)
+        p = [1/n_categories for _ in range(n_categories)]
+
+class SemiSupervisedClassifier:
+    ClusterDomain = Domain[Union[KMeans, AgglomerativeClustering]]()
+    def __init__(self, cluster: AbsCluster = ClusterDomain,
+        classifier: AbsClassifier = Domain[Union[KNN, GaussianNB]] | (
+            lambda x, c=ClusterDomain: x.NCategoryDomain == c.NClusterDomain)
+    ) -> None:
+        self.cluster, self.classifier = cluster, classifier
+    \end{minted}
+    \caption{AutoML,Modelo Semi Supervizado}
+    \label{lst:automl}
+\end{listing}

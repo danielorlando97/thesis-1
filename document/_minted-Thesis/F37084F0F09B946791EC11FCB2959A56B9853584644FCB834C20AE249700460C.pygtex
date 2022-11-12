@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Line}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}
+        \PYG{n+nb+bp}{self}\PYG{p}{,}
+        \PYG{n}{m}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{](}\PYG{n+nb}{min}\PYG{o}{=}\PYG{l+m+mi}{50}\PYG{p}{,} \PYG{n+nb}{max}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:} \PYG{n}{x} \PYG{o}{!=} \PYG{l+m+mi}{65}\PYG{p}{),}
+        \PYG{n}{n}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{]()} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:} \PYG{n}{x} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{50}\PYG{p}{)}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{m}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{n} \PYG{o}{=} \PYG{n}{m}\PYG{p}{,} \PYG{n}{n}
+\end{Verbatim}

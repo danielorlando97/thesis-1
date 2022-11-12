@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{LogisticRegression}\PYG{p}{:}
+    \PYG{n}{Solver\PYGZus{}Domain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{str}\PYG{p}{](}
+        \PYG{n}{options}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}newton\PYGZhy{}cg\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}lbfgs\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}liblinear\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}sag\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}saga\PYGZsq{}}\PYG{p}{])}
+
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}
+        \PYG{n+nb+bp}{self}\PYG{p}{,}
+        \PYG{n}{solver}\PYG{p}{:} \PYG{n+nb}{str} \PYG{o}{=} \PYG{n}{Solver\PYGZus{}Domain}\PYG{p}{,}
+        \PYG{n}{intercept\PYGZus{}scaling}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{s}\PYG{o}{=}\PYG{n}{Solver\PYGZus{}Domain}\PYG{p}{:}
+                \PYG{p}{(}\PYG{n}{s} \PYG{o}{!=} \PYG{l+s+s1}{\PYGZsq{}liblinear\PYGZsq{}}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{n}{x} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)}
+        \PYG{p}{),}
+        \PYG{n}{random\PYGZus{}state}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n}{Optional}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]]} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{s}\PYG{o}{=}\PYG{n}{Solver\PYGZus{}Domain}\PYG{p}{:} \PYG{p}{(}\PYG{n}{s} \PYG{o}{!=} \PYG{p}{[}
+                \PYG{l+s+s1}{\PYGZsq{}liblinear\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}sag\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}saga\PYGZsq{}}\PYG{p}{])} \PYG{o}{\PYGZam{}} \PYG{p}{(}\PYG{n}{x} \PYG{o}{==} \PYG{k+kc}{None}\PYG{p}{)}
+        \PYG{p}{)}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{s}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{i} \PYG{o}{=} \PYG{n}{solver}\PYG{p}{,} \PYG{n}{intercept\PYGZus{}scaling}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{r} \PYG{o}{=} \PYG{n}{random\PYGZus{}state}
+\end{Verbatim}

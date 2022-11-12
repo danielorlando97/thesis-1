@@ -1,3 +1,43 @@
 \begin{recomendations}
-    Recomendaciones
+    \begin{enumerate}
+        \item   Persistencia del aprendizaje resultante del procesos de “prueba y error” para los casos
+              simples. Como la propuesta de solución separa en clases distintas cada uno de los casos
+              específicos, entonces se puede describir un nuevo “método mágico” que represente el procesos
+              posterior a la detección de errores. Donde en los casos de los tipos simples como enteros o
+              categorías se modifique el dominio inicial, pues en estos casos el dominio no es dinámico pues
+              no existe dependencias contextuales. Y por otro lados las clases más complejas como listas,
+              clases o espacios sensibles al contexto implementen la identidad en dicho método. Se
+              recomienda además almacenar el dominio inicial previendo los casos en que las restricciones
+              se adicionen de forma dinámica entre generación y generación, en dicho casos puede ocurrir
+              una mutación del espacio en alguna generación.
+        \item  Desarrollo de una colección de funciones de caja negra. Aprovechando la sintaxis de
+              caja negra se puede desarrollar varias colecciones de funciones básicas, aportando a la biblioteca
+              mayor expresividad y potencialmente eficiencia. Entre las principales ideas se proponen las
+              siguientes colecciones: 1) definiciones matemáticas (primo, factorial, raiz cuadrada, .....),
+              2) operaciones textuales (sufijo, prefijo, .....) y 3) operaciones con listas o tensores (máximo,
+              mínimo, media, ....)
+        \item  Investigación para describir el procesos inverso de una determinada función de caja negra,
+              para aportar información al procesos de inferencia de dominios en los casos en que dicha función
+              depende de un elemento cualquiera del espacio subyacente. La biblioteca con el dominio de
+              transformaciones lineales resuelve las descripciones inapropiadas que se escriben mediante
+              operaciones definidas en la gramática de forma tal que la variable principal de la función de
+              restricciones no aparezca despejada. En el caso de las funciones de caja negra cuando existe
+              dependencia de esta hacia la variables principal simplemente se ignora dicha restricción en
+              fase de inferencia, pero muchas funciones que se describirían como funciones de caja negra
+              cuentan con una inversa conocida. Veas por ejemplo la función raíz cuadrada, si la función de
+              restricciones destaca que la raíz cuadrada de {\bf x} es menor que 10 eso implica necesariamente
+              que {\bf x} es menor que 100. Resolver este problema unido a la colección de funciones propuestas
+              anteriormente puede representar una gran optimización para el DSL tanto en expresividad como en
+              generación
+        \item   Restricciones que afecten a más de un espacio. El modelo seleccionado para la representación
+              de las listas y los tensores es la de una clase superior que referencia a cada uno de los espacio
+              individuales. La herramienta cuenta con los mecanismo necesarios para trasmitir las restricciones
+              individuales a cada uno de los espacios internos, pero no cuenta con la infraestructura necesaria
+              para describir dependencias entre listas o tuplas. Osea, sea A un tensor que simula una lista de
+              tuplas de tamaño dos, no existe ningún mecanismo para describir que el indice 0 de dicha lista es
+              igual a la tupla (1, 2) por ejemplo. Esto se puede lograr definiendo un nuevo dominio ordinal que
+              referencie a los dominios internos y pueda distribuir las restricciones. Para detectar dichos casos
+              se debe aplicar una refectoriazación al recorrido implementado para detectar las operaciones de
+              indexación
+    \end{enumerate}
 \end{recomendations}

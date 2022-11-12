@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{search\PYGZus{}space} \PYG{k+kn}{import} \PYG{n}{FunctionalConstraint}
+\PYG{n+nd}{@FunctionalConstraint}
+\PYG{k}{def} \PYG{n+nf}{IsEven}\PYG{p}{(}\PYG{n}{x}\PYG{p}{):}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n}{x}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{):}
+        \PYG{k}{if} \PYG{n}{x} \PYG{o}{\PYGZpc{}} \PYG{n}{i} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{k}{return} \PYG{k+kc}{False}
+
+    \PYG{k}{return} \PYG{k+kc}{True}
+
+\PYG{n+nd}{@FunctionalConstraint}
+\PYG{k}{def} \PYG{n+nf}{Factorial}\PYG{p}{(}\PYG{n}{x}\PYG{p}{):}
+    \PYG{n}{resutl} \PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n}{x} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{):}
+        \PYG{n}{resutl} \PYG{o}{*=} \PYG{n}{i}
+    \PYG{k}{return} \PYG{n}{resutl}
+
+\PYG{k}{class} \PYG{n+nc}{MySeachSpace}\PYG{p}{:}
+    \PYG{n}{ADomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}\PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:} \PYG{n}{IsEven}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)))}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}
+        \PYG{n+nb+bp}{self}\PYG{p}{,}
+        \PYG{n}{a}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{ADomain}\PYG{p}{,}
+        \PYG{n}{b}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y} \PYG{o}{=} \PYG{n}{ADomain}\PYG{p}{:} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZlt{}} \PYG{n}{Factorial}\PYG{p}{(}\PYG{n}{y}\PYG{p}{))}
+        \PYG{p}{)}
+    \PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{a}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{b} \PYG{o}{=} \PYG{n}{a}\PYG{p}{,} \PYG{n}{b}
+
+\end{Verbatim}

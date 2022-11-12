@@ -1,0 +1,45 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@FunctionalConstraint}
+\PYG{k}{def} \PYG{n+nf}{AdjColors}\PYG{p}{(}\PYG{n}{\PYGZus{}map}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n}{List}\PYG{p}{[}\PYG{n+nb}{bool}\PYG{p}{]],}
+    \PYG{n}{country\PYGZus{}colored}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{],}
+    \PYG{n}{color\PYGZus{}len}
+\PYG{p}{):}
+    \PYG{n}{index} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{country\PYGZus{}colored}\PYG{p}{)}
+    \PYG{n}{result} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{()}
+    \PYG{k}{for} \PYG{n}{i}\PYG{p}{,} \PYG{n}{is\PYGZus{}adj\PYGZus{}country} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{\PYGZus{}map}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]):}
+        \PYG{k}{if} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{index} \PYG{o+ow}{and} \PYG{n}{is\PYGZus{}adj\PYGZus{}country}\PYG{p}{:}
+            \PYG{n}{result}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{country\PYGZus{}colored}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)} \PYG{o}{==} \PYG{n}{color\PYGZus{}len}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{[]}
+    \PYG{k}{return} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{ColorMapProblem}\PYG{p}{:}
+    \PYG{n}{CountryLenDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{](}\PYG{n+nb}{min}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n+nb}{max}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{n}{ColorLenDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{](}\PYG{n+nb}{min}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{|} \PYG{p}{(}
+        \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{cl}\PYG{o}{=}\PYG{n}{CountryLenDomain}\PYG{p}{:} \PYG{n}{x} \PYG{o}{\PYGZlt{}} \PYG{n}{cl}\PYG{p}{)}
+
+    \PYG{n}{MapDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{bool}\PYG{p}{][}\PYG{n}{CountryLenDomain}\PYG{p}{][}\PYG{n}{CountryLenDomain}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+        \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{:} \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{==} \PYG{n}{x}\PYG{p}{[}\PYG{n}{j}\PYG{p}{][}\PYG{n}{i}\PYG{p}{]}
+    \PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{color\PYGZus{}len}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{ColorLenDomain}\PYG{p}{,}
+        \PYG{n}{adj\PYGZus{}map}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n}{List}\PYG{p}{[}\PYG{n+nb}{bool}\PYG{p}{]]} \PYG{o}{=} \PYG{n}{MapDomain}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{cl}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{map} \PYG{o}{=} \PYG{n}{color\PYGZus{}len}\PYG{p}{,} \PYG{n}{adj\PYGZus{}map}
+
+    \PYG{n}{SolutionDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{][}\PYG{n}{CountryLenDomain}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+        \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{color\PYGZus{}len}\PYG{o}{=}\PYG{n}{ColorLenDomain}\PYG{p}{,} \PYG{n}{\PYGZus{}map}\PYG{o}{=}\PYG{n}{MapDomain}\PYG{p}{:} \PYG{p}{(}
+            \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{color\PYGZus{}len}\PYG{p}{,}
+            \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{!=} \PYG{n}{AdjColors}\PYG{p}{(}\PYG{n}{\PYGZus{}map}\PYG{p}{,} \PYG{n}{x}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{n}{i}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{color\PYGZus{}len}\PYG{p}{)}
+        \PYG{p}{)}
+    \PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{validate\PYGZus{}solution}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{solution}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]} \PYG{o}{=} \PYG{n}{SolutionDomain}\PYG{p}{):}
+        \PYG{k}{assert} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{solution}\PYG{p}{)} \PYG{o}{==} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{map}\PYG{p}{)}
+        \PYG{k}{for} \PYG{n}{color} \PYG{o+ow}{in} \PYG{n}{solution}\PYG{p}{:}
+            \PYG{k}{assert} \PYG{n}{color} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{cl}
+
+        \PYG{k}{for} \PYG{n}{i}\PYG{p}{,} \PYG{n}{row} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{map}\PYG{p}{):}
+            \PYG{k}{for} \PYG{n}{j}\PYG{p}{,} \PYG{n}{are\PYGZus{}adj} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{row}\PYG{p}{):}
+                \PYG{k}{if} \PYG{n}{are\PYGZus{}adj} \PYG{o+ow}{and} \PYG{n}{solution}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{==} \PYG{n}{solution}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]:}
+                    \PYG{k}{return} \PYG{k+kc}{False}
+        \PYG{k}{return} \PYG{k+kc}{True}
+\end{Verbatim}

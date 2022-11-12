@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@FunctionalConstraint}
+\PYG{k}{def} \PYG{n+nf}{list\PYGZus{}div}\PYG{p}{(}\PYG{n}{x}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{):}
+    \PYG{n}{result} \PYG{o}{=} \PYG{p}{[}\PYG{n}{i} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n}{x}\PYG{p}{)]}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n}{x}\PYG{p}{):}
+        \PYG{k}{if} \PYG{n}{x} \PYG{o}{\PYGZpc{}} \PYG{n}{i} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n}{result} \PYG{o}{=} \PYG{p}{[}\PYG{n}{j} \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n}{result}
+                        \PYG{k}{if} \PYG{n}{j} \PYG{o}{\PYGZpc{}} \PYG{n}{i} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{k}{return} \PYG{n}{result}
+\PYG{k}{class} \PYG{n+nc}{WorkPlanning}\PYG{p}{:}
+    \PYG{n}{Review\PYGZus{}Work\PYGZus{}Domain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{](}\PYG{n+nb}{min}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nb}{max}\PYG{o}{=}\PYG{l+m+mi}{10000}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}
+        \PYG{n}{init\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{o}{=}\PYG{n}{Review\PYGZus{}Work\PYGZus{}Domain}\PYG{p}{:} \PYG{p}{(}
+                \PYG{n}{x} \PYG{o}{==} \PYG{n}{DivList}\PYG{p}{(}\PYG{n}{y}\PYG{p}{),} \PYG{n}{x} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}
+            \PYG{p}{)}
+        \PYG{p}{),}
+        \PYG{n}{review\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{Review\PYGZus{}Work\PYGZus{}Domain}\PYG{p}{,}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{init}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{review} \PYG{o}{=} \PYG{n}{init\PYGZus{}time}\PYG{p}{,} \PYG{n}{review\PYGZus{}time}
+\end{Verbatim}

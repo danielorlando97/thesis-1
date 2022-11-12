@@ -1,0 +1,43 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{AbsCluster}\PYG{p}{:}
+    \PYG{n}{NClusterDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]()}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{n\PYGZus{}clusters}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{NClusterDomain}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{n} \PYG{o}{=} \PYG{n}{n\PYGZus{}clusters}
+
+\PYG{k}{class} \PYG{n+nc}{KMeans}\PYG{p}{(}\PYG{n}{AbsCluster}\PYG{p}{):}
+    \PYG{k}{pass}
+
+\PYG{k}{class} \PYG{n+nc}{AgglomerativeClustering}\PYG{p}{(}\PYG{n}{AbsCluster}\PYG{p}{):}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}
+        \PYG{n+nb+bp}{self}\PYG{p}{,}
+        \PYG{n}{n\PYGZus{}clusters}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{AbsCluster}\PYG{o}{.}\PYG{n}{NClusterDomain}\PYG{p}{,}
+        \PYG{n}{affinity}\PYG{p}{:} \PYG{n+nb}{str} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{str}\PYG{p}{](}
+            \PYG{n}{options}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}euclidean\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}manhattan\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}l1\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}l2\PYGZdq{}}\PYG{p}{]}
+        \PYG{p}{)}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb}{super}\PYG{p}{()}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{n\PYGZus{}clusters}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{affinity} \PYG{o}{=} \PYG{n}{affinity}
+
+\PYG{k}{class} \PYG{n+nc}{AbsClassifier}\PYG{p}{:}
+    \PYG{n}{NCategoryDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]()}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{n\PYGZus{}categories}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{NCategoryDomain}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{n} \PYG{o}{=} \PYG{n}{n\PYGZus{}categories}
+
+\PYG{k}{class} \PYG{n+nc}{KNN}\PYG{p}{(}\PYG{n}{AbsClassifier}\PYG{p}{):}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{n\PYGZus{}categories}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{AbsClassifier}\PYG{o}{.}\PYG{n}{NCategoryDomain}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb}{super}\PYG{p}{()}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{n\PYGZus{}categories}\PYG{p}{)}
+        \PYG{n}{k} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{n} \PYG{o}{*} \PYG{l+m+mi}{2} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}
+
+\PYG{k}{class} \PYG{n+nc}{GaussianNB}\PYG{p}{(}\PYG{n}{AbsClassifier}\PYG{p}{):}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{n\PYGZus{}categories}\PYG{p}{:} \PYG{n+nb}{int} \PYG{o}{=} \PYG{n}{AbsClassifier}\PYG{o}{.}\PYG{n}{NCategoryDomain}\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb}{super}\PYG{p}{()}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n}{n\PYGZus{}categories}\PYG{p}{)}
+        \PYG{n}{p} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{n\PYGZus{}categories} \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n\PYGZus{}categories}\PYG{p}{)]}
+
+\PYG{k}{class} \PYG{n+nc}{SemiSupervisedClassifier}\PYG{p}{:}
+    \PYG{n}{ClusterDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n}{Union}\PYG{p}{[}\PYG{n}{KMeans}\PYG{p}{,} \PYG{n}{AgglomerativeClustering}\PYG{p}{]]()}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{cluster}\PYG{p}{:} \PYG{n}{AbsCluster} \PYG{o}{=} \PYG{n}{ClusterDomain}\PYG{p}{,}
+        \PYG{n}{classifier}\PYG{p}{:} \PYG{n}{AbsClassifier} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n}{Union}\PYG{p}{[}\PYG{n}{KNN}\PYG{p}{,} \PYG{n}{GaussianNB}\PYG{p}{]]} \PYG{o}{|} \PYG{p}{(}
+            \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{n}{ClusterDomain}\PYG{p}{:} \PYG{n}{x}\PYG{o}{.}\PYG{n}{NCategoryDomain} \PYG{o}{==} \PYG{n}{c}\PYG{o}{.}\PYG{n}{NClusterDomain}\PYG{p}{)}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{cluster}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{classifier} \PYG{o}{=} \PYG{n}{cluster}\PYG{p}{,} \PYG{n}{classifier}
+\end{Verbatim}

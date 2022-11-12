@@ -1,0 +1,42 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{BagItem}\PYG{p}{:}
+\PYG{n}{WeightDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{]()}
+\PYG{n}{PriceDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{](}\PYG{n+nb}{max}\PYG{o}{=}\PYG{l+m+mi}{50}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{w}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n}{WeightDomain}\PYG{p}{,}
+    \PYG{n}{p}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n}{PriceDomain}
+\PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{w}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{p} \PYG{o}{=} \PYG{n}{w}\PYG{p}{,} \PYG{n}{p}
+
+\PYG{k}{class} \PYG{n+nc}{BagProblem}\PYG{p}{:}
+    \PYG{n}{WeightDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{](}\PYG{n+nb}{max}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)}
+    \PYG{n}{ItemsLenDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{](}\PYG{n+nb}{min}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n+nb}{max}\PYG{o}{=}\PYG{l+m+mi}{20}\PYG{p}{)}
+    \PYG{n}{ItemsDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n}{BagItem}\PYG{p}{][}\PYG{n}{ItemsLenDomain}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+        \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{w}\PYG{o}{=}\PYG{n}{WeightDomain}\PYG{p}{:} \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{WeightDomain} \PYG{o}{\PYGZlt{}} \PYG{n}{w}
+    \PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{w}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n}{WeightDomain}\PYG{p}{,}
+        \PYG{n}{items}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n}{BagItem}\PYG{p}{]} \PYG{o}{=} \PYG{n}{ItemsDomain}
+    \PYG{p}{)} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{w}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{items} \PYG{o}{=} \PYG{n}{w}\PYG{p}{,} \PYG{n}{items}
+
+\PYG{n+nd}{@FunctionalConstraint}
+\PYG{k}{def} \PYG{n+nf}{ComputingCurrentCapacity}\PYG{p}{(}\PYG{n}{w}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{items}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n}{BagItem}\PYG{p}{],}
+    \PYG{n}{current\PYGZus{}counts}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n+nb}{float}\PYG{p}{]}
+\PYG{p}{):}
+    \PYG{n}{current\PYGZus{}w} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{([}\PYG{n}{count} \PYG{o}{*} \PYG{n}{item}\PYG{o}{.}\PYG{n}{w} \PYG{k}{for} \PYG{n}{count}\PYG{p}{,}
+                    \PYG{n}{item} \PYG{o+ow}{in} \PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{current\PYGZus{}counts}\PYG{p}{,} \PYG{n}{items}\PYG{p}{)])}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n}{w} \PYG{o}{\PYGZhy{}} \PYG{n}{current\PYGZus{}w}\PYG{p}{)} \PYG{o}{/} \PYG{n}{items}\PYG{p}{[}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{current\PYGZus{}counts}\PYG{p}{)]}\PYG{o}{.}\PYG{n}{w}
+
+\PYG{k}{class} \PYG{n+nc}{BagSolution}\PYG{p}{(}\PYG{n}{BagProblem}\PYG{p}{):}
+    \PYG{n}{SolutionDomain} \PYG{o}{=} \PYG{n}{Domain}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{][}\PYG{n}{BagProblem}\PYG{o}{.}\PYG{n}{ItemsLenDomain}\PYG{p}{]} \PYG{o}{|} \PYG{p}{(}
+        \PYG{k}{lambda} \PYG{n}{x}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{w}\PYG{o}{=}\PYG{n}{BagProblem}\PYG{o}{.}\PYG{n}{WeightDomain}\PYG{p}{,} \PYG{n}{items}\PYG{o}{=}\PYG{n}{BagProblem}\PYG{o}{.}\PYG{n}{ItemsDomain}\PYG{p}{:} \PYG{p}{(}
+            \PYG{n}{x}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{\PYGZlt{}} \PYG{n}{ComputingCurrentCapacity}\PYG{p}{(}\PYG{n}{w}\PYG{p}{,} \PYG{n}{items}\PYG{p}{,} \PYG{n}{x}\PYG{p}{[:}\PYG{n}{i} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{])}
+        \PYG{p}{))}
+    \PYG{k}{def} \PYG{n+nf}{validate\PYGZus{}solution}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{solution}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n+nb}{int}\PYG{p}{]} \PYG{o}{=} \PYG{n}{SolutionDomain}\PYG{p}{):}
+        \PYG{n}{price} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{([}\PYG{n}{item}\PYG{o}{.}\PYG{n}{p} \PYG{o}{*} \PYG{n}{count} \PYG{k}{for} \PYG{n}{item}\PYG{p}{,}
+                     \PYG{n}{count} \PYG{o+ow}{in} \PYG{n+nb}{zip}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{items}\PYG{p}{,} \PYG{n}{solution}\PYG{p}{)])}
+        \PYG{n}{weight} \PYG{o}{=} \PYG{n+nb}{sum}\PYG{p}{([}\PYG{n}{item}\PYG{o}{.}\PYG{n}{w} \PYG{o}{*} \PYG{n}{count} \PYG{k}{for} \PYG{n}{item}\PYG{p}{,}
+                     \PYG{n}{count} \PYG{o+ow}{in} \PYG{n+nb}{zip}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{items}\PYG{p}{,} \PYG{n}{solution}\PYG{p}{)])}
+        \PYG{k}{assert} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{w} \PYG{o}{\PYGZgt{}=} \PYG{n}{weight}
+        \PYG{k}{return} \PYG{n}{price}
+
+\end{Verbatim}

@@ -1,3 +1,3 @@
 #!/bin/sh
 make_logo.sh
-latexmk
+latexmk  -shell-escape

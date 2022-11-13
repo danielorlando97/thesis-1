@@ -1,13 +1,14 @@
 \chapter*{Introducción}\label{chapter:introduction}
 \addcontentsline{toc}{chapter}{Introducción}
 
+
 El aprendizaje automático (machine learning, {\it ML}) es uno de los más famosos
 y poderosos campos de la inteligencia artificial. Sin embargo, es un campo
 donde el tiempo de aprendizaje e investigación es muy superior al de desarrollo
 y donde la experiencia de los investigadores juega un papel fundamental tanto
 en los resultados finales como en la efectividad del procesos investigativo.
 
-    {\it AutoML} (Automated Machine Learning), según [2], es un campo de investigación
+    {\it AutoML} (Automated Machine Learning), según (\cite{autoML}), es un campo de investigación
 que persigue la automatización incremental de todas las fases del desarrollo
 de aplicaciones de aprendizaje automático. A diferencia del proceso de diseño
 manual, {\it AutoML} permite explorar inteligentemente las mejores combinaciones
@@ -28,7 +29,7 @@ en principio incompatibles y extensible para agregar nuevas tecnologías o
 implementaciones propias. Estas características describen y definen a
     {\it Automatic Generation, Optimization And Artificial Learning} ({\bf AutoGOAL}).
 
-    {\bf AutoGOAL} se autodefine en su documentación oficial[4] como:
+    {\bf AutoGOAL} se autodefine en su documentación oficial (\cite{autogoal}  como:
 
 \begin{verbatim}
     `` ...Una biblioteca de Python para encontrar automáticamente la me-
@@ -54,7 +55,7 @@ la gramática se analizan los tipos de entrada y salida de todos los algoritmos 
 excluyen los programas donde se intente secuenciar dos implementaciones tales que
 la salida de uno no sea consistente con la entrada del siguiente. De esta
 manera se logra descarta una gran cantidad de secuencias invalidas, incluso
-antes de empezar a buscar, pero como se puede ver en los resultados de [1]
+antes de empezar a buscar, pero como se puede ver en los resultados de (\cite{estevez-velarde-etal-2019-automl})
 todavía quedan algunas {\it instancias invalidas}.
 
 En muchos casos las {\it instancias invalidas} son consecuencias de los
@@ -64,7 +65,7 @@ prefijados y es automaticamente descartada como posible solución. Como para la
 biblioteca un algoritmo es una función de la cual solo conoce sus tipos de entrada y
 tipo de salida, prever el fallo de las instancias antes descritas previo a su ejecución,
 es equivalente al {\it Halting Problem}, problema que {\it Alan Turing} demostró en 1936
-que es indecidible en una máquinas de Turing [3].
+que es indecidible en una máquinas de Turing (\cite{Hopcroft+Ullman/79/Introduction}).
 
 Sin embargo existe otro conjunto de {\it instancias invalidas} relacionadas a la validez
 y consistencia de los hiperparámtros iniciales. A lo largo del proceso de búsqueda

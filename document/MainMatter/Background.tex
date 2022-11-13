@@ -9,7 +9,7 @@ herramientas de {\it ML} subyacentes. En dichos casos, se llama ``{\it descripci
 del espacio de búsqueda}'' a la delimitación de los hyperparámetros de los
 distintos modelos que se incluyen en dicha definición previa
 
-Como se muestra en las investigaciones previas realizadas por [5] casi ninguna
+Como se muestra en las investigaciones previas realizadas por (\cite{estevanellhacia}) casi ninguna
 de las herramientas del sector {\it AutoML} cuenta con la capacidad real de describir,
 en su totalidad y de forma detallada, su espacio de búsqueda. Independientemente
 de esto, todo mecanismo y sintaxis como el objetivo de describir estructuralmente
@@ -38,7 +38,7 @@ que las descripciones se pueda acercar un poco más al lenguaje natural.
 
 \subsection{DSL (Lenguaje de Dominio Específico, Domain\newline Specific Language)}
 
-Según [6] un lenguaje de dominio específico es un lenguaje especializado que sirve
+Según (\cite{langlois2007dsl}) un lenguaje de dominio específico es un lenguaje especializado que sirve
 para elevar el nivel de abstracción del software y facilitar el desarrollo del mismo.
 Los {\bf DSL} cuentan con múltiples formas de representación e implementación, desde
 micro-modificaciones realizadas a lenguajes subyacentes, hasta proyectos a gran escala.
@@ -113,7 +113,7 @@ para la implementación de la propuesta planteada no se encuentra influenciada s
 situación, sino que además {\it Python} cuenta con potentes y cómoda herramientas para modificar
 la semántica de su sintaxis y desarrollar la metaprogramación.
 
-Según [14], {\it Python} es un lenguaje de programación de alto nivel y de propósito general.
+Según ,(\cite{python}), {\it Python} es un lenguaje de programación de alto nivel y de propósito general.
     {\it Python} es de tipado dinámico y fuerte, pero existen bibliotecas, como {\bf typing}, que haciendo
 uso de la metaprogramación y otras técnicas, son capaces de modificar la semántica del
 lenguaje para ofrecer una experiencia de usuario similar a la de los lenguajes estéticamente
@@ -123,7 +123,7 @@ Una de las características que hacen a este lenguaje tan flexible e ideal para 
 es la filosofía bajo la que describe todos los procesos y transiciones de sus objetos. El
 interprete del lenguaje define una lista de ``{\it métodos mágicos}'', uno por cada operación básica
 de software, los cuales cuanta con sus propias implementaciones básicas, pero que pueden ser
-redefinidos en todo momento. Como señala [14], los ``{\it métodos mágicos}'' son los que comienzan y
+redefinidos en todo momento. Como señala (\cite{python}), los ``{\it métodos mágicos}'' son los que comienzan y
 terminan con el doble guión bajo, entre los que se pueden citar por ejemplo;
 {\it \_\_and\_\_}, {\it \_\_sub\_\_}, {\it \_\_div\_\_}, {\it \_\_mul\_\_} y otra larga lista de funciones que hacen referencia
 a las operaciones aritméticas y de comparación, {\it\_\_call\_\_} método que describe el comportamiento
@@ -132,7 +132,7 @@ que describen los comportamientos cuando se intenta acceder a los miembros de un
 un indice determinado respectivamente. La lista es extremadamente larga y crece a medida
 que aparecen nuevos bibliotecas del lenguaje.
 
-En [14] se define el término metaprogramación como a la posibilidad de que un programa tenga
+En \cite{python} se define el término metaprogramación como a la posibilidad de que un programa tenga
 conocimiento o se manipule a sí mismo. En {\it Python} cada pequeño elemento del lenguaje
 representa un objeto. A diferencia de otros lenguajes, donde la declaración de funciones y
 clases no son más que punteros a direcciones de memoria donde se alojan sus respectivos códigos,
@@ -166,7 +166,7 @@ característica para la flexibilización de la semántica pues por ejemplo, bajo
 misma clase, en el momento de crear una nueva instancia, se podrían crear la instancia adecuada
 de toda una jerarquía según las características de los parámetros iniciales.
 
-Además la biblioteca estándar del lenguaje incluye el módulo {\bf inspect}, que como indica [15],
+Además la biblioteca estándar del lenguaje incluye el módulo {\bf inspect}, que como indica (\cite{python}),
 proporciona varias funciones útiles para ayudar a obtener información sobre objetos vivos
 como módulos, clases, métodos y funciones. Hay cuatro tipos principales de servicios que ofrece
 este módulo: comprobación de tipos, obtención del código fuente, inspección de clases y funciones,
@@ -187,28 +187,28 @@ muestras. El listado final quedo integrado por:
 
 \begin{itemize}
 
-    \item  {\bf AutoGOAL} [4]: Biblioteca de {\it AutoML}, escrita en {\it Python}, transversal a la
+    \item  {\bf AutoGOAL} (\cite{autogoal}): Biblioteca de {\it AutoML}, escrita en {\it Python}, transversal a la
           naturaleza de los problemas y de las herramientas subyacentes. Mediante su módulo {\it Grammar}
           ofrece un listados de tipos y abstracciones con las que los desarrolladores pueden describir
           su espacio de búsqueda.
-    \item {\bf HyperOpt} [7]: Biblioteca de {\it Python} que intenta resolver el problema de la optimización
+    \item {\bf HyperOpt} (\cite{hyperopt}): Biblioteca de {\it Python} que intenta resolver el problema de la optimización
           paramétrica siendo independiente a la función en cuestión. La misma define una sintaxis y
           una lista de funciones para expresar la definición de cada uno de los parámetro de la
           función en cuestión
-    \item {\bf Ray AI Runtime} (AIR) [8]: Ray es un marco unificado para escalar aplicaciones de {\it IA} y
+    \item {\bf Ray AI Runtime} (AIR) (\cite{ray}): Ray es un marco unificado para escalar aplicaciones de {\it IA} y
               {\it Python}. Y AIR es su conjunto de herramientas de código abierto para crear aplicaciones de
               {\it IA}, en la cual incluye una lista de funciones con las que los desarrolladores pueden expresar
           las dimensiones de los distintos hiperparámetros
-    \item {\bf Chocolate} [9]: Chocolate es un marco de optimización completamente asíncrono que depende
+    \item {\bf Chocolate} (\cite{chocolate}): Chocolate es un marco de optimización completamente asíncrono que depende
           únicamente de una base de datos para compartir información entre los trabajadores. Chocolate
           ha sido diseñado y optimizado para la optimización de hiperparámetros, donde cada evaluación
           de funciones tarda mucho en completarse y es difícil de paralelizar. Y como tal define una
           sintaxis y una lista de funciones para definir los dominós de dichos hiperparámetros
-    \item {\bf Optuna} [10]: Optuna es un marco de software de optimización automática de hiperparámetros,
+    \item {\bf Optuna} ({\cite{optuna}}): Optuna es un marco de software de optimización automática de hiperparámetros,
           especialmente diseñado para el aprendizaje automático. El cual inyecta la instancia de una
           clase predefinida para seguir la evolución de dichos hiperparámetros asi como
           una lista de funciones para describir las características de los mismos
-    \item {\bf AutoGloun} [11]: Biblioteca de {\it AutoML}, escrita en {\it Python}, que permite utilizar y
+    \item {\bf AutoGloun} (\cite{autogloun}): Biblioteca de {\it AutoML}, escrita en {\it Python}, que permite utilizar y
           ampliar {\it AutoML} de forma sencilla, centrándose en el ensamblaje automatizado de pilas, el
           aprendizaje profundo y las aplicaciones del mundo real que abarcan datos de imágenes, textos y tablas.
           Aprovechando el ajuste automático de hiperparámetros, la selección/ensamblaje de modelos,
@@ -217,16 +217,16 @@ muestras. El listado final quedo integrado por:
           dicha personalización la biblioteca combina la definición de una sintaxis para la descripción
           estructural de los hiperparámetros con una lista de tipos para expresar la dimension de los
           mismo
-    \item {\bf AutoSklearn} [12]: Biblioteca de {\it AutoML}, escrita en {\it Python}, sustentados sobre
+    \item {\bf AutoSklearn} (\cite{autosklearn}): Biblioteca de {\it AutoML}, escrita en {\it Python}, sustentados sobre
           conjunto de herramientas de aprendizaje automático de scikit-learn. Permite a los desarrolladores
           personalizar sus modelos ofreciendo una lista de tipos con los que restringir los distintos dominios
           de cada hiperparámetro, junto con una sintaxis específica para la declaración de los mismo
-    \item {\bf TPOT} [13]: TPOT es una herramienta de aprendizaje automático en {\it Python} que optimiza los
+    \item {\bf TPOT} (\cite{tpot}): TPOT es una herramienta de aprendizaje automático en {\it Python} que optimiza los
           procesos de aprendizaje automático mediante programación genética. Este define una sintaxis para
           describir la lista de modelos a explorar y sus distintos hiperparámetros
 \end{itemize}
 
-Aunque la investigación realizada en [6] se enfoca más en la clasificación de {\bf DSL} que
+Aunque la investigación realizada en (\cite{langlois2007dsl}) se enfoca más en la clasificación de {\bf DSL} que
 representan proyectos más grandes que aquellos que son objeto de estudio para esta
 investigación en concreto, estudiando las clasificaciones y características que plantea,
 el autor pudo seleccionar varias que son acordes para describir el estado del arte
@@ -242,7 +242,7 @@ momento:
               {\it AutoML}, pero dentro de ambos campos existen múltiples subdominios y razones por las que
           sería de interés describir un dominio determinado
     \item {\bf Activo Objetivo}: Nombre con el que se describe el resultado esperado por las transformaciones
-          del {\bf DSL}. En los casos analizados por [6] suelen ser archivos de textos, gráficos o llamadas
+          del {\bf DSL}. En los casos analizados por (\cite{langlois2007dsl}) suelen ser archivos de textos, gráficos o llamadas
           al sistema, pero en esta investigación el autor reinterpreto esta característica, debido a la
           naturales del campo de investigación, y por tanto los activos objetivos pasan a describir a
           los efectos que provoca el empleo del mismo dentro de un programa, las instancias que
@@ -479,10 +479,10 @@ momento:
 \end{longtable}
 
 
+\newpage
 
 
-
-Analizando el estado del arte mediante las comparaciones antes expuestas,
+Analizando el estado del arte mediante las comparaciones de las tablas \ref{chap2:tab1} y \ref{chap2:tab2},
 donde se detalla las características semánticas y técnicas de las biblioteca
 seleccionadas, se resaltar varias puntos. La mayoría de las herramientas de la
 actualidad no resuelven ninguno de los problemas a los que el presente trabajo

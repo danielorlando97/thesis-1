@@ -32,7 +32,7 @@
 
 \floatstyle{plaintop}
 \restylefloat{table}
-\usepackage{biblatex}
+\usepackage[backend=biber,style=numeric,sortcites,sorting=nty,backref, hyperref, natbib]{biblatex}
 \addbibresource{Bibliography.bib}
 % \setlength{\parskip}{\baselineskip}%
 \renewcommand{\tablename}{Tabla}
@@ -66,12 +66,12 @@
 
 \lstset{style=mystyle}
 
-\title{Título de la tesis}
+\title{DSL en Python, Descripción de Espacios de Búsquedas Y Generación Muestras}
 \author{\\\vspace{0.25cm}Daniel Orlando Ortiz Pacheco}
 \advisor{\\\vspace{0.25cm}Lic. Frank Sadan Naranjo\\\vspace{0.2cm}Doc. Alejandro Piad Morffis}
 \degree{Licenciado en Ciencia de la Computación}
 \faculty{Facultad de Matemática y Computación}
-\date{Fecha\\\vspace{0.25cm}\href{https://github.com/username/repo}{github.com/username/repo}}
+\date{Fecha\\\vspace{0.25cm}\href{https://github.com/danielorlando97/search-space}{github.com/danielorlando97/search-space}}
 \logo{Graphics/uhlogo}
 \makenomenclature
 
@@ -116,6 +116,6 @@
 \include{BackMatter/Recomendations}
 \include{BackMatter/Bibliography}
 
-\renewcommand\listoflistingscaption{List of source codes}
-\listoflistings
+% \renewcommand\listoflistingscaption{List of source codes}
+% \listoflistings
 \end{document}

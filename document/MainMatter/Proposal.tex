@@ -81,15 +81,15 @@ sus espacios búsqueda y posteriormente generar instancias de las mismas.
 
 \begin{listing}[!ht]
     \begin{minted}{Python}
-from search_space import Domain
-ADomain = Domain[int]()
-a, _ = ADomain.get_sample()
+    from search_space import Domain
+    ADomain = Domain[int]()
+    a, _ = ADomain.get_sample()
     \end{minted}
     \caption{Generando un número entero}
     \label{lst:example}
 \end{listing}
 
-La sintaxis de este primer ejemplo es la mínima expresión del {\bf DSL} propuesto, donde basta con
+La sintaxis del ejemplo \ref{lst:example} es la mínima expresión del {\bf DSL} propuesto, donde basta con
 definir el tipo del espacio de búsqueda para generar muestras dentro de la versión más extensa de dicho
 espacio. Y aunque la herramienta se desarrolló con la intención de describir espacios más complejos,
 como se puede ver en el ejemplo, se puede usar para generar muestras de los tipos básicos. Dicha
@@ -99,16 +99,16 @@ tan rápidos como los métodos nativos del lenguaje.
 
 \begin{listing}[!ht]
     \begin{minted}{Python}
-from search_space import Domain
-ADomain = Domain[int] | (lambda x: (x >= 100, x != 101))
-a, _ = ADomain.get_sample()
+    from search_space import Domain
+    ADomain = Domain[int] | (lambda x: (x >= 100, x != 101))
+    a, _ = ADomain.get_sample()
     \end{minted}
     \caption{Generando un número entero con restricciones}
     \label{ex:func}
 \end{listing}
 
 
-En el ejemplo anterior se muestra uno de los mecanismos más importantes definido por el
+En el ejemplo \ref{ex:func} se muestra uno de los mecanismos más importantes definido por el
     {\bf DSL}, la sintaxis para declarar restricciones. Con esta herramienta el usuario puede ser capaz de
 expresar las dimensiones y características de sus espacios de interés. Como en los problemas de búsqueda el
 costo temporal suele ser directamente proporcional a las magnitudes del espacio de búsqueda o a la estructura
@@ -141,10 +141,7 @@ my_seach_space_instance, _ = MySeachSpaceDomain.get_sample()
 \end{listing}
 
 
-
-
-
-Como se ve en el ejemplo número tres la filosofía de la herramienta es que el usuario pueda “decorar” sus
+Como se ve en el ejemplo \ref{ex:class} la filosofía de la herramienta es que el usuario pueda “decorar” sus
 clases declarando los distintos subespacios que la misma contiene. A partir de dicha implementación, basta
 con replicar la sintaxis del primer o del segundo ejemplo, cambiar el tipo de {\bf Domain}, y las restricciones
 en caso de ser necesario, para generar una instancia aleatoria del nuevo espacio descrito. Que la clase
@@ -180,7 +177,7 @@ que los espacios sencillos se pudieran expresar de forma sencillas, y luego aque
 complejas tuviera descripciones expresivas pero no necesariamente sencillas.
 \newpage
 Haciendo referencia una vez
-más a los origenes de este trabajo, se puede comparar los ejemplos 4 y 3 donde se
+más a los origenes de este trabajo, se puede comparar los ejemplos \ref{ex:autogoal} y \ref{ex:class} donde se
 evidencia la diferencia entre una clase decorada con las herramientas de {\bf AutoGOAL} y otra con la propuesta
 presentada. Notes que efectivamente son espacios combinados pero extremadamente simples. En ambos casos las
 modificaciones a lo que sería una clase de {\bf Python} común son mínimas. Nótese además que el {\bf DSL}
@@ -205,14 +202,14 @@ class MySeachSpace:
 
     \end{minted}
     \caption{Clase que describe un espacio sencible del contexto}
-    \label{ex:class_dep}
+    \label{ex:classDep}
 \end{listing}
 
 Como se comentó anteriormente, dos de los aportes más importante de la propuesta son las dependencias
 contextuales y las descripciones de {\it “caja negra”}. Ambas funcionalidades son alteraciones de la sintaxis
 antes expuesta para expresar las restricciones de un domino especifico.
 
-En el ejemplo numero 5 se muestra
+En el ejemplo \ref{ex:classDep} se muestra
 uno de los casos más clásicos de dependencias contextuales, el espacio aleatorio de dos números donde el
 primero es mayor que el segundo. En dicho ejemplo se escribe la función de restricciones como una función
 de dos parámetros donde el primero es un elemento cualquiera del espacio en cuestión y el segundo es un
@@ -225,7 +222,7 @@ describir una relación entre ambos espacios a partir de la relación existente 
 
 Es probable que el lector, al analizar el caso de estudio seleccionado para mostrar la sintaxis de dependencias
 contextuales, piense en que dicho problema se describe mejor con la definición matemática anterior que con la
-clase del ejemplo 5. Y es que la intención del ejemplo 5 era únicamente introducir la sintaxis para la decoración
+clase del ejemplo \ref{ex:classDep}. Y es que la intención de dicho ejemplo era únicamente introducir la sintaxis para la decoración
 de las clases con espacios sensibles al contexto. El {\bf DSL} cuenta su propia sintaxis para definir espacios de más
 de una dimensión, como sería el caso del dominio planteado en la definición matemática anterior. Dicha sintaxis
 no solo se limita a dimensiones predefinidas, ni a restricciones de indices fijos como es el caso del dominio relativo
@@ -254,11 +251,10 @@ class MySeachSpace:
 
     \end{minted}
     \caption{Clase que describe un espacio de búsqueda compuesto por listas de distintas dimensiones }
-    \label{ex:class_list}
+    \label{ex:classList}
 \end{listing}
 
-\newpage
-Nótese que, en estos últimos ejemplo se evidencia la flexibilidad de la sintaxis para definirle restricciones a un
+Nótese que, en el ejemplo \ref{ex:classList} se evidencia la flexibilidad de la sintaxis para definirle restricciones a un
 nuevo domino. El número de variables de entrada del delegado de restricciones puede crecer según las necesidades
 del usuario; siendo siempre mayor que uno, pues la primera variable siempre hace referencia a un elemento cualquier
 del domino en cuestión. Salvo dicho primer elemento, todas las variables de la función de restricciones a las que
@@ -299,13 +295,13 @@ class MySeachSpace:
 
     \end{minted}
     \caption{Espacio de búsqueda con restricciones imperativas}
-    \label{ex:class_func}
+    \label{ex:classFunc}
 \end{listing}
 
 
-El caso de las restricciones de {\it “caja negra”} se ejemplifica con el ejemplo número 7. Con esta funcionalidad
+El caso de las restricciones de {\it “caja negra”} se ejemplifica con el ejemplo \ref{ex:classFunc}. Con esta funcionalidad
 la biblioteca le deja la puerta abierta al usuario para que pueda describir su dominio de forma imperativa.
-Como se puede ver en el ejemplo; solo es necesario decorar una función de Python donde se describa un
+Como se puede ver en el ejemplo; solo es necesario decorar una función de {\bf Python} donde se describa un
 procesamiento sobre los parámetros de entrada, para que el usuario pueda incluir la llamada a esta dentro de
 la lista de restricciones. El {\bf DSL} incluirá las llamadas a dicha función dentro de su mecanismo generativo.
 Luego de que culmine el computo de la misma, dicho mecanismo utilizará sus resultados para realizar el resto
@@ -340,12 +336,12 @@ class MySeachSpace:
 
     \end{minted}
     \caption{Espacio de busqueda con restricciones condicionales}
-    \label{ex:class_cond}
+    \label{ex:classCond}
 \end{listing}
 
 Para terminar con la descripción de la sintaxis del {\bf DSL} propuesto y siendo consecuente con la comparación realizada
 en el estado del arte, luego de haber expuesto tanto su mecanismo para describir dependencias contextuales, como su
-habilidad para expresar espacios de dimensiones dinámicas, véase en el ejemplo numero 10 la sintaxis propuestas para
+habilidad para expresar espacios de dimensiones dinámicas, véase en el ejemplo \ref{ex:classCond} la sintaxis propuestas para
 expresar descripciones de espacios con restricciones condicionales. El {\bf DSL} no aporta ninguna estructura de control
 de flujo para describir estas restricciones condicionales, este anima al usuario a plantear dichas restricciones
 haciendo uso de operadores lógicos. Dichos operadores presentan una implementación de corte, osea si es suficiente
@@ -369,8 +365,8 @@ a construir la nueva muestra
 
 Como se explicó anteriormente todo el procesos generativo esta sustentado por la generación de variables aleatorias
 con una cierta distribución. Sin embargo, los procesos realmente aleatorios dentro de la creación de muestras son la
-selección de opciones, como es el casos de los tipos básicos string y bool, y la generación numérica, para los int y los
-float. El resto de los mecanismos se limitan en crear las instancias de los tipos adecuados con los parámetros correctos. Para que
+selección de opciones, como es el casos de los tipos básicos {\it string} y {\it bool}, y la generación numérica, para los {\it int} y los
+{\it float}. El resto de los mecanismos se limitan en crear las instancias de los tipos adecuados con los parámetros correctos. Para que
 la generación sea un proceso lineal el componente generativo trasmite cada una de las restricciones descritas en los niveles
 superiores de la jerarquía descrita hacia los niveles inferiores donde se encuentran los tipos básicos antes mencionados.
 Con la interpretación de estas restricciones la biblioteca le puede asignar a cada uno de los tipos básicos el domino más
@@ -378,7 +374,7 @@ amplio que cumpla con todas las condiciones para que el resultado del procesos a
 
 La coherencia y consistencia de las muestras con sus respectivas descripciones es uno de los temas más importantes de los que
 se debe encargar el componente generativo, sobre todo con la presencia de dependencias contextuales o restricciones de
-“caja negra”. Por ejemplo, véase en el ejemplo número 6 la descripción del dominio del parámetro {\bf b}, en este se describe una matriz cuadrada
+``caja negra''. Por ejemplo, véase en el ejemplo \ref{ex:classList} la descripción del dominio del parámetro {\bf b}, en este se describe una matriz cuadrada
 donde no solo se igualan las dimensiones de la misma con el espacio aleatorio {\bf ADomain} sino que además se señala que todo
 valor en la matriz es menor que dichas dimensiones. Como se puede apreciar es necesario que el proceso generativo sea coherente
 y robusto con las muestras del dominio {\bf ADomain}, pues para un mismo proceso constructivo el valor aleatorio de dicho dominio
@@ -392,7 +388,7 @@ las restricciones contextuales.
 
 Por otra parte, como ya se mencionó con anterioridad, la transición de las restricciones de “{\it caja negra}” a través de
 toda la jerarquía que describe el espacio de búsqueda del usuario depende únicamente de los parámetros con los que
-este utilice dicha función, Véase en este casos las restricciones del ejemplo numero 7, donde se definen dos nuevas
+este utilice dicha función, Véase en este casos las restricciones del ejemplo \ref{ex:classFunc}, donde se definen dos nuevas
 restricciones {\bf IsEven} y {\bf Factorial}. Dichas definiciones se diferencia únicamente por sus nombres y sus procesos internos,
 pero para el componente generativo de la propuesta de solución son dos funciones que esperan un valor de entrada y
 retornan otro de salida.
@@ -545,7 +541,7 @@ por el {\bf DSL} para la descripción de restricciones. Cada una de las clases q
 la implementación los ``{\it métodos mágicos}'' de las operaciones permitidas por la gramática para el nodo en custión. De esta manera,
 si se usa como entrada para una funcion de restricciones instancias de clases específicas de dicha jerarquía,
 entonces de ser correcta la descripción implementada el resultado de dicha función sería el {\bf AST} de las restricciones
-descritas, de lo contrario se producirá un error de sintaxis. En la figura siguiente se puede ver la gramática definida por
+descritas, de lo contrario se producirá un error de sintaxis. En la figura \ref{chap2:grammar} se puede ver la gramática definida por
 el autor para dichas descripciones, a partir de la cual se implementó dicha jerarquía
 
 
@@ -563,82 +559,76 @@ el autor para dichas descripciones, a partir de la cual se implementó dicha jer
     \hline
     \endlastfoot
 
-    $\hspace{-0.8cm} \bnfpn{Constraint} \bnfpo \bnfpn{Constraint} \bnfsp | \bnfsp \bnfpn{Constraint}$                            \\
-    $\hspace{1.7cm} \bnfpo \bnfpn{Constraint} \bnfsp \& \bnfsp \bnfpn{Constraint}$                                               \\
-    $\hspace{-1cm} \bnfpo \bnfpn{Cmp}$                                                                                           \\
-    $\hspace{1.4cm} \bnfpo \bnfpn{SegmentationExpr}$                                                                             \\
+    $\hspace{-2.5cm} \bnfpn{Constraint} \bnfpo \bnfpn{Constraint} \bnfsp | \bnfsp \bnfpn{Constraint}$                            \\
+    $\hspace{0cm} \bnfpo \bnfpn{Constraint} \bnfsp \& \bnfsp \bnfpn{Constraint}$                                               \\
+    % $\hspace{-1cm} \bnfpo \bnfpn{Cmp}$                                                                                           \\
+    $\hspace{-3.8cm} \bnfpo \bnfpn{Cmp}$                                                                                           \\
+    % $\hspace{1.4cm} \bnfpo \bnfpn{SegmentationExpr}$                                                                             \\
+    $\hspace{-1.4cm} \bnfpo \bnfpn{SegmentationExpr}$                                                                             \\
     \\
-
-    $\hspace{-0.2cm} \bnfpn{Cmp} \bnfpo \bnfpn{Expr} \bnfsp == \bnfsp \bnfpn{Expr}$                                              \\
-    $\hspace{0.9cm} \bnfpo \bnfpn{Expr} \bnfsp != \bnfsp \bnfpn{Expr}$                                                           \\
-    $\hspace{1.1cm} \bnfpo \bnfpn{Expr} \bnfsp >= \bnfsp \bnfpn{Expr}$                                                           \\
-    $\hspace{0.8cm} \bnfpo \bnfpn{Expr} \bnfsp > \bnfsp \bnfpn{Expr}$                                                            \\
-    $\hspace{0.8cm} \bnfpo \bnfpn{Expr} \bnfsp < \bnfsp \bnfpn{Expr}$                                                            \\
-    $\hspace{1.2cm} \bnfpo \bnfpn{Expr} \bnfsp <= \bnfsp \bnfpn{Expr}$                                                           \\
-    $\hspace{-1cm} \bnfpo \bnfpn{Expr}$                                                                                          \\
+    $\hspace{-2.9cm} \bnfpn{Cmp} \bnfpo \bnfpn{Expr} \bnfsp == \bnfsp \bnfpn{Expr}$                                              \\
+    $\hspace{-1.8cm} \bnfpo \bnfpn{Expr} \bnfsp != \bnfsp \bnfpn{Expr}$                                                           \\
+    $\hspace{-1.6cm} \bnfpo \bnfpn{Expr} \bnfsp >= \bnfsp \bnfpn{Expr}$                                                           \\
+    $\hspace{-1.9cm} \bnfpo \bnfpn{Expr} \bnfsp > \bnfsp \bnfpn{Expr}$                                                            \\
+    $\hspace{-1.9cm} \bnfpo \bnfpn{Expr} \bnfsp < \bnfsp \bnfpn{Expr}$                                                            \\
+    $\hspace{-1.5cm} \bnfpo \bnfpn{Expr} \bnfsp <= \bnfsp \bnfpn{Expr}$                                                           \\
+    % $\hspace{-1cm} \bnfpo \bnfpn{Expr}$                                                                                          \\
+    $\hspace{-3.7cm} \bnfpo \bnfpn{Expr}$                                                                                          \\
     \\
-    $\bnfpn{SegmentationExpr} \bnfpo \bnfpn{SegmentationAtom} \bnfsp == \bnfsp \bnfpn{Expr}$                                     \\
-    $\hspace{3.5cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp != \bnfsp \bnfpn{Expr}$                                               \\
-    $\hspace{3.7cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp >= \bnfsp \bnfpn{Expr}$                                               \\
-    $\hspace{3.4cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp > \bnfsp \bnfpn{Expr}$                                                \\
-    $\hspace{3.7cm} \bnfpo \bnfpn{SegmentationAtom}  \bnfsp <= \bnfsp  \bnfpn{Expr}$                                             \\
-    $\hspace{3.4cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp < \bnfsp \bnfpn{Expr}$                                                \\
+    $\hspace{-2.6cm}\bnfpn{SegmentationExpr} \bnfpo \bnfpn{SegmentationAtom} \bnfsp == \bnfsp \bnfpn{Expr}$                                     \\
+    $\hspace{0.9cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp != \bnfsp \bnfpn{Expr}$                                               \\
+    $\hspace{1.1cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp >= \bnfsp \bnfpn{Expr}$                                               \\
+    $\hspace{0.8cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp > \bnfsp \bnfpn{Expr}$                                                \\
+    $\hspace{1.1cm} \bnfpo \bnfpn{SegmentationAtom}  \bnfsp <= \bnfsp  \bnfpn{Expr}$                                             \\
+    % $\hspace{3.4cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp < \bnfsp \bnfpn{Expr}$                                                \\
+    $\hspace{0.8cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp < \bnfsp \bnfpn{Expr}$                                                \\
     \\
+    $\hspace{-3.2cm}\bnfpn{SegmentationAtom} \bnfpo \bnfpn{SegmentationAtom} \bnfsp + \bnfsp \bnfpn{Expr}$                         \\
+    $\hspace{0.7cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp - \bnfsp \bnfpn{Expr}$                                                \\
+    $\hspace{0.6cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp * \bnfsp \bnfpn{Expr}$                                                \\
+    $\hspace{0.5cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp / \bnfsp \bnfpn{Expr}$                                                \\
+    % $\hspace{1.8cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp  \bnfts{\%} \bnfsp \bnfpn{Expr}$                                      \\
+    $\hspace{0.6cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp  \bnfts{\%} \bnfsp \bnfpn{Expr}$                                      \\
+    $\hspace{-1.9cm}\bnfpo \bnfpn{Expr} \bnfsp \bnfts{\%} \bnfsp \bnfpn{Expr}$                                                   \\
     \\
-    $\hspace{-2cm}\bnfpn{SegmentationAtom} \bnfpo \bnfpn{SegmentationAtom} \bnfsp + \bnfsp \bnfpn{Expr}$                         \\
-    $\hspace{1.9cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp - \bnfsp \bnfpn{Expr}$                                                \\
-    $\hspace{1.8cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp * \bnfsp \bnfpn{Expr}$                                                \\
-    $\hspace{1.7cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp / \bnfsp \bnfpn{Expr}$                                                \\
-    $\hspace{1.8cm} \bnfpo \bnfpn{SegmentationAtom} \bnfsp  \bnfts{\%} \bnfsp \bnfpn{Expr}$                                      \\
-    $\hspace{-0.7cm}\bnfpo \bnfpn{Expr} \bnfsp \bnfts{\%} \bnfsp \bnfpn{Expr}$                                                   \\
-
+    $\hspace{-3cm}\bnfpn{Expr} \bnfpo \bnfpn{Expr} \bnfsp + \bnfsp \bnfpn{Expr}$                                               \\
+    $\hspace{-1.7cm} \bnfpo \bnfpn{Expr} \bnfsp - \bnfsp \bnfpn{Expr}$                                                           \\
+    $\hspace{-1.8cm} \bnfpo \bnfpn{Expr} \bnfsp * \bnfsp \bnfpn{Expr}$                                                           \\
+    $\hspace{-1.9cm} \bnfpo \bnfpn{Expr} \bnfsp / \bnfsp \bnfpn{Expr}$                                                           \\
+    $\hspace{-3.5cm} \bnfpo \bnfpn{Expr}$                                                                                        \\
     \\
-
-    $\hspace{-1.8cm}\bnfpn{Expr} \bnfpo \bnfpn{Atom} \bnfsp + \bnfsp \bnfpn{Expr}$                                               \\
-    $\hspace{-0.5cm} \bnfpo \bnfpn{Atom} \bnfsp - \bnfsp \bnfpn{Expr}$                                                           \\
-    $\hspace{-0.6cm} \bnfpo \bnfpn{Atom} \bnfsp * \bnfsp \bnfpn{Expr}$                                                           \\
-    $\hspace{-0.7cm} \bnfpo \bnfpn{Atom} \bnfsp / \bnfsp \bnfpn{Expr}$                                                           \\
-    $\hspace{-2.3cm} \bnfpo \bnfpn{Atom}$                                                                                        \\
+    $\hspace{-3.3cm} \bnfpn{Atom} \bnfpo \bnfpn{Atom}\bnfts{[}index\bnfts{]} $                                                   \\
+    $\hspace{0.6cm} \bnfpo \bnfpn{Atom}\bnfsp getattr\bnfsp string\_name $                                                       \\
+    $\hspace{-3.8cm}\bnfpo Self$                                                                                                 \\
+    $\hspace{-1.8cm} \bnfpo \bnfts{(} \bnfsp \bnfpn{Constraint}\bnfsp \bnfts{)}$                                                 \\
+    $\hspace{-1.9cm} \bnfpo \bnfpn{NaturalValue}$                                                                                \\
     \\
-
-    $\hspace{-2.3cm} \bnfpn{Atom} \bnfpo \bnfpn{Atom}\bnfts{[}index\bnfts{]} $                                                   \\
-    $\hspace{1.6cm} \bnfpo \bnfpn{Atom}\bnfsp getattr\bnfsp string\_name $                                                       \\
-    $\hspace{-2.8cm}\bnfpo Self$                                                                                                 \\
-    $\hspace{-0.8cm} \bnfpo \bnfts{(} \bnfsp \bnfpn{Constraint}\bnfsp \bnfts{)}$                                                 \\
-    $\hspace{-0.9cm} \bnfpo \bnfpn{NaturalValue}$                                                                                \\
-
+    $\hspace{-4.9cm}\bnfpn{NaturalValue} \bnfpo FunctionCall $                                                                     \\
+    $\hspace{0cm} \bnfpo \bnfpn{NaturalValuesGrammar}$                                                                         \\
+    $\hspace{0.1cm} \bnfpo int, str, float, bool, list, .....$                                                                     \\
     \\
-
-    $\hspace{-4cm}\bnfpn{NaturalValue} \bnfpo FunctionCall $                                                                     \\
-    $\hspace{0.9cm} \bnfpo \bnfpn{NaturalValuesGrammar}$                                                                         \\
-    $\hspace{1cm} \bnfpo int, str, float, bool, list, .....$                                                                     \\
+    $\hspace{0.25cm} \bnfpn{NaturalValuesGrammar} \bnfpo \bnfpn{NaturalValuesGrammar} \bnfsp | \bnfsp \bnfpn{NaturalValuesGrammar}$ \\
+    $\hspace{5.2cm} \bnfpo \bnfpn{NaturalValuesGrammar} \bnfsp \& \bnfsp \bnfpn{NaturalValuesGrammar}$                              \\
+    $\hspace{-0.8cm} \bnfpo \bnfpn{NaturalValuesExpr}$                                                                              \\
     \\
+    $\hspace{0.1cm} \bnfpn{NaturalValuesExpr} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp == \bnfsp \bnfpn{NaturalValuesExpr}$       \\
+    $\hspace{3.8cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp != \bnfsp \bnfpn{NaturalValuesExpr}$                                 \\
+    $\hspace{4cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp >= \bnfsp \bnfpn{NaturalValuesExpr}$                                 \\
+    $\hspace{3.7cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp > \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
+    $\hspace{3.7cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp < \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
+    $\hspace{4cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp <= \bnfsp \bnfpn{NaturalValuesExpr}$                                 \\
+    $\hspace{3.6cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp + \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
+    $\hspace{3.6cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp - \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
+    $\hspace{3.5cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp * \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
+    $\hspace{3.4cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp / \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
+    $\hspace{-0.6cm} \bnfpo \bnfpn{NaturalValuesAtom}$                                                                            \\
+    $\hspace{-2.5cm} \bnfpo \bnfpn{SelfIndex}$                                                                                   \\
     \\
-    $\hspace{0.25cm} \bnfpn{NaturalValuesGrammar} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp | \bnfsp \bnfpn{NaturalValuesGrammar}$ \\
-    $\hspace{5.1cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp \& \bnfsp \bnfpn{NaturalValuesGrammar}$                              \\
-    $\hspace{0cm} \bnfpo \bnfpn{NaturalValuesExpr}$                                                                              \\
-
-    \\
-    $\hspace{0.8cm} \bnfpn{NaturalValuesExpr} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp == \bnfsp \bnfpn{NaturalValuesExpr}$       \\
-    $\hspace{4.5cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp != \bnfsp \bnfpn{NaturalValuesExpr}$                                 \\
-    $\hspace{4.6cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp >= \bnfsp \bnfpn{NaturalValuesExpr}$                                 \\
-    $\hspace{4.3cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp > \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
-    $\hspace{4.3cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp < \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
-    $\hspace{4.7cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp <= \bnfsp \bnfpn{NaturalValuesExpr}$                                 \\
-    $\hspace{4.3cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp + \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
-    $\hspace{4.3cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp - \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
-    $\hspace{4.2cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp * \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
-    $\hspace{4.1cm} \bnfpo \bnfpn{NaturalValuesExpr} \bnfsp / \bnfsp \bnfpn{NaturalValuesExpr}$                                  \\
-    $\hspace{0.1cm} \bnfpo \bnfpn{NaturalValuesAtom}$                                                                            \\
-    $\hspace{-1.7cm} \bnfpo \bnfpn{SelfIndex}$                                                                                   \\
-
-    \\
-
-    $\hspace{-1.5cm}\bnfpn{NaturalValuesAtom} \bnfpo \bnfpn{NaturalValuesAtom}\bnfts{[}index\bnfts{]} $                          \\
-    $\hspace{4.9cm}\bnfpo \bnfpn{NaturalValuesAtom}\bnfsp getattr\bnfsp string\_name $                                           \\
-    $\hspace{1.8cm}\bnfpo int, str, float, bool, list, .....$                                                                    \\
-    $\hspace{2.3cm}\bnfpo \bnfts{(} \bnfsp \bnfpn{NaturalValuesGrammar}\bnfsp \bnfts{)}$                                         \\
-    $\hspace{1.1cm}\bnfpo \bnfpn{ExternalSearchSpace}$
+    $\hspace{-3cm}\bnfpn{NaturalValuesAtom} \bnfpo \bnfpn{NaturalValuesAtom}\bnfts{[}index\bnfts{]} $                          \\
+    $\hspace{3.5cm}\bnfpo \bnfpn{NaturalValuesAtom}\bnfsp getattr\bnfsp string\_name $                                           \\
+    $\hspace{0.3cm}\bnfpo int, str, float, bool, list, .....$                                                                    \\
+    $\hspace{0.9cm}\bnfpo \bnfts{(} \bnfsp \bnfpn{NaturalValuesGrammar}\bnfsp \bnfts{)}$                                         \\
+    $\hspace{-0.2cm}\bnfpo \bnfpn{ExternalSearchSpace}$
     \\
 \end{longtable}
 
@@ -724,8 +714,8 @@ resultante es el mas grande subconjunto del dominio inicial, tal que la mayoría
 restricciones descritas.
 
 Nótese que en dicho subconjunto la mayoría cumplen con las restricciones, y es que como se ha mencionado anteriormente existen
-casos en los que la biblioteca únicamente puede resolver los problemas a partir de la filosofía “prueba y error”. En la siguiente
-tabla se ejemplifican algunos de los casos más ilistrativos del mecanismo de modificación de dominios, además el primero de dichos
+casos en los que la biblioteca únicamente puede resolver los problemas a partir de la filosofía “prueba y error”. En la 
+tabla \ref{chap2:examples} se ejemplifican algunos de los casos más ilistrativos del mecanismo de modificación de dominios, además el primero de dichos
 ejemplos es uno de los casos mas sencillos donde la herramienta se ve obligada a dejar elementos no factible en el interior del
 domino.
 
@@ -951,7 +941,7 @@ detección de dependencias circulares registrado todos los espacios que comienza
 
 El proceso de generación de muestras, luego de consultar al contexto en cuestión y validar que el espacio en cuestión no
 generado ninguna muestra ni ha comenzado su generación, se divide en tres momentos principales, inferencia del dominio
-dinámico, la generación de muestra y la validación de la misma. En la figura siguiente se muestra el seudocódigo de dicho
+dinámico, la generación de muestra y la validación de la misma. En la figura \ref{chap2:algo} se muestra el seudocódigo de dicho
 proceso generativo donde se puede ver que, como se a mencionado en múltiples ocasiones, aunque se realizarón todos los
 esfuerzos por huir de la filosofía “prueba y error” esta siempre va a estar presente cuando se habla de generación de
 instancias condicionales.
@@ -973,7 +963,7 @@ instancias condicionales.
         $context \longleftarrow Save Sample$\;
         \Return{(sample, context)}
     }
-    \caption{Algoritmo Básico de Generando de Muestras}
+    \caption{Algoritmo Básico de Generando de Muestras\label{chap2:algo}}
 \end{algorithm}
 
 

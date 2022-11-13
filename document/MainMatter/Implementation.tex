@@ -67,7 +67,7 @@ experimentos realizados y se reportarán sus respectivos resultados. En la sigui
 el autor realizará un análisis crítico y objetivo de los resultados obtenidos en los experimentos
 y sobre el sistema en general.
 
-\section*{Experimentos, Descripción y Resultandos}
+\section{Experimentos, Descripción y Resultandos}
 
 Para intentar mostrar todas las características y particularidades de la propuesta el autor diseñó
 cuatro experimentos con los que espera dar respuesta a las preguntas anteriormente planteadas. El
@@ -75,7 +75,7 @@ autor considerá que los experimentos diseñados le permitirá al lector tener u
 comportamiento del sistema en la mayoría de sus casos de uso, además de reflejar la gran variedad de
 casos de uso a los que dicho sistema puede dar respuesta.
 
-\subsection*{Ejemplos, Generación y Consistencia}
+\subsection{Ejemplos, Generación y Consistencia}
 
 El primero de los experimento consiste precisamente en la explotación del {\bf DSL} para evidenciar la
 amplia gama de dominios que este puede describir y generar. El desarrollo de este experimento
@@ -93,7 +93,7 @@ de implementar sus respectivas pruebas y realizando en cada caso las debidas com
 estado del arte en términos expresivos:
 
 1) {\bf Búsqueda acotada por las características previamente conocidas de la mejor recta que ajuste los
-            datos}. En este casos el espacio de búsqueda se describe como una clase simple donde las restricciones
+            datos}, código de ejemplo (\ref{lst:rectas}). En este casos el espacio de búsqueda se describe como una clase simple donde las restricciones
 no contienen dependencias contextuales ni mayor complejidad. Para validar que la herramienta es
 coherente con la descripción aportada por cada una de las muestras generadas se comprueba que dicha
 muestra pertenece a la clase descrita y que los atributos que representan la pendiente y el intercepto
@@ -111,7 +111,7 @@ distribución pudieran modelar dicha separación del dominio inicial.
 
 
 2) {\bf Búsqueda de un punto óptimo en el interior del un dataset con una estructura particular}, todos los
-puntos se encuentra contenidos por las rectas {\it x = y + 10} y {\it x = y - 10}. En este caso el espacio de búsqueda
+puntos se encuentra contenidos por las rectas {\it x = y + 10} y {\it x = y - 10}, código de ejemplo (\ref{lst:points}). En este caso el espacio de búsqueda
 si es sensible al contexto, pues la variable x depende del valor de la variable y. Como se puede ver en la
 implementación del ejemplo, la descripción es una clase simple con la sintaxis antes descrita para definir
 dependencias contextuales. Para validar la consistencia de las muestras generadas en la respectiva prueba se
@@ -125,7 +125,7 @@ puede utilizar la filosofía de ``prueba y error'' para solo analizar las instan
 descritas. En el casos de las bibliotecas de optimización que se apoyan en los diccionarios y las funciones de
 distribución, no tiene forma de expresar dicha relación.
 
-3) {\bf Optimización paramétrica}, donde la descripción del espacio de búsqueda del conjunto de parámetros de la clase
+3) {\bf Optimización paramétrica}, código de ejemplo (\ref{lst:sklearn}), donde la descripción del espacio de búsqueda del conjunto de parámetros de la clase
       {\bf LogisticRegresion} de {\bf Sklearn} refleje lo descrito en su documentación oficial en cuanto a la semántica de dichos
 parámetros. La gran mayoría de las clases y modelos aportados por {\bf Sklearn} y otras bibliotecas suelen definir varios
 parámetros condicionales y dependientes del contexto. En el casos particular de la clase seleccionada, la semántica
@@ -139,14 +139,14 @@ las herramientas descriptivas basadas en clases, como es el caso de {\bf AutoGOA
 de flujo para describir dependencias condicionales, entonces para valores dependientes de este estilo siempre se genera
 una muestra de sus dominio más amplio independientemente de que se use la misma o no.
 
-4) {\bf Búsqueda de los plazos óptimos para programar dos tareas rutinarias que nunca deben coincidir}. En este caso se hace
+4) {\bf Búsqueda de los plazos óptimos para programar dos tareas rutinarias que nunca deben coincidir}, código de ejemplo (\ref{lst:primos}). En este caso se hace
 referencia al espacio de dos números naturales primos relativos entre ellos. Dicha relación no puede ser expresada
 combinando los distintos operadores definidos en la gramática de restricciones, por lo que se define una función de
 ``caja negra'' para describir dicha restricción. En este caso, para cada muestra la prueba implementada revisa que no
 exista ningún número natura que divida a ambos atributos. Igual que en los dos casos anteriores, en este ejemplo existen
 dependencias contextuales, por lo que las herramientas expresivas en el estado del arte son limitadas.
 
-5)y 6) {\bf Modelación de grafos}. Como se puede ver en ambos ejemplos el {\bf DSL} es capaz de modelar el espacio de búsqueda donde
+5)y 6) {\bf Modelación de grafos}, códigos de ejemplo (\ref{lst:adj} y \ref{lst:node}). Como se puede ver en ambos ejemplos el {\bf DSL} es capaz de modelar el espacio de búsqueda donde
 la estructura del mismo es un grafos. El sistema propuesto puede modelar grafos utilizando los dos diseños más comunes de
 estas estructuras, las matrices de adyacencia y los grafos orientados a objetos. La teoría de grafos es una de las
 herramientas más potentes para resolver problemas de búsqueda.
@@ -168,7 +168,7 @@ de los subespacios internos de la clase en cuestión. La representación más pa
 definir con la biblioteca {\bf Optuna}, pero dicha implementaciones serían muy similares a los generadores de muestras implementables
 con las herramientas nativas del lenguaje.
 
-7) {\bf Modelación del clásico problema de ``la mochila'' como problema de búsqueda}. Dicho espacio de búsqueda se describe como una
+7) {\bf Modelación del clásico problema de ``la mochila'' como problema de búsqueda}, código de ejemplo (\ref{lst:bag}). Dicho espacio de búsqueda se describe como una
 jerarquía de clases donde de forma independiente se definen distintos conceptos como: los elementos que pueden formar parte de
 la mochila, la estructura de la mochila y la estructura de la solución para un problema dado. En este ejemplo se evidencia que la
 herramienta no solo generar muestras para los parámetros iniciales de los constructores de las distintas clases, como es el caso de
@@ -183,7 +183,7 @@ soluciones factibles es un espacio sensible al contexto. Pero solo {\bf Optuna} 
 problemas con sus posibles soluciones, aunque nuevamente dicha descripción no estaría muy alejada de la implementación que se podría
 lograr con las herramientas nativas del lenguaje.
 
-8) {\bf Modelación del clásico problema de búsqueda “el mapa de colores” y su espacio de soluciones}. Al igual que en el caso anterior,
+8) {\bf Modelación del clásico problema de búsqueda “el mapa de colores” y su espacio de soluciones}, código de ejemplo (\ref{lst:colors}). Al igual que en el caso anterior,
 en esta ocasión se muestra que la herramienta propuesta es capaz de describir el espacio de todas las instancias del problema en
 cuestión junto al conjunto de posibles soluciones para cada una de las instancias. En trabajos futuros a las dos componente descritas
 en el presente trabajo se le debería integrar un tercer componente capaz de modificar las distintas distribuciones aleatorias. Por
@@ -203,7 +203,7 @@ realizadas se comprobará el dominio dinámico que computó la herramienta para 
 Al igual que en ocasiones anteriores, la optimización sobre dicho espacio combinatorio solo podría ser descrito por la biblioteca
       {\bf Optina}, realizando una análisis similar al propuesto para cada uno de los indices que fuera a generar.
 
-9) {\bf Descripción del espacio de búsqueda de un pequeño problema de AutoML con dependencias contextuales}. En este casos se plantea la
+9) {\bf Descripción del espacio de búsqueda de un pequeño problema de AutoML con dependencias contextuales}, código de ejemplo (\ref{lst:automl}). En este casos se plantea la
 búsqueda de un modelo de aprendizaje automatizado semisupervisado, donde en el espacio de búsqueda descrito se evidencia los
 problemas clásicos del {\bf AutoML}: la selección de modelos y la optimización paramétrica. En dicho ejemplo se muestra como se puede
 describir dicho espacio de búsqueda con una jerarquía de clases y como se relacionan las mismas planteando una dependencia contextual
@@ -225,7 +225,7 @@ resultados de dichas pruebas, las cuales se ejecutan con cada modificación del 
 El autor confirma que cada una de las pruebas tuvo un resultado correcto y que todos los ejemplos presentados son se pueden describir y
 generar con el sistema propuesto.
 
-\subsection*{Casos Simple. Comparación con las herramientas nativas}
+\subsection{Casos Simple. Comparación con las herramientas nativas}
 
 
 
@@ -238,7 +238,7 @@ como evidencia de todo lo explicado anteriormente sobre la descomposición del {
 Como ya se ha comentado anteriormente, dentro del sistema existen tres procesos generativos básicos, dos aleatorios y un tercero
 constructivos. En dicho segundo experimento se comparará la rápidez del {\bf DSL} para generar un entero, seleccionar un texto, crear una
 clase o crear una lista con las respectivas implementaciones análogas utilizando las herramientas nativas del lenguaje. A continuación
-se enumeran y detallan cada una de las comparaciones
+se enumeran y detallan cada una de las comparaciones (los resultados se pueden ver en la figura \ref{fig:exp2}):
 \begin{enumerate}
       \item Generación de un número entero mediante: 1) el sistema como un todo, 2) la componente generativa, 3) generador basado en la función {\it uniform} de la
             biblioteca {\it random}. Se generaron 10000 muestras y cada una de ellas dentro de subconjunto [-100000, 100000] de los enteros.
@@ -263,10 +263,10 @@ se enumeran y detallan cada una de las comparaciones
 \begin{figure}[!ht]
       \includegraphics[width=\linewidth]{Graphics/exp2.png}
       \caption{Resultados del Segundo Experimento}
-      \label{fig:exp_2}
+      \label{fig:exp2}
 \end{figure}
 
-\subsection*{Procesos más costosos, conjuntos y matrices simétricas}
+\subsection{Procesos más costosos, conjuntos y matrices simétricas}
 
 El tercer experimento consisten en la medición de la eficiencia en cuanto a tiempo y exploración
 del espacio de los ejemplos más simples en los que aparecen los procesos más costosos antes
@@ -290,27 +290,27 @@ la generación de tensores de múltiples dimensiones. Para estos casos se realiz
 \end{enumerate}
 
 
-\begin{figure}[!ht]
-      \includegraphics[width=\linewidth]{Graphics/exp4.png}
-      \caption{Resultados de los experimentos con matrices}
-      \label{fig:exp_4}
-\end{figure}
-
 En cada uno de los experimentos se midierón el tiempo de generación y, para el caso de los experimentos
 con conjuntos, el número de error a la hora de elegir un nuevo elemento para el conjunto, donde un error
 es elegir un elemento que ya pertenezca al conjunto. Las generaciones fueron realizadas por: 1) el
 mecanismo generador del sistema y 2) generador basado en la función {\it uniform} de la biblioteca {\it random}.
-En las dos siguentes gráficas se muestran los resultados obtenidos.
+En las gráficas \ref{fig:exp3} y \ref{fig:exp4} se muestran los resultados obtenidos.
+
+\begin{figure}[!ht]
+      \includegraphics[width=\linewidth]{Graphics/exp4.png}
+      \caption{Resultados de los experimentos con matrices}
+      \label{fig:exp4}
+\end{figure}
 
 \begin{figure}[H]
       \includegraphics[width=\linewidth]{Graphics/exp3.png}
       \caption{Resultados de los experimentos con conjuntos}
-      \label{fig:exp_3}
+      \label{fig:exp3}
 \end{figure}
 
 
 
-\subsection*{Heurísticas para restricciones de caja negra}
+\subsection{Heurísticas para restricciones de caja negra}
 
 Los casos de funciones de “caja negra”, como ya se ha explicado con anterioridad, es en ocasiones la
 funcionalidad más estocástica del sistema, pues para aquellas restricciones que se definen una dependencia
@@ -344,12 +344,12 @@ costo temporal del proceso generativo. A dicho experimento se someterán 3 gener
 \end{enumerate}
 
 De este experimento se cronometró el tiempo de generación y se contabilizaron tanto el número de errores como la
-cantidad de errores repetidos. Los resultados se muestran en las gráficas siguientes.
+cantidad de errores repetidos. Los resultados se muestran en las gráficas de la figura \ref{fig:exp5}.
 
 \begin{figure}[H]
       \includegraphics[width=\linewidth]{Graphics/exp5.png}
       \caption{Resultados de la primera fase del 4to experimento}
-      \label{fig:exp_5}
+      \label{fig:exp5}
 \end{figure}
 
 La segunda fase de este experimento número 4 es la generación de números primos con limites fijos. Dicho experimento
@@ -358,23 +358,23 @@ la persistencia del aprendizaje obtenido en cada generación?. Para dicho experi
 dentro del subconjunto [2, 250000 ] de los números naturales. En este casos se usarón los mismos 3 generadores de la
 fase anterior solo que en este casos el tercero de ellos no se expande en cada iteración. De este experimento se cronometró
 el tiempo de generación y se contabilizaron tanto el número de errores como la cantidad de errores repetidos. Los resultados
-se muestra en las dos siguiente figuras
+se muestran en las figuras \ref{fig:exp6} y \ref{fig:exp7}.
 
 \begin{figure}[!ht]
       \includegraphics[width=\linewidth]{Graphics/exp7.png}
       \caption{Grafica de intentos y distribucion de muetras la segunda fase del 4to experimento}
-      \label{fig:exp_7}
+      \label{fig:exp7}
 \end{figure}
 
 \newpage
 
-\begin{figure}[H]
+\begin{figure}[!ht]
       \includegraphics[width=\linewidth]{Graphics/exp6.png}
       \caption{Grafica temporal de la segunda fase del 4to experimento}
-      \label{fig:exp_6}
+      \label{fig:exp6}
 \end{figure}
 
-\subsection*{Discusión}
+\subsection{Discusión}
 
 Analizando los resultados obtenidos en los experimentos anteriores se pueden realizar varias observaciones.
 Primero, como ya se había comentado con anterioridad el mecanismo generador de forma generar no puede ser más

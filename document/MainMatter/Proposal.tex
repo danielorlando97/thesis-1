@@ -2,21 +2,20 @@
 
 Al analizar los sistemas comparados en el capitulo anterior se nota la existencia
 de grandes limitaciones expresivas para que el usuario exprese detalladamente las
-características de su espacio de búsqueda. Por lo general el desarrollo de soluciones
-para problemas de búsqueda, además de una estrategia de búsqueda y un método de evaluación,
-cuenta con la implementación de mecanismos imperativos y poco descriptivos para generar
-muestras del espacio de búsqueda. Para hacer frente a estas limitaciones expresivas
-el presente documento plantea le uso de un {\bf DSL} implementado para que el análisis de
-los problemas de búsqueda parta de una descripción expresiva y declarativa de su
-espacio de búsqueda.
+características de su espacio de búsqueda. Por lo general, la solución de un problema de 
+búsqueda esta compuestos por una estrategia de búsqueda y un método de evaluación. 
+Sin embargo, la implementaciones de estas soluciones necesitan además un mecanismos 
+imperativos y poco descriptivos para generar muestras del espacio de búsqueda. 
+Para hacer frente a estas limitaciones expresivas el presente documento plantea le 
+uso de un {\bf DSL} implementado para que el análisis de los problemas de búsqueda 
+parta de una descripción expresiva y declarativa de su espacio de búsqueda.
 
 Dicha herramienta fue desarrollada pensando en la comodidad del usuario a la hora de
 describir y construir su espacio de interés. Por dicha razón, la biblioteca plantea
 una filosofía constructiva, {\it “de abajo hacia arriba”} ({ \it “Bottom-Up”}), para la
 construcción de dichas descripciones. La misma define una serie de patrones de diseño
-con los que se puede expresar el espacio de búsqueda relativo una clase de {\bf Python} en
-concreto, partiendo de los tipos básicos del lenguaje ({\it int}, {\it float}, {\it bool},
-{\it str}).
+con los que se puede expresar un espacio de búsqueda concreto con una clase de {\bf Python}, 
+partiendo de los tipos básicos del lenguaje ({\it int}, {\it float}, {\it bool}, {\it str}).
 
 Con dichos patrones el usuario puede describir la estructura y dimensión del espacio
 relativo a la clase en cuestión, así como las características de cada uno de sus
@@ -46,9 +45,9 @@ generación de variables aleatorias y aunque la biblioteca cuenta con la impleme
 algunas de las distribuciones básicas, el usuario puede definir las suyas propias e incluso
 redefinir las ya existentes. Asumiendo la existencia de dichas implementaciones, el resto del
 proceso generativo se centra en la resolución de cada uno de los dominios concretos para cada
-uno de los subespacios. Dichos dominios se encuentra expresados con la sintaxis del {\bf DSL}
-y puede contener dependencias entre ellos. Entre la listas de restricciones que el usuario puede
-describir es importante resaltar dos de ellas, que supone el mayor reto durante el proceso de
+uno de los subespacios. Dichos dominios se encuentran expresados con la sintaxis del {\bf DSL}
+y pueden contener dependencias entre ellos. Entre la listas de restricciones que el usuario puede
+describir es importante resaltar dos de ellas, que suponen el mayor reto durante el proceso de
 inferencia de los distintos dominios.
 
 Las dependencias contextuales son un de los logros más importantes del presente trabajo. Para
@@ -65,8 +64,8 @@ necesario un análisis posterior al procesos generativo. Dicho análisis en esta
 mucho más propenso a errores, pues el mecanismo generativo no cuenta con información suficiente
 para incluir a estas funciones en el proceso de inferencia y redefinición de cada domino en
 concreto. La filosofía {\it “prueba y error”} a la hora de generar muestras aleatorias es el
-mecanismo más simple posible para crear elementos que cumple con un cantidad finita de condiciones.
-Aunque el autor ideo todos los protocolos que pudo para que la creación de muestras fuera lo más
+mecanismo más simple posible para crear elementos que cumplen con un cantidad finita de condiciones.
+Aunque el autor ideó todos los protocolos que pudo para que la creación de muestras fuera lo más
 lineal posible, para el casos de las funciones de ``{\it caja negra}'' lo más que se puede hacer es
 optimizar el proceso de {\it “prueba y error”} aprendiendo de dichas equivocaciones.
 
@@ -354,13 +353,13 @@ Como se ha comentado con anterioridad la propuesta de solución debe plantear do
 de búsquedas y otro para generar muestras de lo previamente descrito. Hasta el momento se ha hecho énfasis en el componente
 descriptivo y a lo largo de toda las explicaciones anteriores se ha hecho referencia a distintos procesos del componente generativo.
 
-Dicho componente, desde sus inicios, se desarrollo con la intención de alejarse lo más posible de las filosofías de
+Dicho componente, desde sus inicios, se desarrolló con la intención de alejarse lo más posible de las filosofías de
     {\it “prueba y error”}. Este, partiendo de la base de un espacio de búsqueda descrito con las herramientas anteriormente
 detalladas, modela todas las descripciones como una jerarquía de clases sobre la cual pueda detectar las distintas
 relaciones entre los espacios descritos, reconocer el orden topológico de dichas descripciones y preparar todas las
 herramientas necesarias para construir las respectivas muestras . En el momento que una instancia de la
 clase {\bf Domain} llaman al método {\it get\_sample} el mecanismo generativo, apoyado en la jerarquía antes descrita, comienza
-a construir la nueva muestra
+a construir la nueva muestra.
 % en orden topológico y con la misma filosofía de las descripciones {\it “de abajo hacia arriba”}.
 
 Como se explicó anteriormente todo el procesos generativo esta sustentado por la generación de variables aleatorias
@@ -388,7 +387,7 @@ las restricciones contextuales.
 
 Por otra parte, como ya se mencionó con anterioridad, la transición de las restricciones de “{\it caja negra}” a través de
 toda la jerarquía que describe el espacio de búsqueda del usuario depende únicamente de los parámetros con los que
-este utilice dicha función, Véase en este casos las restricciones del ejemplo \ref{ex:classFunc}, donde se definen dos nuevas
+dicho usuario utilice la función, Véase en este casos las restricciones del ejemplo \ref{ex:classFunc}, donde se definen dos nuevas
 restricciones {\bf IsEven} y {\bf Factorial}. Dichas definiciones se diferencia únicamente por sus nombres y sus procesos internos,
 pero para el componente generativo de la propuesta de solución son dos funciones que esperan un valor de entrada y
 retornan otro de salida.
@@ -403,7 +402,7 @@ cuestión, como se explico anteriormente.
 
 Para optimizar los casos donde la única opción es la “{\it prueba y error}” la biblioteca cuenta con un mecanismo para “aprender”
 de cada error. Dicho mecanismo solo esta disponible para los errores en la generación de muestras de tipos básicos, pues el
-resto son espacios combinatorios donde descartar opciones no es trivial. En los tipos simple, por otro lado, descartar un
+resto son espacios combinatorios donde descartar opciones no es trivial. En los tipos simples, por otro lado, descartar un
 elemento no es más que una nueva delimitanción del dominio dinámico y contextual
 
 \section{Ideas e Implementación}
@@ -412,34 +411,35 @@ elemento no es más que una nueva delimitanción del dominio dinámico y context
 Luego del análisis realizado al estado del arte en el que se desarrollaría la investigación, la implementación de
 la propuesta de solución se realizó entendiendo que la herramienta final no solo debía resolver dos problemas
 (expresividad y generación) sino que además debía ser un sistema con dos componentes independientes capaces de
-operar juntos. Como se comento anteriormente, dichas dos piezas por lo general se explotarán en momentos distintos
+operar juntos. Como se comentó anteriormente, dichas dos piezas por lo general se explotarán en momentos distintos
 del programa del usuario, las descripciones deberían interpretarse una única vez, mientras que el sistema generador
 debe poder ser ejecutado tanto como el usuario lo requiera. Debido a lo anterior, a lo largo del desarrollo de la
 herramienta frente a todo problema el autor siempre analizó si la solución del mismo podía ser computada total o
 parcialmente al momento de interpretar cada descripción y únicamente en caso contrario dicho problema se resuelve desde
 cero al momento de generar muestras.
 
-Además de la filosofía anteriormente descrita, el desarrollo tomo otra serie de consideraciones con las que, en varios
-casos ante problemas con múltiples soluciones el autor se apoyó para tomar decisiones consecuentes. Primero, siempre
-se consideró más importante la velocidad de generación que la memoria de ejecución, siendo consecuentes con la
-filosofía básica del desarrollo, si la información puede ser computada en tiempo de compilación y
+
+
+Además de en la filosofía anteriormente descrita, el desarrollo se apoyó en otra serie de consideraciones.
+Primero, siempre se consideró más importante la velocidad de generación que la memoria de ejecución, siendo 
+consecuentes con la filosofía básica del desarrollo, si la información puede ser computada en tiempo de compilación y
 posteriormente utilizada para simplificar el proceso de generación se debe almacenar la misma. Segundo, con el objetivo
-fijado en la descripciones de dependencias contextuales, se consideró que dicho problema es naturalmente recursivo, por
+fijado en las descripciones de dependencias contextuales, se consideró que dicho problema es naturalmente recursivo, por
 lo que los procesos de compilación e interpretación de las descripciones y la generación de muestras deberían tener
 dicha naturaleza.
 
 Luego, siendo conscientes de los posibles usos de la herramienta (generación con dominio sin restricciones, con
 restricciones deterministas o con restricciones contextuales), se analizó que existirían procesos innecesarios
-para casos concretos, por lo que se desarrollo toda la infraestructura necesario para comprender el caso de uso
+para casos concretos, por lo que se desarrolló toda la infraestructura necesaria para comprender el caso de uso
 especificado por el usuario y crear únicamente las clases y herramientas imprescindibles. Por ultimo, como la
 propuesta de solución es un {\bf DSL} para la descripción y delimitación de los dominios de interés de los usuarios,
 todos los algoritmos y teorías sobre la compilación e interpretación de lenguajes serían una sólida base desde
 donde partir para la búsqueda de soluciones, así como la lógica matemática y la teoría de conjunto sería una
 fuente de inspiración para la sintaxis y las funcionalidades del sistema.
 
-El centro toda lógica de la biblioteca es la clase {\bf BasicSearchSpace}. La misma cuenta con una
+El centro toda la lógica de la biblioteca es la clase {\bf BasicSearchSpace}. La misma cuenta con una
 serie de métodos e implementaciones que se detallarán a lo largo del capítulo. Dicha clase cuenta además con
-sus propios ``{\it métodos mágicos}'' para que toda clase que herede de esta pueda ajustar los procesos antes comentado
+sus propios ``{\it métodos mágicos}'' para que toda clase que herede de esta pueda ajustar los procesos antes comentados
 a su domino y funcionalidad especifica.
 
 
@@ -504,14 +504,14 @@ espacio descrito.
 
     % Place nodes
     \node [block] (init) {tipo, dimensiones, parámetros y lista de restricciones};
-    \node [cloud, right= 2.5cm of init, text width=12em] (hasOptions) { ?`el parámetro {\bf options} es distrinto de {\bf None}?};
-    \node [block, below= 1.2cm of hasOptions] (categorical) {clase = espacio de búsqueda categorical};
+    \node [cloud, right= 2.5cm of init, text width=12em] (hasOptions) { ?`el parámetro {\bf options} es distinto de {\bf None}?};
+    \node [block, below= 1.2cm of hasOptions] (categorical) {clase = espacio de búsqueda categórico};
     \node [block, below= 1.2cm of init] (normal) {clase = espacio de búsqueda relativo al tipo estático};
     \node [cloud, below= 1.2cm of normal] (dim) { ?`es un espacio multidimensional?};
     \node [block, right= 3.7cm of dim] (tensor) {clase = espacio tensorial de tipo igual a la clase previa};
     \node [cloud, below= 1.2cm of dim] (restricciones) { ?`hay restricciones contextuales?};
     \node [block, right= 3.7cm of restricciones] (ss) {clase = espacio sensible al contexto de tipo igual a la clase previa};
-    \node [block, below= 1.1cm of restricciones] (stop) {generación de una nueva instance de la {\bf clase} correspondiente};
+    \node [block, below= 1.1cm of restricciones] (stop) {generación de una nueva instancia de la {\bf clase} correspondiente};
 
     % Draw edges
     \path [line] (init) -- (hasOptions);

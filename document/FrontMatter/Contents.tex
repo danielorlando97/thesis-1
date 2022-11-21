@@ -25,15 +25,14 @@ class Line:
 \begin{listing}[!ht]
     \begin{minted}{Python}
 class CenterPoint:
-    Y_Domain = Domain[int]()
-    
+    X_Domain = Domain[int](min=0, max=100)
+
     def __init__(
         self,
-        x: float = Domain[float]() | (
-            lambda x, y=Y_Domain: 
-                (x < y - 10) | (x > y + 10)
+        x: int = X_Domain,
+        y: float = Domain[float] | (
+            lambda y, x=X_Domain: (x - 10 < y, y < x + 10)
         ),
-        y: int = Y_Domain
     ) -> None:
         self.x, self.y = x, y
     \end{minted}

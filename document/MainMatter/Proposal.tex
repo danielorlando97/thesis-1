@@ -70,7 +70,7 @@ lineal posible, para el casos de las funciones de ``{\it caja negra}'' lo más q
 optimizar el proceso de {\it “prueba y error”} aprendiendo de dichas equivocaciones.
 
 
-\section{Descripción De La Biblioteca}
+\section{Descripción De La Biblioteca}\label{section:describe}
 
 La cara visible de la biblioteca propuesta es la clase {\bf Domain} la cual es una factoría de espacios
 aleatorios. En dicha clase, los tipos básicos y las funciones {\it lambdas} de {\bf Python} son todas
@@ -448,15 +448,15 @@ a su domino y funcionalidad especifica.
 Como ya se ha explicado anteriormente, la herramienta pública de la biblioteca es la clase {\bf Domian}. Esta es una
 factoría de clases que heredan de la clase \newline {\bf BasicSearchSpace}. La biblioteca cuenta con 10 de estas clases, una
 por cada tipo básico ({\it int}, {\it float}, {\it str}, {\it bool}), dos para las estructuras como listas y clases,
-otras tres que representan los operadores de tipo ({\it Union}, {\it Self}, {\it Optinal}) y una ultima para los
-espacios con dependencia contextuales. Dicha factoría creará la instancia respectiva al tipo estático que el usuario
+otras tres que representan los operadores de tipo ({\it Union}, {\it Self}, {\it Optional}) y una ultima para los
+espacios con dependencias contextuales. Dicha factoría crea la instancia relativa al tipo estático correspondiente que el usuario
 especifique con la sintaxis vista en secciones anteriores. Dicha instancia no será creada hasta que la clase
-    {\bf Domian} ejecute o su método {\it \_\_call\_\_} o su método {\it \_\_or\_\_}, dejando espacio para que el usuario
+    {\bf Domian} ejecute su método {\it \_\_call\_\_} o su método {\it \_\_or\_\_}, dejando espacio para que el usuario
 luego de especificar el tipo pueda continuar determinando las dimensiones del espacio que quiere describir.
 
 Una vez fijado el tipo y las dimensiones, el usuario deberá utilizar la sintaxis de {\bf Python} para llamar a una función
-o asignarle una lista de restricciones al dominio mediante el operador ``|'', sintaxis vista en secciones anteriores.
-Cualquiera sea la elección del usuario, a continuación la clase  {\bf Domian}  creará la nueva instancia del espacio de
+o asignarle una lista de restricciones al dominio mediante el operador ``|'', sintaxis vista en la secciones \ref{section:describe}.
+Cualquiera hay sido la elección del usuario, la clase  {\bf Domian}  creará la nueva instancia del espacio de
 búsqueda correspondiente, en dependencia del tipo, las dimensiones, los parámetros iniciales provistos al constructor
 de la clase  {\bf Domian}  y el hecho de que se le defina restricciones al espacio o no. La lógica implementada para seleccionar
 la clase heredera correspondiente se muestra en la imagen siguiente mediante un diagrama de flujo. Dicho mecanismo fue
@@ -529,20 +529,20 @@ espacio descrito.
 
 \end{tikzpicture}
 
-Una vez determinado el tipo específico del espacio de búsqueda que el usuario intenta describir comienza
+Una vez determinado el tipo específico asociado al espacio de búsqueda que el usuario intenta describir comienza
 el proceso de interpretación y almacenamiento de las distintas restricciones. Como se vio en secciones
 anteriores, las restricciones se describen mediante la sintaxis de expresiones lambdas de {\bf Python}, lo que
-significa que dichas restricciones no son más que una función anónima del lenguaje. En este casos específico
-se puede señalar que las restricciones son funciones que mayoritariamente dependen de sus parámetros de entrada.
+significa que dichas restricciones no son más que una función anónima del lenguaje. En este caso específico
+se puede señalar que las restricciones son funciones que en gran medida dependen de sus parámetros de entrada.
 
 Para obtener toda la información descrita por el usuario dentro de dichas funciones, la biblioteca cuenta con
-una jerarquía de clases con el que se puede representar los {\bf ASTs} de cada una de las cadenas del lenguaje definido
+una jerarquía de clases con la que se pueden representar los {\bf ASTs} de cada una de las cadenas del lenguaje definido
 por el {\bf DSL} para la descripción de restricciones. Cada una de las clases que componen dicha jerarquía cuenta con
-la implementación los ``{\it métodos mágicos}'' de las operaciones permitidas por la gramática para el nodo en custión. De esta manera,
+la implementación de los ``{\it métodos mágicos}'' de las operaciones permitidas por la gramática para el nodo en custión. De esta manera,
 si se usa como entrada para una funcion de restricciones instancias de clases específicas de dicha jerarquía,
 entonces de ser correcta la descripción implementada el resultado de dicha función sería el {\bf AST} de las restricciones
-descritas, de lo contrario se producirá un error de sintaxis. En la figura \ref{chap2:grammar} se puede ver la gramática definida por
-el autor para dichas descripciones, a partir de la cual se implementó dicha jerarquía
+descritas, de lo contrario se producirá un error de sintaxis. En la figura \ref{chap2:grammar} se puede ver la gramática que se 
+definió para dichas descripciones, a partir de la cual se implementó dicha jerarquía
 
 
 
@@ -634,9 +634,9 @@ el autor para dichas descripciones, a partir de la cual se implementó dicha jer
 
 Durante la explicación de la sintaxis propuesta ya se resaltó la semántica de los distintos parámetros de las
 funciones de restricciones. Dicha semántica se encuentra reflejada dentro de la jerarquía que describe el
-lenguaje de restricciones. Por tanto, haciendo alusión a lo antes expuesto, para el primer parámetro de cualquier
+lenguaje de restricciones. Por tanto, para el primer parámetro de cualquier
 función de restricciones se crea una instancia del nodo {\bf Self} de la jerarquía, haciendo alusión a un elemento
-cualquiera del dominio que se esta describiendo. Luego se crea un nodo {\bf ExternalSearchSpace} por cada uno de los
+cualquiera del dominio que se está describiendo. Luego se crea un nodo {\bf ExternalSearchSpace} por cada uno de los
 parámetros que presente valor por defecto. Y por ultimo, un nodo {\bf SelfIndex} por cada uno de los parámetros que
 resten por asignar.
 
@@ -647,11 +647,11 @@ en cuestión. Cada uno de los operadores binarios reescritos comprueba si los op
 jerarquía, en caso contrario se crea un nuevo nodo {\bf NaturalValue} para dicho valor externo.
 
 Una vez resuelta la función de restricciones y obtenido el respectivo {\bf AST}, comienza el procesos de almacenamiento
-del mismo para que posteriormente en tiempo de generación poder analizar si las muestras cumplen con dichas
+del mismo para que posteriormente en tiempo de generación se pueda analizar si las muestras cumplen con dichas
 restricciones. Pero, al inicio de esta sección se señalaba que la biblioteca intenta precomputar la mayor
 cantidad de información posible en los momentos previos al tiempo de generación de muestras. Además, como
 se explicó anteriormente, el número de espacios que puede describir la propuesta de solución es bastante
-grande y no todos hace uso de todas las funcionalidades implementadas. Por estas razones, el proceso de
+grande y no todos hacen uso de todas las funcionalidades implementadas. Por estas razones, el proceso de
 almacenamiento y los procesos previos al mismo, de existir estos, dependen de la naturaleza del espacio de búsqueda
 subyacente y de la composición del {\bf AST} en cuestión.
 
@@ -672,11 +672,11 @@ Como se ha comentado anteriormente, al momento de generar muestras solo hay dos 
 generación de números y la elección de opciones, el resto de procesos se limitan a la composición de estructuras.
 Dichas operaciones aleatorias únicamente tiene lugar en los tipos básicos y en operadores de tipos como la unión o
 la opcionalidad. Estas dos únicas operaciones aleatorias se diferencian entre si por sus respectivos dominios. Mientras
-que la generación de números se desarrolla dentro de los limites de un dominio acotado y potencialmente infinito (para
-el casos de los números decimales), la elección de opciones siempre determina un dominio finito y numerable.
+que la generación de números se desarrolla dentro de los limites de un dominio acotado y potencialmente infinito, 
+la elección de opciones siempre determina un dominio finito y numerable.
 
 La semántica de los dominios y la mutabilidad de estos frente a las distintas restricciones fueron modelados mediante una
-nueva jerarquía de clases. Esta además de describir la naturaleza de los dominios infinitos acotados o finitos numerables,
+nueva jerarquía de clases. Esta además de describir la naturaleza de los dominios enteros, reales y categóricos,
 también cuenta con la implementación de otros dos dominios que surgen de la interacción de los dos anteriores con operaciones
 lógicas o aritméticas dentro de las funciones de restricciones.
 
@@ -692,7 +692,7 @@ aquellas restricciones que no son escritas de forma tal que el parámetro que ha
 del espacio en cuestión quedase despejada.
 
 
-Cada uno de los espacios de búsqueda definidos inicialmente por la biblioteca determina explícitamente su tipo de domino
+Cada uno de los espacios de búsqueda definidos inicialmente por la biblioteca determinan explícitamente su tipo de domino
 inicial y los distintos recorridos por los {\bf ASTs} que dicha clase necesita para inferir los limites reales y dinámicos
 descritos por el usuario. Todos los procesos y análisis realizados a partir de la información contenida en los ASTs de
 restricciones fueron implementados siguiendo el patrón de diseño visitante (Visitor Design Pattern). El resultado final
@@ -706,17 +706,17 @@ tipos básicos contienen en su {\bf AST} todas aquellas restricciones que los re
 para clasificarlos en las categorías antes descritas. En los casos en los que dicho árbol no contenga restricciones
 contextuales se realiza un recorrido sobre el mismo para modificar el domino inicial del espacio.
 
-El recorrido de modificación de dominio no es más que un {\bf DFS} por el {\bf AST}. Una vez se resuelve los valores específicos de cada
+El recorrido de modificación de dominio no es más que un {\bf DFS} por el {\bf AST}. Una vez se resuelven los valores específicos de cada
 hoja del árbol, se le aplica al dominio en cuestión cada una de las operaciones descritas en el interior de {\bf AST}. Cada una de
 las clases de la jerarquía de dominios cuenta con la implementación de todos los operadores que pueda soportar el mismo, como
-regla generar dicha implementación retorna un nuevo dominio modificado. Al finalizar este recorrido, el dinámico dominio
-resultante es el mas grande subconjunto del dominio inicial, tal que la mayoría los valores en su interior cumple con las
+regla generar dicha implementación retorna un nuevo dominio modificado. Al finalizar este recorrido, el dominio dinámico
+resultante es el más grande subconjunto del dominio inicial, tal que la mayoría los valores en su interior cumplen con las
 restricciones descritas.
 
 Nótese que en dicho subconjunto la mayoría cumplen con las restricciones, y es que como se ha mencionado anteriormente existen
 casos en los que la biblioteca únicamente puede resolver los problemas a partir de la filosofía “prueba y error”. En la 
 tabla \ref{chap2:examples} se ejemplifican algunos de los casos más ilistrativos del mecanismo de modificación de dominios, además el primero de dichos
-ejemplos es uno de los casos mas sencillos donde la herramienta se ve obligada a dejar elementos no factible en el interior del
+ejemplos es uno de los casos más sencillos donde la herramienta se ve obligada a dejar elementos no factible en el interior del
 domino.
 
 \setlength\LTleft{-3cm}
@@ -845,9 +845,10 @@ domino.
     \hline
 \end{longtable}
 
-En dicho primer ejemplo se tiene un espacio de búsqueda de números reales, por lo tanto su dominio inicial es un dominio decimal infinito acotado,
-o lo que es lo mismo una clase con las propiedades {\bf min} y {\bf max}. Para dicho espacio el usuario describe que todo elemento perteneciente
-al mismo es menor estricto que 5. Dicha restricción es resuelta con el recorrido antes explicado, realizando la misma operación sobre
+En dicho primer ejemplo se tiene un espacio de búsqueda de números reales, por lo tanto su dominio inicial es un dominio decimal acotado.
+Todos los dominios numéricos acotados se modelan mediante clases de {\bf Python} con las propiedades {\bf min} y {\bf max}. 
+En dicho ejemplo el usuario describe que todo elemento perteneciente
+al espacio es menor estricto que 5. Dicha restricción es resuelta con el recorrido antes explicado, realizando la misma operación sobre
 el dominio en cuestión. Nótese que para que dicho dominio cumpla con esta restricción únicamente necesita comparar su limite superior
 con el valor especificado, y en caso que dicho limite sea superior cambiarlo. Si el espacio de búsqueda fuera de números naturales y
 limite superior fuera mayor que 5, como es el caso del segundo ejemplo de la tabla anterior, entonces el nuevo limite sería 4, dejando
@@ -857,8 +858,7 @@ sistema y el lenguaje.
 
 Otro de los proceso importantes que se realizan en tiempo de compilación, al que ya anteriormente se le ha hecho referencia,
 es la transferencia de restricciones a través de la jerarquía descrita por el usuario. Este procesos es exclusivo de los espacios
-complejos como las listas y las clases. Además este es el objetivo principal de tres de los siete recorridos implementados por el
-autor.
+complejos como las listas y las clases. Además este es el objetivo principal de tres de los siete recorridos implementados.
 
 Las clases y las listas en principio se pueden considerar ambos contenedores de espacios de búsquedas. Aunque existe una diferencia
 principal entre estas estructuras, los espacios internos de las clases ya han sido creados incluso antes que el espacio de la clase
@@ -881,13 +881,13 @@ de un espacio personalizado por el usuario se filtran todos los miembros estáti
 herederos de la clase {\bf BasicSearchSpace}, se almacenan sus referencias en dicha nueva instancia y se les inyecta las herramientas
 necesarias. Por otro lado, en el caso de los tensores las inyecciones ocurren cada vez que dicho espacio crea un nuevo espacio
 interno para un nuevo indice. Como las dimensione de estos tensores pueden ser fijas o dinámicas, tanto en tiempo de compilación
-como en tiempo de generación se puede ser necesario la creación de un nuevo espacio y la inyección de las herramientas necesarias.
+como en tiempo de generación puede ser necesario crear un nuevo espacio e inyectarle las herramientas necesarias.
 
 Nótese que el hecho de que las restricciones sea traspasadas de padres a hijos a lo largo de las jerarquías descritas, implica que
 cada una de las hojas conoces al detalle su posición en la jerarquía y solo dependen de sus padres para obtener las distintas
 herramientas interpretativas. Debido a lo anterior se podría resumir que, todo espacio perteneciente a un tensor conoce cual es
 su indice y todo espacio perteneciente a una clase conoce a que miembro el hace referencia. Partiendo de esta base, las herramientas
-interpretativas antes mencionadas solo tiene la tarea de detectar cuando una operación de indexación o referencia a atributo se refiere
+interpretativas antes mencionadas solo tienen la tarea de detectar cuando una operación de indexación o referencia a atributo se refiere
 al espacio en cuestión o cuando es una referencia contextual a otro espacio de la jerarquía.
 
 Para realizar dichas interpretaciones sobre el {\bf AST} de restricciones la biblioteca utiliza tres de los siete recorridos antes mencionados,
@@ -905,9 +905,9 @@ de la operación es verdadero, en caso contrario dicha restricciones no son toma
 Una vez resueltos los distintos valores de todas las indexaciones si los indices coinciden con la posición del espacio en cuestión dentro
 del tensor entonces se remplaza dichos nodos por nodos {\bf Self} o en caso contrario por nodos de dependencias contextuales.
 
-En las primeras ideas de solución siempre el autor intento que las dependencias circulares fueran imposible de representar debido a
+En las primeras ideas de solución siempre que las dependencias circulares fueran imposible de representar debido a
 las reglas gramaticales y semánticas del lenguaje. Pero, todas las interpretaciones posteriores a las definiciones no solo hicieron
-que se tornan muy complicada la definición de dichas reglas, sino que además el autor se percato que dicha idea limitaba en gran
+que se tornan muy complicada la definición de dichas reglas, sino que además dicha idea limitaba en gran
 medida el potencial expresivo de la herramienta. Debido a todo lo anterior, la biblioteca cuenta con las herramientas necesarias para
 soportar dependencias circulares únicamente dentro de la misma estructura. Dichas herramientas se encuentran integradas dentro de los
 tres recorridos antes descritos.
@@ -926,7 +926,7 @@ sin caer en procesos infinitos.
 Una vez determinado todos los tipos concretos de los distintos espacios de búsqueda, optimizados todos los dominios iniciales y
 almacenados los {\bf ASTs} de restricciones, la biblioteca cuenta con toda la infraestructura necesaria para comenzar la explotación
 de las descripciones realizadas y la generación de muestras de las mismas. Proceso que inicia en el momento que el usuario
-utilice una de sus espacios descritos para llamar la método {\bf get\_sample}, método que tienen como resultado la muestra generada y
+utilice una de sus espacios descritos para llamar al método {\bf get\_sample}, método que tienen como resultado la muestra generada y
 el contextos en el que se desarrollo dicha generación.
 
 \subsection{Implementación del Mecanismo Gerativo}
@@ -936,14 +936,14 @@ obtenerlo se crea uno por defecto antes de iniciar la generación. Estos context
 almacena por niveles las muestras de cada uno de los espacios de búsqueda que fueron analizados frente al mismo. Dichos niveles
 son creados por las espacios de búsqueda de orden superior para desechar muestras que no sean consistentes con restricciones
 estructurales que no puedan ser trasmitidas y cumplidas por cada unidad en particular. Gracias a dichos contextos se puede
-garantizar que un mismo espacio de búsqueda con un mismo contextos siempre genera la misma muestra. Además de permite la
-detección de dependencias circulares registrado todos los espacios que comienzan su proceso de muestreo.
+garantizar que un mismo espacio de búsqueda con un mismo contextos siempre genera la misma muestra. Además de que permite la
+detección de dependencias circulares registrando todos los espacios que comienzan su proceso de muestreo.
 
-El proceso de generación de muestras, luego de consultar al contexto en cuestión y validar que el espacio en cuestión no
-generado ninguna muestra ni ha comenzado su generación, se divide en tres momentos principales, inferencia del dominio
-dinámico, la generación de muestra y la validación de la misma. En la figura \ref{chap2:algo} se muestra el seudocódigo de dicho
+El proceso de generación de muestras, luego de consultar al contexto en cuestión y validar que el espacio en cuestión no ha
+generado ninguna muestra ni ha comenzado su generación, se divide en tres momentos principales: 1) inferencia del dominio
+dinámico, 2) generación de la muestra y la validación de la misma. En la figura \ref{chap2:algo} se muestra el pseudocódigo de dicho
 proceso generativo donde se puede ver que, como se a mencionado en múltiples ocasiones, aunque se realizarón todos los
-esfuerzos por huir de la filosofía “prueba y error” esta siempre va a estar presente cuando se habla de generación de
+esfuerzos por evitar de la filosofía “prueba y error” esta siempre va a estar presente cuando se habla de generación de
 instancias condicionales.
 
 \begin{algorithm}[H]
@@ -970,21 +970,22 @@ instancias condicionales.
 El primer paso de la generación de muestras, luego de las distintas consultas realizadas al contexto,
 es la inferencia de los dominios dinámicos. En esta fase de la generación se realizan todos los procesos
 de interpretación y reducción de dominios que se realizan en tiempo de compilación, solo que en estas
-instancias únicamente se analizan aquellos {\bf ASTs} donde existan dependencias contextuales. En estos casos
-junto al dominio actual y a los recorridos se le proporciona además el contexto de generación y una vez
-se detecta una dependencia contextual se comienza el proceso de generación de muestra para aquellos espacios
-que sirven de base para la muestra final del espacio al que se le solicitó una nueva muestra. En ocasiones
-anteriores se resaltó que la biblioteca detectaba la estructura topológica de las descripciones, que se
-encuentra plasmada en los distintos {\bf ASTs}, y que la generación de muestras se ordenaba en orden ascendente
-al número de dependencias de cada espacio. Pero, aunque lo anterior es la base teórica que sostuvo el desarrollo
-del {\bf DSL}, en la práctica ambas ideas son características implícitas en la filosofía recursiva de la solución.
+instancias únicamente se analizan aquellos {\bf ASTs} donde existan dependencias contextuales. 
+En estos casos, junto al dominio actual, a los recorridos se les proporciona el contexto de generación. 
+Una vez se detecta una dependencia contextual se genera una muestra para el espacio referenciado coherente con el 
+contexto en cuestión. El resultado de dicho proceso sustituye al espacio referenciado en el {\bf AST} resultante 
+del recorridos en cuestión. En ocasiones anteriores se resaltó que la biblioteca detectaba la estructura topológica de 
+las descripciones, estructura que se encuentra plasmada en los distintos {\bf ASTs}, y que la generación de muestras 
+se ordenaba en orden ascendente al número de dependencias de cada espacio. Pero, aunque lo anterior es la base 
+teórica que sostuvo el desarrollo del {\bf DSL}, en la práctica ambas ideas son características implícitas en la 
+filosofía recursiva de la solución.
 
 El resultado final de esta primera etapa es un nuevo dominio dinámico, lo más ajustado posible a las restricciones
 y coherente con las muestras generadas durante el proceso de inferencia, y un nuevo {\bf AST}, resultado de todas las
-posibles interpretaciones realizadas al {\bf AST} inicial. En este nuevo {\bf AST} se une el resultado final de los recorridos
-realizados por las restricciones con dependencias contextuales con las representaciones de aquellas otras restricciones
-que no presentaba dichas dependencias, anteriormente ya se comentó que en tiempo de compilación ambos conjuntos
-se almacenan en registros distintos. Dicho nuevo {\bf AST}, como se puede ver en el seudocódigo anterior, será el que se
+posibles interpretaciones realizadas al {\bf AST} inicial. En este nuevo {\bf AST} se une el resultado de los recorridos
+realizados por las restricciones con dependencias contextuales, con las representaciones de aquellas otras restricciones
+que no presentaban dichas dependencias, anteriormente ya se comentó que en tiempo de compilación ambos conjuntos
+se almacenan en registros distintos. Este nuevo {\bf AST}, como se puede ver en el pseudocódigo anterior, será el que se
 utilizará para realizar las comprobaciones finales.
 
 Una vez realizadas todas las inferencias y reducciones posibles comienza la generación de la muestras. Este pasos es
@@ -1002,11 +1003,13 @@ Por otro lado, se pueden ver otros 3 espacios que a pesar de ser especiales no p
 espacio vacío, desarrollado para agregar la opcionalidad a la lista de herramientas descriptivas del {\bf DSL}. Este espacio en
 particular se limita a devolver el valor especial del lenguaje {\bf None}. El segundo es la clase {\bf SelfSpace}, esta clase no es
 más que una ``caja'' que se crea vacía inicialmente hasta el momento en que se puede conocer el tipo real al que este espacio hace
-referencia, en dicho instante se realiza una copia de dicho espacio y se coloca en el interior de esta ``caja''. Una vez se resuelve
-el tipo real de una clase {\bf SelfSpace} todo método o atributo que se le solicite a la instancia de dicha clase, esta solo se
-limitara a replicar la solicitud hacia la instancia que esta contiene en su interior. Por último, el {\bf DSL} brinda una definición
-para la operación unión entre tipos distintos, para esto se implementó una nueva clase que a grandes rasgos e muy similar a un espacio
-categorical, salvo que al momento de generar muestras este espacio realiza dos generaciones. La primera generación consiste en la
+referencia, en dicho instante se realiza una copia de dicho espacio y se coloca en el interior de esta ``caja''. 
+Una vez se resuelve el tipo real de una clase {\bf SelfSpace} dicha instancia pasa a ser una simple interfaces para 
+comunicar su espacio interno con el resto herramientas y operaciones.
+Por último, el {\bf DSL} brinda una definición para la operación unión entre tipos distintos.
+Para esto se implementó una nueva clase que a grandes rasgos e muy similar a un espacio categorical, 
+salvo que al momento de generar muestras este espacio realiza dos generaciones. 
+La primera generación consiste en la
 selección del tipo al que pertenecerá el resultado final, y luego utilizando un espacio previamente creado y relativo a dicho tipo
 se genera la muestra final. Estos tres espacios especiales son el resultado de la integración del {\bf DSL} propuesto con la biblioteca
     {\bf typing} de {\bf Python}.
@@ -1017,11 +1020,11 @@ procesos muy distintos. La generación de tensores es un procesos únicamente re
 el espacio en caso de ser necesario y generando muestras de estos. El espacio de clases, sin embargo, realiza un análisis utilizando
     {\bf metaprogramación} para detectar cada uno de los espacios internos y las funciones que han sido decoradas con la sintaxis descrita en
 secciones anteriores. Una vez finalizada le generación de la muestra en cuestión se le asigne un nuevo atributo {\it \_\_context\_\_},
-que hace referencia al contexto en el que dicha muestra se construyó. En ambos casos, antes de comenzar a generar las muestras de los
+que hace referencia al contexto en el que dicha muestra se construyó. En ambos casos, antes de comenzar a generar las muestras de
 cada uno de sus espacios internos, se construye un nuevo contexto hijo del contexto en cuestión para que si la muestra
 final no es coherente poder eliminar del contexto cada muestra particular con facilidad.
 
-Una vez obtenida una posible muestra final, como se a comentado en anteriores capítulos, es necesario una última fase en la que se
+Una vez obtenida una posible muestra final es necesario una última fase en la que se
 revisará detalladamente la coherencia y compatibilidad de la muestra con todas las restricciones planteadas. Esta última fase consiste
 en un último recorrido sobre el {\bf AST} resultante del proceso de inferencia de dominios dinámicos. En este se sustituyen todo los nodos
     {\bf Self} por la muestra generada y se intentan simular todas las operaciones descritas en las funciones de restricciones. En caso de que

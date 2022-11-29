@@ -1,6 +1,6 @@
 \begin{resumen}
   {\bf AutoGOAL} es una de las bibliotecas del estado del arte que analiza la
-  problemática del {\it AutoML}. Esta se distingue del resto por ser transversal
+  problemática del {\it AutoML}. Esta se distingue de las alternativas por ser transversal
   a la naturaleza del problema, característica que es consecuencia directa
   de su elección y diseño de la estrategia de búsqueda,
   {\it Evolución Gramatical Probabilística}
@@ -12,17 +12,33 @@
   sus respectivas gramáticas, más amplio será el conjunto de los problemas
   que esta podrá intentar resolver. Las herramientas existentes previas al
   desarrollo de la presente tesis se limitaban a la definición e inferencia
-  de gramáticas libres del contexto
+  de gramáticas libres del contexto.
 
   En este documento se presenta una nueva herramienta, que al integrarse con
   \newline{\bf AutoGOAL} podría ampliar el poder descriptivo de este hasta la
-  generación de gramáticas sensibles al contextos sin dependencias circulares.
+  generación de gramáticas sensibles al contexto sin dependencias circulares.
   Dicha nueva biblioteca define un {\bf DSL}
   ({\it Lenguaje de Dominio Específico}, {\it Domain Specific Language}) capaz de
   describir, con una filosofía {\it Bottom-Up}, la composición de los
   espacios de búsqueda y las relaciones y restricciones entre sus
   componentes internos, para posteriormente generar muestras apoyándose en
-  dichas descripciones
+  dichas descripciones.
+
+  La investigación que se describe en el documento finaliza sometiendo al 
+  sistema propuesto a una serie de experimentos que intentan evaluar las 
+  capacidades expresivas y generativas del mismo. En los resultados de dichos 
+  experimentos se evidencia que los procesos generativos del sistema son, en 
+  general, eficientes en cuanto a tiempo, aunque nunca mejores que un generador 
+  imperativo escrito con las herramientas del lenguaje. Sobre dichos procesos generativos se 
+  demuestra además su efectividad al generar muestras pertenecientes a los 
+  espacios descritos. 
+
+  Por otro lado, a lo largo del documento y como parte de los 
+  experimentos se muestran decenas de ejemplos que evidencian la expresividad de 
+  la propuesta y la amplia gama de casos de usos en las que esta puede ser útil. 
+  Concluyendo que la misma es un salto evolutivo en cuanto a la expresividad de 
+  las descripciones de los espacios de búsqueda, llegando a ser despreciable las 
+  diferencias en cuanto a tiempo de generación que pueda tener con herramientas menos expresivas.
 
 \end{resumen}
 
@@ -45,6 +61,20 @@
   capable of describing, with a {\bf Bottom-Up} philosophy, the composition of the search spaces
   and the relationships and constraints of the search spaces. and the relationships and constraints
   between its internal components, in order to subsequently internal components, and then generate
-  samples based on these descriptions. these descriptions
+  samples based on these descriptions. these descriptions.
+
+  The research described in the paper concludes by subjecting the proposed system to a series of 
+  experiments that attempt to evaluate the expressive and generative capabilities of the system. 
+  The results of these experiments show that the generative processes of the system are, 
+  in general, efficient in terms of time, although never better than an imperative generator 
+  written with the language tools. The effectiveness of these processes in generating samples 
+  belonging to the described spaces is also demonstrated. 
+  
+  On the other hand, the expressive capabilities of the system demonstrated in these experiments 
+  are impressive. Throughout the document and as part of the experiments, dozens of examples are 
+  shown that demonstrate the expressiveness of the proposal and the wide range of use cases in 
+  which it can be useful. Concluding that it is an evolutionary leap in terms of the expressiveness 
+  of the descriptions of the search spaces, becoming negligible the differences in terms of 
+  generation time that this may have with the imperative generators. 
 
 \end{abstract}

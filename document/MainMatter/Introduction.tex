@@ -6,7 +6,7 @@ El aprendizaje automático (machine learning, {\it ML}) es uno de los más famos
 y poderosos campos de la inteligencia artificial. Sin embargo, es un campo
 donde el tiempo de aprendizaje e investigación es muy superior al de desarrollo
 y donde la experiencia de los investigadores juega un papel fundamental tanto
-en los resultados finales como en la efectividad del procesos investigativo.
+en los resultados finales como en la efectividad del proceso investigativo.
 
     {\it AutoML} (Automated Machine Learning), según (\cite{autoML}), es un campo de investigación
 que persigue la automatización incremental de todas las fases del desarrollo
@@ -15,7 +15,7 @@ manual, {\it AutoML} permite explorar inteligentemente las mejores combinaciones
 de algoritmos e hiperparámetros para la construcción de posibles soluciones.
 
 Se han creado varias bibliotecas que aprovechan las tecnologías de {\it ML}
-existentes para aplicar técnicas {\it AutoML} y asi ofrecer una forma óptima
+existentes para aplicar técnicas {\it AutoML} y de esta manera ofrecer una forma óptima
 o semi óptima de combinar dichas tecnologías para dar solución a
 los problemas que puedan ser resueltos con las mismas. La mayoría de dichas
 herramientas se centran en una familia específica de algoritmos ({\it como las
@@ -49,56 +49,63 @@ valores de entrada, salida e hiperparámetros de los algoritmos que formen parte
 del espacio de interés del usuario.
 
 Con la lista de descripciones del usuario se infiere una gramática libre
-del contexto que describe el lenguaje de todos los potenciales programas validos
+del contexto que describe el lenguaje de todos los potenciales programas válidos
 que se pueden construir combinando los algoritmos aportados. Al momento de inferir
 la gramática se analizan los tipos de entrada y salida de todos los algoritmos y se
 excluyen los programas donde se intente secuenciar dos implementaciones tales que
 la salida de uno no sea consistente con la entrada del siguiente. De esta
-manera se logra descarta una gran cantidad de secuencias invalidas, incluso
+manera se logra descartar una gran cantidad de secuencias inválidas, incluso
 antes de empezar a buscar, pero como se puede ver en los resultados de (\cite{estevez-velarde-etal-2019-automl})
-todavía quedan algunas {\it instancias invalidas}.
+todavía quedan algunas {\it instancias inválidas}.
 
-En muchos casos las {\it instancias invalidas} son consecuencias de los
+\section*{Motivación}
+
+En muchos casos las {\it instancias inválidas} de una ejecuciones de {\bf AutoGOAL} son consecuencias de los
 parámetros iniciales de la búsqueda, como el tiempo de espera o la capacidad de memoria.
 En estos casos, durante la ejecución de la instancia en cuestión se superan los límites
-prefijados y es automaticamente descartada como posible solución. Como para la
+prefijados y es automáticamente descartada como posible solución. Como para la
 biblioteca un algoritmo es una función de la cual solo conoce sus tipos de entrada y
 tipo de salida, prever el fallo de las instancias antes descritas previo a su ejecución,
 es equivalente al {\it Halting Problem}, problema que {\it Alan Turing} demostró en 1936
-que es indecidible en una máquinas de Turing (\cite{Hopcroft+Ullman/79/Introduction}).
+que es indecidible en una máquina de Turing (\cite{Hopcroft+Ullman/79/Introduction}).
 
-Sin embargo existe otro conjunto de {\it instancias invalidas} relacionadas a la validez
+Sin embargo, existe otro conjunto de {\it instancias inválidas} relacionadas a la validez
 y consistencia de los hiperparámtros iniciales. A lo largo del proceso de búsqueda
 se exploran las ``posibles soluciones'' a partir de las distintas instancias generadas
 por la gramática que se infirió de las definiciones del usuario. Como la misma
-es libre del contexto los valores que se generan para cada símbolo terminal de la misma
-son independientes entre si, pero, existen modelos en los que por definición o por
+es libre del contexto, los valores que se generan para cada símbolo terminal de la misma
+son independientes entre sí, pero, existen modelos en los que por definición o por
 experiencia práctica se presenta una cierta dependencia entre los valores de sus
 hiperparámetros.
 
 Para describir dicho modelo en el contexto de {\bf AutoGOAL} se presentan dos opciones.
-La primera sería definir el modelo de la forma mas simple posible, asignando a cada
+La primera sería definir el modelo de la forma más simple posible, asignando a cada
 hiperparámetro la descripción más extensa de su dominio y en el interior del algoritmo
-controlar que los mismos cumplan con dichas reglas contextuales y en casos contrario
-lanzar un excepción en tiempo de ejecución. Por otro lado, la segunda opción sería, teniendo
+controlar que los mismos cumplan con dichas reglas contextuales y en caso contrario
+lanzar una excepción en tiempo de ejecución. Por otro lado, la segunda opción sería, teniendo
 en cuanta dichas dependencias, que el usuario defina un algoritmo por cada combinación de
 subdominios compatibles de los hiperparámetros.
 
-En la práctica, debido a las limitaciones de la biblioteca para describir dichas
-dependencias contextuales, los desarrolladores prefieren incluir dichas {\it instancias
-        invalidas} a su espacio de búsqueda inicial, pues el procesos de evitarlas suele
+\section*{Problema}
+
+En la práctica, debido a las limitaciones de la biblioteca para describir
+restricciones y dependencias contextuales, los desarrolladores prefieren incluir
+en sus espacios de búsqueda iniciales los elementos que no cumplen  
+con dichas reglas contextuales, pues el proceso de evitarlas suele
 ser bastante tediosos y poco escalable. Provocando consigo una dilatación del
 tiempo de ejecución de {\bf AutoGOAL}.
 
 Dichas limitaciones dieron lugar a que los autores de la biblioteca propusieran
-nuevo problema a resolver, el desarrollo de una herramienta capaz de describir de
+un nuevo problema a resolver, el desarrollo de una herramienta capaz de describir de
 la forma más expresiva y simple posible la estructura interna de los
 distintos espacios de búsqueda, las dependencias y relaciones existentes entre sus
 componentes, y con la capacidad de generar muestras, dada una descripción
-previa, de forma tal que cada uno de los dominio internos se reajuste al contexto
-específico del procesos generativo en cuestión.
+previa, de forma tal que cada uno de los dominios internos se reajuste al contexto
+específico del proceso generativo en cuestión.
 
-En respuesta a este nuevo problema el presente documento plantea el desarrollo de una
+\section*{Hipótesis}
+
+En respuesta al problema planteado, la investigación realizada plantea el desarrollo de una
 nueva biblioteca que cuente con todas las arquitecturas y herramientas necesarias para
 crear un {\bf DSL} capaz de describir los distintos espacios de búsquedas bajo una
 filosofía ``{\it de abajo hacia arriba}'' ({\it Bottom-Up}), mediante el cual apoyado
@@ -108,23 +115,55 @@ sintaxis, inspirada en el paradigma funcional, para declarar restricciones y
 relaciones en cada uno de los distintos subespacios. Estas declaraciones dan lugar a la
 definición de varios {\bf AST's} ({\it Astract Syntaxis Trees, Árboles de Sintaxis
         Abstracta}) los cuales son visitados al momento del muestreo para acotar los distintos
-subdominos y validar cada uno de las selecciones internas.
+subdominios y validar cada uno de las selecciones internas.
 
-Toda esta investigación y desarrollo se realizó con el objetivo de crear una
-herramienta con la que se pueda describir detalladamente, en un lenguaje de alto nivel,
-los distintos espacios de búsqueda. Descripciones que debían ser escalables, mantenibles,
-expresivas, independientes de los procesos y algoritmos de generación de muestras, pero a
-su vez capaz de transmitirle a dichos algoritmos los distintos dominios dinámicos para
-cada contextos en cuestión.
+\section*{Objetivos}
 
-Luego en un plano más general se esperaba darle respuesta a las limitaciones
-de {\bf AutoGOAL} que dieron lugar al problema inicial y que el resultado final sea
-de utilidad en todos aquellos escenarios donde sea de interés describir espacios
-aleatorios y generar muestras del mismo, como pueden ser los algoritmos genéticos,
-donde puede ser interesante que la descripción de la población sea lo más expresiva
+La presente investigación y el desarrollo de su propuesta de solución se realizaron con el objetivo de crear una 
+herramienta con la que se pueda describir detalladamente, en un lenguaje de 
+alto nivel, los distintos espacios de búsqueda. Con dicha herramienta se 
+pretendía resolver las limitaciones de {\bf AutoGOAL} que dieron lugar al problema 
+inicial. Además, se esperaba que dicha herramienta fuera de utilidad en todos 
+aquellos escenarios donde existiera interés en describir espacios aleatorios 
+y generar muestras del mismo, como pueden ser los algoritmos genéticos, donde 
+sería interesante que la descripción de la población sea lo más expresiva 
 posible.
 
-El documento esta organizado en tres capítulos. Un primer capítulo donde se analiza
+Para llevar a cabo dicha investigación y desarrollo se señalaron una serie 
+de objetivos específicos relacionados con cada una de las fases de ambos 
+procesos. Los mismos se detallan a continuación:
+\begin{itemize}
+    \item Estudio de los principales {\bf DSL}s y frameworks que tuvieran como objetivo 
+    principal la descripción de espacios de búsqueda. Con dicho estudio se 
+    pretendía detectar las principales limitaciones expresivas y los patrones 
+    de diseño más comunes.
+    \item Diseñar una sintaxis declarativa y expresiva con la cual se pudiera describir 
+    las dimensiones, estructuras y restricciones de los espacios de búsqueda. 
+    Dicha sintaxis debía presentar mecanismos para resolver las limitaciones 
+    detectadas. Principalmente, debía poder representar dependencias contextuales, 
+    limitación que dio origine a la presente investigación.
+    \item Desarrollar una jerarquía de clases que definiera un {\bf DSL} que representara la 
+    sintaxis diseñada anteriormente. Dicho {\bf DSL} debía ser capaz de integrarse con la 
+    biblioteca {\bf AutoGOAL}.\
+    \item Desarrollar un mecanismo generador que fuese capaz de generar muestras 
+    aleatorias dada una descripción implementada con el {\bf DSL} anteriormente 
+    definido. Dicho mecanismo debía ser extensible y modular, para que los 
+    usuarios finales de la herramienta pudieran definir sus propios protocolos 
+    y distribuciones para la generación aleatoria sin modificar las descripciones 
+    realizadas.
+    \item Someter la implementación concreta de la propuesta de solución a una fase 
+    experimental para obtener resultados cuantitativos y cualitativos sobre las 
+    capacidades expresivas y generativas de la propuesta.
+    \item Realizar un análisis basado en los resultados experimentales, 
+    cuestionando la validez y utilidad tanto de la implementación 
+    concreta como de la investigación en general. 
+\end{itemize}
+
+
+
+\section*{Estructura del Documento}
+
+El presente documento está organizado en tres capítulos. Un primer capítulo donde se analiza
 el marco teórico en que se realizaron las implementaciones y los trabajos realizados
 en el sector hasta la fecha. Un segundo capítulo donde se detalla la propuesta de soluciones, sus
 objetivos, alcance e implementación. Y un último un capítulo donde apoyado en ejemplos

@@ -192,6 +192,12 @@
    \addcontentsline{toc}{chapter}{Recomendaciones}%
     \chapter*{Recomendaciones}}%
   {}
+\newenvironment{codesample}%
+  {\cleardoublepage%
+   \phantomsection%
+   \addcontentsline{toc}{chapter}{Ejemplos de Código}%
+    \chapter*{Ejemplos de Código}}%
+  {}
 \newenvironment{dedication}%
   {\cleardoublepage%
    \thispagestyle{empty}%

@@ -1,32 +1,43 @@
 \begin{conclusions}
-      Se puede concluir que los resultados de la investigación realizadas son favorables
+      Se puede concluir que los resultados de la investigación realizada son favorables
       y que la implementación aportada es una buena solución para los objetivos planteados.
-      Con la presente investigación se crearó una herramienta con la que se puede describir
+      Con la presente investigación se creó una herramienta con la que se puede describir
       detalladamente en lenguaje de alto nivel una amplia gama de espacios de búsqueda.
       Las descripciones que se pueden realizar con la explotación de la propuesta realizada
-      son: 1) escalables y mantenibles, pues la sintaxis propuesta esta basada en las
+      son: 1) escalables y mantenibles, pues la sintaxis propuesta está basada en las
       clases de {\bf Python}, las descripciones resultantes cuentan con toda la flexibilidad y potencia
       del patrón orientado a objeto, 2) expresivas, pues se diseñó una sintaxis lo más
       similar posible a las definiciones de dominios matemáticos por lo que las descripciones resultantes suelen
       ser muy concretas y legibles, 3) independiente de los procesos y algoritmos de generación de
       muestra, se crearon las interfaces y los conectores necesarios para que los usuarios
-      puedieran definir sus propias clases {\bf Sampler}.
+      pudieran definir sus propias clases {\bf Sampler}.
+
+      Mediante la experimentación se comprobaron las capacidades expresivas y generativas del 
+      sistema propuesto. En los resultados de dichos 
+      experimentos se evidenció que los procesos generativos del sistema son, en 
+      general, eficientes en cuanto a tiempo, aunque nunca mejores que los generadores 
+      imperativos que se pueden escribir con las herramientas del lenguaje. 
+      Sobre dichos procesos generativos se demostró además su efectividad al generar muestras pertenecientes a los 
+      espacios descritos. Por otro lado, las capacidades expresivas del sistema que se demostraron en dichos 
+      experimentos son impresionantes. A lo largo del documento se mostraron decenas de ejemplos 
+      que evidenciaron la expresividad de 
+      la propuesta y la amplia gama de casos de usos en las que esta puede ser útil.
 
       De forma general se presentó una potencial solución a las limitaciones expresivas de {\bf AutoGOAL}.
       El sistema es mucho más interesante para desarrollos puntuales de
-      soluciones de problemas de búsqueda que para una sistema del {\bf AutoML}, donde el tiempo de evaluación
+      soluciones de problemas de búsqueda que para un sistema del {\bf AutoML}, donde el tiempo de evaluación
       de la función objetivo es mucho más grande que el tiempo de generación de muestras.
 
       El resultado final es un {\bf DSL} muy expresivo y coherente en la generación de muestra. Dicho {\bf DSL} es
       capaz de representar expresiones que hasta el momento prácticamente no tenían representación simple
-      ni declarativa. Entre la lista de relaciones descriptibles que hacen que el {\bf DSL} propuesto se un
+      ni declarativa. Entre la lista de relaciones descriptibles que hacen que el {\bf DSL} propuesto es un
       salto evolutivo en la descripción de espacio de búsqueda con respecto al estado del arte se
       encuentran las dependencias contextuales, las dependencias condicionales y los tensores de
       dimensiones dinámicas.
 
       El uso de la herramienta propuesta puede suponer un salto importante en la
       legibilidad del código. Además de aumentar la productividad a la hora de resolver problemas de
-      búsqueda pues una mejor descripción del espacio del búsqueda se traduce en una mejor comprensión
+      búsqueda pues una mejor descripción del espacio de búsqueda se traduce en una mejor comprensión
       de la estructura del mismo. Dicha comprensión no solo es importante para el desarrollador en
       cuestión a la hora de diseñar la soluciones o pensar las heurísticas, sino que además facilita
       el análisis del código en cuestión por personas ajenas al desarrollo.

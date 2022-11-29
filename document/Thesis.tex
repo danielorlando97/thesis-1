@@ -66,9 +66,9 @@
 
 \lstset{style=mystyle}
 
-\title{DSL en Python, Descripción de Espacios de Búsquedas Y Generación Muestras}
+\title{DSL en Python para la Descripción de Espacios de Búsquedas y la Generación de Muestras}
 \author{\\\vspace{0.25cm}Daniel Orlando Ortiz Pacheco}
-\advisor{\\\vspace{0.25cm}Lic. Frank Sadan Naranjo\\\vspace{0.2cm}Doc. Alejandro Piad Morffis}
+\advisor{\\\vspace{0.25cm}Lic. Frank Sadan Naranjo\\\vspace{0.2cm}Dr.C. Alejandro Piad Morffis}
 \degree{Licenciado en Ciencia de la Computación}
 \faculty{Facultad de Matemática y Computación}
 \date{Fecha\\\vspace{0.25cm}\href{https://github.com/danielorlando97/search-space}{github.com/danielorlando97/search-space}}
@@ -91,6 +91,24 @@
 \newcommand{\nnorm}[1]{\left\lvert #1 \right\rvert }
 \renewcommand{\lstlistingname}{Ejemplo de código}
 \renewcommand{\lstlistlistingname}{Ejemplos de código}
+\makeatletter
+\let\l@listing\l@figure
+\makeatother
+% % https://tex.stackexchange.com/questions/34400
+% % https://tex.stackexchange.com/questions/538069
+% \renewcommand\lstlistingname{Quellcode (in German)}
+% \renewcommand{\lstlistlistingname}{Quellcodeverzeichnis (in German)}
+
+\newcommand*\wildcard[2][5cm]{%
+  \mbox{%
+    \vbox to 3cm{%
+      \vfill
+      \hbox to #1{\hrulefill}\par
+      \hbox to #1{\strut\hfil#2\hfil}
+    }
+  }
+}
+
 
 \begin{document}
 
@@ -101,7 +119,8 @@
 \include{FrontMatter/Thanks}
 \include{FrontMatter/SupervisorOpinion}
 \include{FrontMatter/Abstract}
-\include{FrontMatter/Contents}
+\tableofcontents
+\lstlistoflistings
 
 \mainmatter
 
@@ -115,6 +134,7 @@
 \include{BackMatter/Conclusions}
 \include{BackMatter/Recomendations}
 \include{BackMatter/Bibliography}
+\include{FrontMatter/Contents}
 
 % \renewcommand\listoflistingscaption{List of source codes}
 % \listoflistings

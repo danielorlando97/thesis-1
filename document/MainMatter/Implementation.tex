@@ -1,31 +1,31 @@
 \chapter{Casos de Uso, Ejemplos y Resultados}\label{chapter:implementation}
 
-En este último capítulo se analizará desde varios puntos de vistas
+En este último capítulo se analizará desde varios puntos de vista
 la propuesta de solución y su implementación concreta. Dicho análisis 
-se realizará mediante la experimentación y la interpretación objetiva de 
+se realizará mediante la experimentación y la interpretación crítica de 
 los resultados. Con cada uno de los experimentos se analizará la idoneidad
 del sistema como solución a los problemas y objetivos planteados inicialmente. 
 El diseño de dichos experimentos fue influenciado por una serie de preguntas 
-formuladas a partir de los objetivos de la investigación
+formuladas a partir de los objetivos de la investigación.
 
-Las preguntas formulada para diseñar los experimentos fueron las siguientes. 
-Primero, ?`qué tan expresiva es la herramienta?, ?`cuales son los
+Las preguntas formuladas para diseñar los experimentos fueron las siguientes. 
+Primero, ?`qué tan expresiva es la herramienta?, ?`cuáles son los
 casos de uso de la misma?, ?`es esta herramienta más expresiva que resto de las 
 herramientas descriptivas que existen en el estado del arte contemporáneo?. 
 Segundo, ?`qué tan efectiva es la herramienta en el proceso de generación de muestras?, 
 ?`el sistema mantiene la coherencia entre las descripciones
-y las muestras generadas?. Y por uúltimo, ?`qué tan eficiente es la herramienta?.
+y las muestras generadas?. Y por último, ?`qué tan eficiente es la herramienta?
 
 Para dar respuesta a esta última pregunta es necesario definir cuales son las características
 que transformarían a la propuesta realizada en una solución eficiente para los objetivos
-planteados. Por tanto, se define eficiencia para los objetivos propuestos a traves de las siguientes preguntas: 
+planteados. Por tanto, se define eficiencia para los objetivos propuestos a través de las siguientes preguntas: 
 1) ?`qué tan efectivas son las heurísticas implementadas para que el proceso generativo sea lo más lineal
 posible, alejándose de las filosofías ``prueba y error''?, 2) ?`qué tan eficiente en tiempo es el
-procesos de generación de muestras? 3) ?`es mejor utilizar el sistema propuesto para describir el
+proceso de generación de muestras? 3) ?`es mejor utilizar el sistema propuesto para describir el
 espacio de búsqueda y genera muestras de dicha descripción, que implementar de forma imperativa
 un generador de dicho espacio con las herramientas nativas del lenguaje?.
 
-A continuación se enumeraran los procesos de mayor complejidad algorítmica implementados.
+A continuación se enumerarán los procesos de mayor complejidad algorítmica implementados.
 Dicha información es muy importante para analizar los distintos experimentos y sus resultadas
 que se mostrarán a lo largo del capítulo, pues con este conocimiento se podrá tener una mejor idea 
 del desempeño de la herramienta y la idoneidad de las implementaciones:
@@ -33,8 +33,8 @@ del desempeño de la herramienta y la idoneidad de las implementaciones:
 
       \item Generación de tensores: Para la construcción de los tensores los únicos datos iniciales
             que se tienen son la dimensiones de estos y su tipo. Por dicha razón, la construcción de un tensor
-            se componen de dos procesos, busqueda de indices válidos según las dimensiones seleccionadas y 
-            generación aleatoria de un elemento para cada indice descubierto
+            se compone de dos procesos, búsqueda de índices válidos según las dimensiones seleccionadas y 
+            generación aleatoria de un elemento para cada índice descubierto.
  
             \begin{listing}[!ht]
                   \begin{minted}{Python}
@@ -55,7 +55,7 @@ def tensor_builder(dims, index = []):
 
       \item Segmentación del dominio de los enteros por la operación distinto (!=) con una lista de valores: Cuando el usuario describe
             una desigualdad entre el dominio del los enteros y una lista de valores para poder crear los
-            segmentos correctos es necesario ordenar dicha lista. Por tanto dicho procesos es más costoso que
+            segmentos correctos es necesario ordenar dicha lista. Por tanto dicho proceso es más costoso que
             revisar si un elemento no pertenece a la lista de valores señalados. Por ejemplo, sea N el subconjunto
             de los enteros entre ($-\infty, \infty$) entonces:\\
             La operación N(($-\infty, \infty$) !=  [1, 100, 20, 33, 24] tiene como resultado: \\
@@ -63,11 +63,11 @@ def tensor_builder(dims, index = []):
    
 
       \item Restricciones secuenciales que referencian a subsecciones del propio espacio, ejemplo \ref{ejemplo:set}: Restricciones de
-            este tipo implican que para cada uno de los indices del espacio es necesario construir una segmento nuevo
+            este tipo implican que para cada uno de los índices del espacio es necesario construir una segmento nuevo
             con los elementos señalados para realizar las operaciones señaladas. En implementaciones imperativas esto podría
             resolverse con los {\it slice} de {\bf Python}, pero para que el {\bf DSL} sea lo más flexible posible con este 
             tipo de restricciones la construcción de cada uno de los segmentos se implementa mediante la búsqueda de valores en el 
-            contexto de generación y por el muestreo de los indices que aún no se encuentren en la memoria de dicho contexto.   
+            contexto de generación y por el muestreo de los índices que aún no se encuentren en la memoria de dicho contexto.   
 
             \begin{listing}[!ht]
                   \begin{minted}{Python}
@@ -77,15 +77,15 @@ def tensor_builder(dims, index = []):
                   \label{ejemplo:set}
               \end{listing}
 
-      \item Resoluciones de restricciones de caja negra que no aportan datos al procesos de inferencia: Como ya
-            se señalo anteriormente, dichos procesos únicamente pueden ser resueltos con el mecanismo de “prueba y error”, desrito en el seudocodigo \ref{chap2:algo},
+      \item Resoluciones de restricciones de caja negra que no aportan datos al proceso de inferencia: Como ya
+            se señaló anteriormente, dichos procesos únicamente pueden ser resueltos con el mecanismo de “prueba y error”, descrito en el pseudocódigo \ref{chap2:algo},
             por lo que su costo temporal depende de las dimensiones del espacio y la probabilidad de seleccionar un elemento
-            factible según la distribución en cuestión
-      \item Resolución de dimensiones dinámicas: Este es sin duda el procesos más crítico para el mecanismo generador,
-            pues en este casos no se pueden realizar cálculos previos en fase de compilación pues no se conocen los detalles
-            del espacio. El procesos de construcción es el mismo que se describe en el ejemplo \ref{exp:tensors}, pero en este caso
-            por cada indice antes de generar un nuevo valor aleatorio es necesario crear una copia del tipo básico del tensor relativa al índice generado.
-            A su favor, los espacios descritos con estos mecanismo no presenta una descripción simple en el resto de los mecanismo descriptivos.
+            factible según la distribución en cuestión.
+      \item Resolución de dimensiones dinámicas: Este es sin duda el proceso más crítico para el mecanismo generador,
+            pues en estos casos no se pueden realizar cálculos previos en fase de compilación pues no se conocen los detalles
+            del espacio. El proceso de construcción es el mismo que se describe en el ejemplo \ref{exp:tensors}, pero en este caso
+            por cada índice antes de generar un nuevo valor aleatorio es necesario crear una copia del tipo básico del tensor relativa al índice generado.
+            A su favor, los espacios descritos con este mecanismo no presentan una descripción simple en el resto de los mecanismos descriptivos.
 \end{itemize}
 
 El resto del capítulo se divide en dos secciones. En la primera se describirán uno a uno los
@@ -93,7 +93,7 @@ experimentos realizados y se reportarán sus respectivos resultados. En la sigui
 se realizará un análisis de los resultados obtenidos en los experimentos
 y sobre el sistema en general.
 
-\section{Experimentos, Descripción y Resultandos}
+\section{Experimentos, Descripción y Resultados}
 
 Para intentar mostrar todas las características y particularidades de la propuesta se diseñaron
 cuatro experimentos con los que se espera dar respuesta a las preguntas anteriormente planteadas. 
@@ -103,18 +103,18 @@ casos de uso a los que dicho sistema puede dar respuesta.
 
 \subsection{Ejemplos, Generación y Consistencia}
 
-El primero de los experimento consiste en la explotación del {\bf DSL} para evidenciar la
+El primero de los experimentos consiste en la explotación del {\bf DSL} para evidenciar la
 amplia gama de dominios que este puede describir y generar. El desarrollo de este experimento
-formó parte activa del proceso de contrucción de la herramiento, el cual siguió un patrón orientado a pruebas ({\bf Test
-            Driver Design}). Dicho patrón plantea que el desarrollo se realice única y exclusivamente con el
+formó parte activa del proceso de construcción de la herramienta, el cual siguió un patrón orientado a pruebas ({\bf Test
+            Driven Design}). Dicho patrón plantea que el desarrollo se realice única y exclusivamente con el
 objetivo de vencer una prueba definida previamente. Como el objetivo final del sistema es la
 generación de muestras aleatorias, dichas pruebas fueron implementadas con una visión estadística,
 buscando el 100\% de casos positivos en la mayoría de dichas pruebas.
 
 El código de los ejemplos de caso de uso se puede consultar en las secciones iniciales del presente
 documento. En dicha sección se ordenan dichos ejemplos en orden ascendente a la complejidad de los
-mismo. A continuación se enumerarán cada uno de dichos ejemplos, definiendo el espacio de búsqueda
-que se intenta describir en cada casos, puntualizando las distintas consideraciones tomadas a la hora
+mismos. A continuación se enumerarán cada uno de dichos ejemplos, definiendo el espacio de búsqueda
+que se intenta describir en cada caso, puntualizando las distintas consideraciones tomadas a la hora
 de implementar sus respectivas pruebas y realizando en cada caso las debidas comparaciones con el
 estado del arte en términos expresivos:
 
@@ -127,15 +127,15 @@ estado del arte en términos expresivos:
       \space n \in \mathbb{Z},\space n < 50} \\
 \end{align*}
 
-En este casos el espacio de búsqueda se describe como una clase simple donde las restricciones
+En este caso el espacio de búsqueda se describe como una clase simple donde las restricciones
 no contienen dependencias contextuales ni mayor complejidad. Para validar que la herramienta es
 coherente con la descripción aportada por cada una de las muestras generadas se comprueba que dicha
 muestra pertenece a la clase descrita y que los atributos que representan la pendiente y el intercepto
-de la recta se encuentran dentro de los limites descritos para cada uno.
+de la recta se encuentran dentro de los límites descritos para cada uno.
 
-Todas las restricciones descritas en este casos hacen referencia a los limites del espacio exceptuando
+Todas las restricciones descritas en este caso hacen referencia a los límites del espacio exceptuando
 la operación de desigualdad ($\neq$), describiendo la existencia de un elemento incorrecto en el interior del
-dominio inicial. En este casos todas las herramientas descriptivas basada en clases como {\bf AutoGOAL} y
+dominio inicial. En este caso todas las herramientas descriptivas basadas en clases como {\bf AutoGOAL} y
       {\bf AutoSklearn} pueden detectar dicho elemento dentro del cuerpo de la función {\it \_\_init\_\_} y lanzar el error
 respectivo. {\bf Optuna}, por otro lado, al tener una sintaxis imperativa puede optar por varias opciones:
 1) la ``prueba y error'', 2) la definición de dos dominios disjuntos seleccionables a partir de
@@ -164,22 +164,22 @@ Como se señaló en el capítulo \ref{chapter:state-of-the-art}, la única herra
 describir dependencias contextuales es la biblioteca {\bf Optuna}, que efectivamente puede describir este espacio
 realizando una generación en orden topológico, implementada de forma imperativa. El enfoque descriptivo basado en clases
 puede utilizar la filosofía de ``prueba y error'' para solo analizar las instancias que cumplan con la condiciones
-descritas. En el casos de las bibliotecas de optimización que se apoyan en los diccionarios y las funciones de
+descritas. En el caso de las bibliotecas de optimización que se apoyan en los diccionarios y las funciones de
 distribución, no tiene forma de expresar dicha relación.
 
 3) {\bf Optimización paramétrica}, código de ejemplo (\ref{lst:sklearn}), donde la descripción del espacio de búsqueda del conjunto de parámetros de la clase
       {\bf LogisticRegresion} de {\bf Sklearn} refleje lo descrito en su documentación oficial en cuanto a la semántica de dichos
 parámetros. La gran mayoría de las clases y modelos aportados por {\bf Sklearn} y otras bibliotecas suelen definir varios
-parámetros condicionales y dependientes del contexto. En el casos particular de la clase seleccionada, la semántica
+parámetros condicionales y dependientes del contexto. En el caso particular de la clase seleccionada, la semántica
 de los parámetros ``intercept_scaling'' y ``random_state'' depende del valor específico del parámetro ``solver''. Al ser
-un espacio condicional en este casos la implementación de las respectivas pruebas consiste en determinar a cual de
+un espacio condicional en este caso la implementación de las respectivas pruebas consiste en determinar a cuál de
 los posibles casos pertenece la muestra en cuestión para luego comprobar sus distintos atributos.
 
 Como a pesar de que el ejemplo muestra un espacio condicional, este sigue siendo un caso de dependencias contextuales
-por lo que la comparación expresiva es similar a la del caso anterior. En este caso notesé que 
+por lo que la comparación expresiva es similar a la del caso anterior. En este caso nótese que 
 las herramientas descriptivas basadas en clases, como es el caso de {\bf AutoGOAL} o de {\bf AutoSklearn}, no cuentan con estructuras
-de flujo para describir dependencias condicionales. Por lo tanto para hiperparámetros dependientes como los de este ejemplo siempre se genera
-una muestra de sus dominio más amplio independientemente de que se use la misma o no.
+de flujo para describir dependencias condicionales. Por lo tanto para hiperparámetros dependientes como los de este ejemplo siempre se generan
+muestras de sus dominios más amplios independientemente de que se use la misma o no.
 
 4) {\bf Búsqueda de los plazos óptimos para programar dos tareas rutinarias que nunca deben coincidir}, código de ejemplo (\ref{lst:primos}). En este caso se hace
 referencia al espacio de dos números naturales primos relativos. Dicha relación no puede ser expresada
@@ -197,7 +197,7 @@ los dos patrones de diseño planteados para dichas estructuras utilizan herramie
 
 En el ejemplo \ref{lst:adj} se modela el espacio de los grafos no dirigidos mediante matrices de adyacencias. Dicho espacio
 se describe mediante la representación de dependencias circulares internas. Para comprobar las muestras
-generada por dicho espacio se comprueba iterativamente si la matriz generada es simétrica y si sus dimensiones corresponden a
+generadas por dicho espacio se comprueba iterativamente si la matriz generada es simétrica y si sus dimensiones corresponden a
 la respectiva cantidad de nodos generados. 
 
 Por otro lado, en el ejemplo \ref{lst:node} el modela el espacio de los árboles binarios mediante el patrón orientado a objetos.
@@ -211,8 +211,8 @@ La descripción de estos espacios es extremadamente complicado en el resto de la
 para describir espacios similares es la representación de listas de adyacencia. Aunque en principio las herramientas basadas
 en clases podrían describir los grafos orientados a objetos, ellas no presentan ninguna sintaxis para describir la opcionalidad
 de los subespacios internos de la clase en cuestión. La representación más parecida a las propuestas presentadas serían son las que se pudieran
-definir con la biblioteca {\bf Optuna}, pero dicha implementaciones serían muy similares a los generadores de muestras implementables
-con las herramientas nativas del lenguaje.
+definir con la biblioteca {\bf Optuna}, pero dichas implementaciones serían muy similares a los generadores implementables a partir
+de las herramientas nativas del lenguaje.
 
 7) {\bf Modelación del clásico problema de ``la mochila'' como problema de búsqueda}, código de ejemplo (\ref{lst:bag}). Dicho espacio de búsqueda se describe como una
 jerarquía de clases donde de forma independiente se definen distintos conceptos como: los elementos que pueden formar parte de
@@ -239,25 +239,25 @@ en el conjunto vació en caso de ser el conjunto total de colores. Aunque al rea
 no será un elemento factible, en el futuro con la integración de un sistema optimizador todas las instancias serán importantes para 
 determinar las distribuciones más eficientes.
 
-De forma similar al caso anterior, el proceso de prueba se divide en dos momento, la generación de problemas y la generación de
+De forma similar al caso anterior, el proceso de prueba se divide en dos momentos, la generación de problemas y la generación de
 soluciones. Para cada uno de los problemas se comprueba su correcta estructura y la pertenecia de cada uno de sus atributivos a sus
 respectivos dominios. Por otro lado, el análisis de las soluciones es un poco más dinámico pues para cada una de las selecciones
 realizadas se comprobará el dominio dinámico que computó la herramienta para realizar dicha selección.
 
 Al igual que en ocasiones anteriores, la optimización sobre dicho espacio combinatorio solo podría ser descrito por la biblioteca
-      {\bf Optina}, realizando una análisis similar al propuesto para cada uno de los indices que fuera a generar.
+      {\bf Optuna}, realizando un análisis similar al propuesto para cada uno de los índices que fuera a generar.
 
-9) {\bf Descripción del espacio de búsqueda de un pequeño problema de AutoML con dependencias contextuales}, código de ejemplo (\ref{lst:automl}). En este casos se plantea la
+9) {\bf Descripción del espacio de búsqueda de un pequeño problema de AutoML con dependencias contextuales}, código de ejemplo (\ref{lst:automl}). En este caso se plantea la
 búsqueda de un modelo de aprendizaje automatizado semisupervisado, donde en el espacio de búsqueda descrito se evidencia los
 problemas clásicos del {\bf AutoML}: la selección de modelos y la optimización paramétrica. En dicho ejemplo se muestra como se puede
 describir dicho espacio de búsqueda con una jerarquía de clases y como se relacionan las mismas planteando una dependencia contextual
 en los niveles superiores de la jerarquía (la clase {\bf AutoMLUnsupervidedExample}), restricción que afecta al dominio de un elemento
-particular que tiene en común cada uno de los modelos que participa en el procesos de selección de modelos. Dicho ejemplo es un
-resultado más de la integración del {\bf DSL} con la biblioteca {\bf typing}
+particular que tiene en común cada uno de los modelos que participa en el proceso de selección de modelos. Dicho ejemplo es un
+resultado más de la integración del {\bf DSL} con la biblioteca {\bf typing}.
 
-El procesos de prueba para este casos de uso se limita a la comprobación de la estructura de las muestras generadas. Cada uno de
+El proceso de prueba para este caso de uso se limita a la comprobación de la estructura de las muestras generadas. Cada uno de
 los modelos debe pertenecer al tipo base correcto independientemente a la
-selección del modelo final. La restricción planteada para el número de clusters y la cantidad de categorías debe cumplirse tambien.
+selección del modelo final. La restricción planteada para el número de clusters y la cantidad de categorías debe cumplirse también.
 A nivel descriptivo, todas las herramientas que solucionan el problema de la selección de modelos y la optimización paramétrica
 cuenta con herramientas para describir dicho espacio de búsqueda. Aunque en la mayoría de los cosos la restricción planteada sería
 implementada de una forma más imperativa, generando un único valor y compartiendo el mismo para las dos instancias seleccionadas.
@@ -267,23 +267,21 @@ un número representativo de muestras y comprobar que efectivamente dichas muest
 pruebas se puede consultar en el repositorio de {\bf GitHub} \href{https://github.com/danielorlando97/search-space}{github.com/danielorlando97/search-space}. 
 En dicho repositorio se puede consultar además los
 resultados de dichas pruebas, las cuales se ejecutan con cada modificación del código mediante el empleo de los {\bf GitHub's Actions}.
-Cada una de las pruebas tuvo un resultado correcto y que todos los ejemplos presentados son se pueden describir y
-generar con el sistema propuesto.
+Cada una de las pruebas tuvo un resultado correcto demostrando que el sistema propuesto genera muestras consistentes con las descripciones presentadas.
 
 \subsection{Casos Simples. Comparación con las herramientas nativas}
 
 
-
 El segundo experimento consiste en cronometrar el desempeño del mecanismo generativo del {\bf DSL} propuesto para los casos más simples y
 básicos. Luego se comparan los resultados del {\bf DSL} con los resultados de un experimento similar realizado a los generadores implementados
-con las herramientas nativas del sistema. Aunque el objetivo de este experimento es comprobar la rápidez de generación del sistema,
-también se mostrará el costo temporal del sistema como un todo, uniendo el procesos de interpretación con la generación de muestras,
+con las herramientas nativas del sistema. Aunque el objetivo de este experimento es comprobar la rapidez de generación del sistema,
+también se mostrará el costo temporal del sistema como un todo, uniendo el proceso de interpretación con la generación de muestras,
 como evidencia de todo lo explicado anteriormente sobre la descomposición del {\bf DSL} en dos tiempos, compilación y ejecución.
 
 Como ya se ha comentado anteriormente, dentro del sistema existen tres procesos generativos básicos, dos aleatorios y un tercero
-constructivos. En dicho segundo experimento se comparará la rápidez del {\bf DSL} para generar un entero, seleccionar un texto, crear una
+constructivo. En dicho segundo experimento se comparará la rapidez del {\bf DSL} para generar un entero, seleccionar un texto, crear una
 clase o crear una lista con las respectivas implementaciones análogas utilizando las herramientas nativas del lenguaje. A continuación
-se enumeran y detallan cada una de las comparaciones (los resultados se pueden ver en la figura \ref{fig:exp2}):
+se enumeran y detallan cada una de las comparaciones:
 \begin{enumerate}
       \item Generación de un número entero mediante: 1) el sistema como un todo, 2) la componente generativa, 3) generador basado en la función {\it uniform} de la
             biblioteca {\it random}. Se generaron 10000 muestras y cada una de ellas dentro de subconjunto [-100000, 100000] de los enteros.
@@ -298,7 +296,7 @@ se enumeran y detallan cada una de las comparaciones (los resultados se pueden v
                   {\bf DSL} para generar números enteros . Se generaron 10000 muestras y cada una de las listas generadas tienen longitud 1000 elementos.
             Cada elemento en las listas están definidos dentro de subconjunto de los enteros [-10000, 10000]. Cada una de las generaciones se cronometraron utilizando la
             biblioteca {\it time} de {\bf Python}.
-      \item Generación de una clase cuyo constructor espera dos número entero mediante: 1) el sistema como un todo, 2) la componente generativa,
+      \item Generación de una clase cuyo constructor espera dos números entero mediante: 1) el sistema como un todo, 2) la componente generativa,
             3) un mecanismo generativo implementado mediante el constructor de dicha clase y generador basado en la función {\it uniform} de la biblioteca {\it random}, 4) un
             mecanismo generativo implementado mediante el constructor de dicha clase y el mecanismo generador del {\bf DSL} para generar números enteros.
             Se generaron 1000 muestras y en cada una de ellas los distintos parámetros son generados están definidos dentro del subconjunto de los
@@ -310,6 +308,13 @@ se enumeran y detallan cada una de las comparaciones (los resultados se pueden v
       \caption{Resultados del Segundo Experimento}
       \label{fig:exp2}
 \end{figure}
+
+Como se puede apreciar en las gráficas de la figura \ref{fig:exp2}, de forma general el mecanismo generativo 
+del sistema propuesto siempre es más lento que los mecanismos imperativos implementados con las 
+herramientas del lenguaje. Entre estos casos resaltan los resultados obtenidos en el experimento 
+realizado con los espacios tensoriales, siendo este caso el que presenta mayor diferencia con el 
+generador imperativo. Nótese además la gran diferencia que existe en cuanto a tiempo de ejecución 
+entre el componente generativo y el sistema como un todo, donde se unen interpretación y generación.
 
 \subsection{Procesos más costosos, conjuntos y matrices simétricas}
 
@@ -335,17 +340,11 @@ la generación de tensores de múltiples dimensiones. Para estos casos se realiz
 \end{enumerate}
 
 
-En cada uno de los experimentos se midierón el tiempo de generación y, para el caso de los experimentos
-con conjuntos, el número de error a la hora de elegir un nuevo elemento para el conjunto, donde un error
+En cada uno de los experimentos se midieron el tiempo de generación y, para el caso de los experimentos
+con conjuntos, el número de errores a la hora de elegir un nuevo elemento para el conjunto, donde un error
 es elegir un elemento que ya pertenezca al conjunto. Las generaciones fueron realizadas por: 1) el
 mecanismo generador del sistema y 2) generador basado en la función {\it uniform} de la biblioteca {\it random}.
-En las gráficas \ref{fig:exp3} y \ref{fig:exp4} se muestran los resultados obtenidos.
 
-\begin{figure}[H]
-      \includegraphics[width=\linewidth]{Graphics/exp3.png}
-      \caption{Resultados de los experimentos con conjuntos}
-      \label{fig:exp3}
-\end{figure}
 
 \begin{figure}[!ht]
       \includegraphics[width=\linewidth]{Graphics/exp4.png}
@@ -355,34 +354,49 @@ En las gráficas \ref{fig:exp3} y \ref{fig:exp4} se muestran los resultados obte
 
 
 
+En las gráficas de las figuras \ref{fig:exp3} y \ref{fig:exp4} se vuelve a evidenciar que los mecanismos imperativos 
+son más rápidos que la propuesta de solución. Entre estos resultados resaltan especialmente aquellos 
+que se muestran en la gráfica de la figura \ref{fig:exp3}, relativos a los experimentos realizados con el espacio 
+de los conjuntos. Nótese el aumento progresivo de la cantidad de errores cometidos por los mecanismos 
+imperativos a la hora de seleccionar un nuevo valor único para el conjunto en construcción, en comparación con la 
+eficacia del sistema propuesto que nunca se equivoca en dicho procesos. Pero independientemente a 
+dicha eficacia, las diferencias temporales siguen existiendo.
+
+\begin{figure}[H]
+      \includegraphics[width=\linewidth]{Graphics/exp3.png}
+      \caption{Resultados de los experimentos con conjuntos}
+      \label{fig:exp3}
+\end{figure}
+
+
 
 
 \subsection{Heurísticas para restricciones de caja negra}
 
 Los casos de funciones de “caja negra”, como ya se ha explicado con anterioridad, es en ocasiones la
 funcionalidad más estocástica del sistema, pues para aquellas restricciones que definen una dependencia
-con los elementos del espacio subyacente el único procesos generativo posible es la “prueba y error”.
+con los elementos del espacio subyacente el único proceso generativo posible es la “prueba y error”.
 Además como ya se ha señalado en capítulos anteriores, existe una diferencia determinante cuando se le
 aplica dichas restricciones a espacios compuestos como las listas o las clases y cuando se le aplica a
 espacios simples como los números. Cuando un espacio sencillo como los números presenta una restricción
 de “caja negra” que no se puede incluir en el proceso de inferencia de dominios, el sistema plantea una
-heurísticas de búsqueda muy simple. Aprender de cada error cometido modificando el dominio de generación.
-Dicha heurísticas no es posible en el casos de los espacios estructurales pues dichos espacios son
+heurística de búsqueda muy simple. Aprender de cada error cometido modificando el dominio de generación.
+Dicha heurística no es posible en el caso de los espacios estructurales pues dichos espacios son
 combinatorios y descarta opciones no es trivial.
 
-El cuarto experimento realizado intentó evidenciar el efecto de dicha heurísticas en la eficiencia temporal
+El cuarto experimento realizado intentó evidenciar el efecto de dicha heurística en la eficiencia temporal
 y de exploración del mecanismo generativo ante casos de funciones de ``caja negra'' que no aportan información
-al proceso de reducción de dominios. Dicho experimento esta compuesto por dos parte y en ambas se utilizará
+al proceso de reducción de dominios. Dicho experimento está compuesto por dos partes y en ambas se utilizará
 la función {\bf IsEven} definida en capítulos anteriores.
 
 El primero de los experimentos realizados consiste en la generación de 500000 números primos donde para cada
 generación {\bf i} se definen el espacio de búsqueda en el subconjunto de los naturales [2, {\bf i} + 100]. Con este
-experimento se busca encontrar el tamaño de dominio a partir del cual la heurísticas es determinante en el
+experimento se busca encontrar el tamaño de dominio a partir del cual la heurística es determinante en el
 costo temporal del proceso generativo. A dicho experimento se someterán 3 generadores:
 \begin{enumerate}
 
-      \item  El mecanismo generador del sistema planteado apoyado en la respectiva descripción del espacio
-      \item  Un generador implementado mediante las herramientas nativas del lenguaje
+      \item  El mecanismo generador del sistema planteado apoyado en la respectiva descripción del espacio.
+      \item  Un generador implementado mediante las herramientas nativas del lenguaje.
       \item  Un generador implementado con las dos componentes principales del sistema generativo propuesto, el
             dominio y la función de distribución. En cada iteración el dominio se expande en vez
             de crearse uno nuevo. De esta forma el autor desea comprobar que tan determinante sería la persistencia del
@@ -391,7 +405,14 @@ costo temporal del proceso generativo. A dicho experimento se someterán 3 gener
 \end{enumerate}
 
 De este experimento se cronometró el tiempo de generación y se contabilizaron tanto el número de errores como la
-cantidad de errores repetidos. Los resultados se muestran en las gráficas de la figura \ref{fig:exp5}.
+cantidad de errores repetidos.
+En las gráficas de la figura \ref{fig:exp5} se puede ver los resultados de la primera fase del proceso experimental 
+al que fue sometido el espacio de los números primos. En dichos resultados se puede ver que la propuesta de solución 
+y el generador imperativo presentan resultados relativamente similares en cuanto a errores cometidos y a tiempo de 
+generación. Las únicas diferencias entre estos generadores son 1) que la media de los errores cometidos por el generador 
+imperativo es ligeramente mayor que la del sistema propuesto y 2) que en la gráfica que muestra los tiempos reportados por 
+la propuesta de solución presenta varios picos con valores extrañamente altos. Nótese además que el mecanismo generador 
+extra que se incluyó en el proceso experimental, reporta los mejores resultados en ambas medidas.
 
 \begin{figure}[H]
       \includegraphics[width=\linewidth]{Graphics/exp5.png}
@@ -399,25 +420,33 @@ cantidad de errores repetidos. Los resultados se muestran en las gráficas de la
       \label{fig:exp5}
 \end{figure}
 
-La segunda fase de este experimento número 4 es la generación de números primos con limites fijos. Dicho experimento
+La segunda fase de este experimento número 4 es la generación de números primos con límites fijos. Dicho experimento
 es un complemento a la pregunta planteada en el tercer generador de la fase anterior. ?`Qué tan determinante sería
 la persistencia del aprendizaje obtenido en cada generación?. Para dicho experimento se generaron 500000 números primos
-dentro del subconjunto [2, 250000 ] de los números naturales. En este casos se usarón los mismos 3 generadores de la
-fase anterior solo que en este casos el tercero de ellos no se expande en cada iteración. De este experimento se cronometró
-el tiempo de generación y se contabilizaron tanto el número de errores como la cantidad de errores repetidos. Los resultados
-se muestran en las figuras \ref{fig:exp6} y \ref{fig:exp7}.
+dentro del subconjunto [2, 250000 ] de los números naturales. En este caso se usaron los mismos 3 generadores de la
+fase anterior solo que en este caso el tercero de ellos no se expande en cada iteración. De este experimento se cronometró
+el tiempo de generación y se contabilizaron tanto el número de errores como la cantidad de errores repetidos.
 
 \begin{figure}[!ht]
       \includegraphics[width=\linewidth]{Graphics/exp7.png}
-      \caption{Grafica de intentos y distribucion de muetras la segunda fase del 4to experimento}
+      \caption{Gráfica de intentos y distribución de muestras la segunda fase del 4to experimento}
       \label{fig:exp7}
 \end{figure}
 
-\newpage
+En las gráficas de las figuras \ref{fig:exp6} y \ref{fig:exp7} se muestran los resultados de la segunda 
+fase del proceso experimental al que fue sometido el espacio de los números primos. En esta ocasión, al 
+igual que en el experimento anterior, aparecen similitudes entre el mecanismo generador del sistema 
+propuesto y el mecanismo imperativo. Dichos dos mecanismos reportan resultados parecidos en cuanto a 
+tiempo de generación y cantidad de errores, aunque se puede ver una clara diferencia en las distribuciones 
+de las muestras generadas. Por otro lado, el tercer generador y motivo principal de este último experimento 
+con respecto al tiempo de generación es mejor que el mecanismo generador de la propuesta de solución, pero 
+continúa siendo más lento que las herramientas imperativas. Este, por otra parte, comente muchos menos errores 
+que los otros dos generadores y su gráfica de distribución de las muestras generadas presenta un aspecto mucho 
+más acorde con la distribución uniforme que su análoga para el caso del DSL propuesto.
 
 \begin{figure}[!ht]
       \includegraphics[width=\linewidth]{Graphics/exp6.png}
-      \caption{Grafica temporal de la segunda fase del 4to experimento}
+      \caption{Gráfica temporal de la segunda fase del 4to experimento}
       \label{fig:exp6}
 \end{figure}
 
@@ -436,9 +465,9 @@ como un sistema de dos componentes (descriptivo y generativo) y la delimitación
 ({\it tiempo de compilación del DSL} y {\it tiempo de ejecución del DSL}). Nótese la inmensa diferencia entre los 
 tiempos reportados por el mecanismo generativo por si solo y los obtenidos por el sistema como un todo. 
 Tercero, en contraste con los resultados obtenidos en los experimentos realizados para analizar al mecanismo generativo, donde
-dichos resultados requieren de una interpretación y un análisis para poder ratificar su valides, los resultados
+dichos resultados requieren de una interpretación y un análisis para poder ratificar su validez, los resultados
 obtenidos durante los experimentos realizados con la componente descriptiva son irrefutables. La
-herramienta descriptiva aumenta el número de espacio de búsqueda descriptibles y además lo hace con
+herramienta descriptiva aumenta el número de espacios de búsqueda descriptibles y además lo hace con
 mucha mayor expresividad que las herramientas del estado del arte.
 
 Luego, en los experimentos realizados sobre los casos más críticos se pueden ver varios resultados que ponen en duda
@@ -447,9 +476,9 @@ costos temporales del mecanismo de generación. Pues; como se muestra en los res
 en especial para los casos en los que se experimentó con el espacio de los conjuntos hasta las dimensiones exploradas,
 independientemente del número de errores que comenta el mecanismo imperativo el costo temporal de la infraestructura del
 sistema es mayor que el del mecanismo de “prueba y error” implementado de forma imperativa. Nótese, que en los resultados
-de dicho experimento la linea temporal del mecanismo generador presenta una serie de picos temporales. Dichos picos se le
+de dicho experimento la línea temporal del mecanismo generador presenta una serie de picos temporales. Dichos picos se le
 atribuyen al sistema de almacenamiento de cada uno de los espacios creado con su respectiva función de distribución,
-dicho mecanismo fue implementado mediante una clase que sigue el patrón {\bf Singleton}. Por las característica de los experimentos
+dicho mecanismo fue implementado mediante una clase que sigue el patrón {\bf Singleton}. Por las características de los experimentos
 realizados, donde en cada iteración se crea un nuevo espacio, el diccionario interno de la clase antes mencionada pasa a ser
 ineficiente múltiples veces si necesita expandir su tabla de hash y recolocando cada uno de los elementos. Dicho fenómeno no
 debería ocurrir en situaciones normales, pues como ya se comentó anteriormente las descripciones y las generaciones no debería
@@ -471,7 +500,7 @@ valores erróneos y el {\bf DSL} no. Al igual que sucede en los experimentos ant
 al que se le intenta dar solución los resultados no son del todo malos, las diferencias temporales podrían llegar a ser
 despreciables.
 
-En dicho primer pasos del experimento cuatro se dincluyó un tercer generador para investigar cuan determinante sería
+En dicho primer pasos del experimento cuatro se incluyó un tercer generador para investigar cuan determinante sería
 realizar una refactorización del sistema para persistir el aprendizaje de generaciones anteriores. Nótese que la optimización
 sería ampliamente efectiva, reduciendo casi a la mitad el tiempo de generación en comparación con los métodos nativos del
 lenguaje. Además de disminuir representativamente el número de errores de generación cometidos. Por dichas
@@ -481,29 +510,29 @@ espacio.
 
 Para medir el impacto real de dicha refactorización en el sistema se realizó el segundo paso del experimento número 4. En la
 primera fase el dominio que mantendría el aprendizaje se fue expandiendo en cada iteración, pero dicho caso no tendría lógica
-en un escenario real pues si un domino se encuentra definido dentro de cierta segmentación es porque el resto de los valores
-del espacio son no son factible. Realizar una expanción sería, en principio, agregar valores erróneos al domino. Por dicha razón
-el segundo paso determina unos limites fijos de búsqueda, un caso más real del caso de uso que se piensa factorizar. Como se
+en un escenario real pues si un dominio se encuentra definido dentro de cierta segmentación es porque el resto de los valores
+del espacio no son factible. Realizar una expanción sería, en principio, agregar valores erróneos al dominio. Por dicha razón
+el segundo paso determina unos límites fijos de búsqueda, un caso más real del caso de uso que se piensa factorizar. Como se
 puede ver la gráfica \ref{fig:exp6} en la que se muestra los tiempos reportados por dicho experimento mientras que el {\bf DSL} siempre es más lento
 que el mecanismo imperativo, dicho sistema con la refactorización planteada se acercaría mucho más a los tiempos reportados por
 las herramientas nativas del lenguaje.
 
-Aunque evidentemente la refactorización planteada mejoraría la eficiencia del sistema, de este último experimento aun se puede
+Aunque evidentemente la refactorización planteada mejoraría la eficiencia del sistema, de este último experimento aún se puede
 comentar algunos detalles. Primero, el experimento se realizó delimitado por un parámetro {\bf n} donde {\bf n} es el número de generaciones
 que se realizarán y dichas muestras se encontrarán definidas entre [0, {\bf n}/2]. Como se puede ver en la gráfica que muestra el
 número de errores de generación se aprecia que aunque el dominio va aprendiendo de sus errores al final del experimento sigue
 existiendo valores erróneos. Esto significa que una vez que se empieza a segmentar el dominio existe un punto en donde la
-probabilidad de escoger un segmento totalmente valido para generar una muestra es mucho mayor que la de escoger un segmento
-invalido, por lo que empiezan a aparecer generaciones que no aportan aprendizaje. El experimento muestra que 500000
+probabilidad de escoger un segmento totalmente válido para generar una muestra es mucho mayor que la de escoger un segmento
+inválido, por lo que empiezan a aparecer generaciones que no aportan aprendizaje. El experimento muestra que 500000
 generaciones no son suficientes para que el sistema explore un espacio de [0, 250000] de forma aleatoria.
-Luego, nótese además la influencia de la refactorización en la distribución de las muestras. En el casos del {\bf DSL} planteado
+Luego, nótese además la influencia de la refactorización en la distribución de las muestras. En el caso del {\bf DSL} planteado
 por la presente investigación existe mayor densidad de muestras en los extremos del dominio, mientras que la distribución
-de la factorizacón se muestra más uniforme. Por lo que en resumen, sería una muy buena idea incluir la modificación de los
+de la refactorización se muestra más uniforme. Por lo que en resumen, sería una muy buena idea incluir la modificación de los
 dominios iniciales para los espacios simples.
 
 Finalmente, se considera el resultado como un éxito tanto en términos descriptivos como generativos, independientemente
 de que los resultados obtenidos por el mecanismo generador no eran los esperados. En general los tiempos obtenidos por el
-mecanismo generador presenta una diferencia con respecto a los tiempos de los mecanismo imperativos implementados que podrían
+mecanismo generador presenta una diferencia con respecto a los tiempos de los mecanismos imperativos implementados que podrían
 considerarse despreciables considerando la expresividad del código final y la seguridad en la generación de muestras. Como se
 mostró en el primer experimento realizado, la gama de espacios descriptibles con la herramienta es representativamente grande y
 variada, además de que las pruebas implementadas para garantizar la coherencia del sistema es una prueba bastante fiable para
